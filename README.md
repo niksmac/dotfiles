@@ -1,4 +1,4 @@
-# Lightraisn Tech dotfiles
+# Lightrains Tech dotfiles
 
 ## dotfiles
 
