@@ -9,6 +9,6 @@
 
 # The rest of our fun ssh aliases
 alias sshpegke='ssh root@128.199.76.62'
-alias sshlight='ssh root@192.168.27.100'
+alias sshlight='ssh light@192.168.27.100'
 alias sshksum='ssh root@192.168.52.211'
 alias sshgodady='ssh ligh5599@118.139.175.1'
