@@ -1,0 +1,4 @@
+open "OneDark.itermcolors"
+
+TERM_PROLILE='One Dark';
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
