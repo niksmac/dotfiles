@@ -12,5 +12,8 @@ alias sshpegke='ssh root@128.199.76.62'
 alias sshlight='ssh light@192.168.27.100'
 alias sshksum='ssh root@192.168.52.211'
 alias sshgodady='ssh ligh5599@118.139.175.1'
-alias sbuild='jekyll build'
-alias sbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac.github.io'
+
+# Jekyll Awesomeness
+alias jkserve='jekyll serve'
+alias jkbuild='jekyll build'
+alias jkbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac.github.io'
