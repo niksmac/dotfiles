@@ -3,3 +3,9 @@ metromatinee:
   paths: [
     "/Volumes/Webroot/metromatinee"
   ]
+"pegke.com":
+  title: "pegke.com"
+  paths: [
+    "/Users/niksmac/iWork/projects/pegke.com"
+    "/Users/niksmac/Downloads/fullPage.js-master/examples"
+  ]

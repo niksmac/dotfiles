@@ -32,3 +32,5 @@
     viewedVersion: "0.89.0"
   term3: {}
   "linter-jshint": {}
+  "atom-beautify":
+    _analyticsUserId: "3a5eb701-53d9-45c2-950e-18534c904479"
