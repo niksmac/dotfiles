@@ -17,3 +17,6 @@ alias sshgodady='ssh ligh5599@118.139.175.1'
 alias jkserve='jekyll serve'
 alias jkbuild='jekyll build'
 alias jkbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac.github.io'
+
+# Drupal coding standards phpcs
+alias drupalcs="phpcs --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt'"
