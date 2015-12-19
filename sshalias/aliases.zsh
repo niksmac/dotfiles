@@ -14,7 +14,7 @@ alias sshksum='ssh root@192.168.52.211'
 alias sshgodady='ssh ligh5599@118.139.175.1'
 
 # Jekyll Awesomeness
-alias jkserve='jekyll serve'
+alias jkserve='jekyll clean && jekyll serve'
 alias jkbuild='jekyll build'
 alias jkbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac.github.io'
 

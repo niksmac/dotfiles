@@ -7,5 +7,9 @@ metromatinee:
   title: "pegke.com"
   paths: [
     "/Users/niksmac/iWork/projects/pegke.com"
-    "/Users/niksmac/Downloads/fullPage.js-master/examples"
+  ]
+"canned-emails":
+  title: "canned-emails"
+  paths: [
+    "/Users/niksmac/iWork/projects/canned-emails"
   ]
