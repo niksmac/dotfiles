@@ -1,15 +1,1 @@
-metromatinee:
-  title: "metromatinee"
-  paths: [
-    "/Volumes/Webroot/metromatinee"
-  ]
-"pegke.com":
-  title: "pegke.com"
-  paths: [
-    "/Users/niksmac/iWork/projects/pegke.com"
-  ]
-"canned-emails":
-  title: "canned-emails"
-  paths: [
-    "/Users/niksmac/iWork/projects/canned-emails"
-  ]
+{}

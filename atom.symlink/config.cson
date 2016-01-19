@@ -1,36 +1,9 @@
 "*":
+  core: {}
   editor:
-    showIndentGuide: true
-    fontFamily: "Menlo"
-    invisibles: {}
-    softWrapAtPreferredLineLength: true
     fontSize: 15
-  core:
-    ignoredNames: [
-      ".bundle"
-      ".git"
-      "log"
-      "repositories"
-      "tmp"
-      "vendor"
-    ]
-    hideGitIgnoredFiles: true
-    disabledPackages: [
-      "background-tips"
-      "exception-reporting"
-      "metrics"
-    ]
-  "spell-check":
-    grammars: [
-      "text.plain"
-      "source.gfm"
-      "text.git-commit"
-    ]
+    invisibles: {}
+  "exception-reporting":
+    userId: "ff404733-d023-14a0-d603-ccf69094cffb"
   welcome:
     showOnStartup: false
-  "release-notes":
-    viewedVersion: "0.89.0"
-  term3: {}
-  "linter-jshint": {}
-  "atom-beautify":
-    _analyticsUserId: "3a5eb701-53d9-45c2-950e-18534c904479"
