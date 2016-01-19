@@ -53,3 +53,8 @@ bind r source-file ~/.tmux.conf \; display "Reloaded .tmux.conf"
 # send prefix to inner tmux
 bind-key a send-prefix
 
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
