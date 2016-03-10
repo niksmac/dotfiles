@@ -13,6 +13,7 @@ alias sshlight='ssh light@192.168.27.100'
 alias sshksum='ssh root@192.168.52.211'
 alias sshgodady='ssh ligh5599@118.139.175.1'
 alias sshether='ssh root@192.168.27.101'
+alias ssheth='ssh root@37.139.31.106'
 
 # Jekyll Awesomeness
 alias jkserve='jekyll clean && jekyll serve'
