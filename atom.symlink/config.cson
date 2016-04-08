@@ -2,6 +2,7 @@
   core:
     automaticallyUpdate: false
   editor:
+    fontSize: 15
     invisibles: {}
     softWrap: true
     softWrapAtPreferredLineLength: true
