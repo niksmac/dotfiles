@@ -1,5 +1,6 @@
 "*":
-  core: {}
+  core:
+    automaticallyUpdate: false
   editor:
     invisibles: {}
     softWrap: true
