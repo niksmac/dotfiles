@@ -22,3 +22,6 @@ alias jkbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac
 
 # Drupal coding standards phpcs
 alias drupalcs="phpcs --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt'"
+
+
+alias c='clear'
