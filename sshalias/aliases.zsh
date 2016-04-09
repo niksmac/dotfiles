@@ -18,7 +18,6 @@ alias ssheth='ssh root@37.139.31.106'
 # Jekyll Awesomeness
 alias jkserve='jekyll clean && jekyll serve'
 alias jkbuild='jekyll build'
-alias jkbuildp='jekyll build --destination /Users/niksmac/iWork/projects/niksmac.github.io'
 
 # Drupal coding standards phpcs
 alias drupalcs="phpcs --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt'"
