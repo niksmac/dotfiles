@@ -25,3 +25,4 @@ alias drupalcs="phpcs --standard=Drupal --extensions='php,module,inc,install,tes
 
 
 alias c='clear'
+alias yd='youtube-dl'
