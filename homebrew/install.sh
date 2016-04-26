@@ -22,6 +22,6 @@ then
 fi
 
 # Install homebrew packages
-brew install grc coreutils spark tmux youtube-dl
+brew install grc coreutils spark tmux youtube-dl the_silver_searcher
 
 exit 0

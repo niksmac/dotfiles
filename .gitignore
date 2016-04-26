@@ -1,2 +1,4 @@
 atom.symlink
 git/gitconfig.symlink
+atom.symlink/
+atom.symlink/blob-store/
