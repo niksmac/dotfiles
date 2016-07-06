@@ -12,8 +12,6 @@ set ignorecase	" Always case-insensitive
 set incsearch	" Searches for strings incrementally
 
 set autoindent	" Auto-indent new lines
-set expandtab	" Use spaces instead of tabs
-set shiftwidth=4	" Number of auto-indent spaces
 set smartindent	" Enable smart-indent
 set smarttab	" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
@@ -22,5 +20,30 @@ set softtabstop=4	" Number of spaces per Tab
 set ruler	" Show row and column ruler information
 set showtabline=0	" Show tab bar
 
-set undolevels=1000	" Number of undo levels
+set undolevels=200	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour
+
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
+
+" plugins 
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/vim-easy-align'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'scrooloose/nerdtree'
+Plug 'pangloss/vim-javascript'
+
+call plug#end()
+
+filetype plugin indent on    " required
+
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+
