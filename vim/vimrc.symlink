@@ -1,49 +1,54 @@
 " General
-set number	" Show line numbers
+set number  " Show line numbers
 set relativenumber  "This turns on relative numbering
-set linebreak	" Break lines at word (requires Wrap lines)
-set showbreak=+++	" Wrap-broken line prefix
-set textwidth=100	" Line wrap (number of cols)
-set showmatch	" Highlight matching brace
+set linebreak " Break lines at word (requires Wrap lines)
+set showbreak=+++ " Wrap-broken line prefix
+set textwidth=100 " Line wrap (number of cols)
+set showmatch " Highlight matching brace
 
-set hlsearch	" Highlight all search results
-set smartcase	" Enable smart-case search
-set ignorecase	" Always case-insensitive
-set incsearch	" Searches for strings incrementally
+set hlsearch  " Highlight all search results
+set smartcase " Enable smart-case search
+set ignorecase  " Always case-insensitive
+set incsearch " Searches for strings incrementally
 
-set autoindent	" Auto-indent new lines
-set smartindent	" Enable smart-indent
-set smarttab	" Enable smart-tabs
-set softtabstop=4	" Number of spaces per Tab
+set autoindent  " Auto-indent new lines
+set smartindent " Enable smart-indent
+set smarttab  " Enable smart-tabs
+set softtabstop=4 " Number of spaces per Tab
 
 "" Advanced
-set ruler	" Show row and column ruler information
-set showtabline=0	" Show tab bar
+set ruler " Show row and column ruler information
+set showtabline=0 " Show tab bar
 
-set undolevels=200	" Number of undo levels
-set backspace=indent,eol,start	" Backspace behaviour
+set undolevels=200  " Number of undo levels
+set backspace=indent,eol,start  " Backspace behaviour
 
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
 set shiftround
 set expandtab
+set clipboard=unnamed
 
-" plugins 
+" plugins
 
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-Plug 'scrooloose/nerdtree'
+Plug 'Valloric/YouCompleteMe'
 Plug 'pangloss/vim-javascript'
+Plug 'Chiel92/vim-autoformat'
+Plug 'kien/ctrlp.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-surround'
+Plug 'mileszs/ack.vim'
 
 call plug#end()
 
-filetype plugin indent on    " required
+au BufWrite * :Autoformat
 
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
+let g:ctrlp_user_command = [
+      \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
+      \ 'find %s -type f'
+      \ ]
 
