@@ -30,6 +30,8 @@ set shiftround
 set expandtab
 set clipboard=unnamed
 
+set regexpengine=1
+
 " plugins
 
 call plug#begin('~/.vim/plugged')
@@ -42,13 +44,34 @@ Plug 'kien/ctrlp.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
 Plug 'mileszs/ack.vim'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'rking/ag.vim'
+Plug 'w0ng/vim-hybrid'
 
 call plug#end()
 
 au BufWrite * :Autoformat
 
+" crlp
 let g:ctrlp_user_command = [
       \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
       \ 'find %s -type f'
       \ ]
 
+" syntastic
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Color scheme
+set background=dark
+colorscheme hybrid

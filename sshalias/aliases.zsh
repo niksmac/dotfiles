@@ -19,9 +19,9 @@ alias ssheth='ssh root@37.139.31.106'
 alias jkserve='jekyll clean && jekyll serve'
 alias jkbuild='jekyll build'
 
-# Drupal coding standards phpcs
-alias drupalcs="phpcs --standard=Drupal --extensions='php,module,inc,install,test,profile,theme,js,css,info,txt'"
-
-
 alias c='clear'
 alias yd='youtube-dl'
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias tree='tree -I node_modules'
+
+alias copyssh="pbcopy < $HOME/.ssh/id_rsa.pub"
