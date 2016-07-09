@@ -33,7 +33,6 @@ set clipboard=unnamed
 set regexpengine=1
 
 " plugins
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
@@ -62,7 +61,6 @@ let g:ctrlp_user_command = [
       \ ]
 
 " syntastic
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
