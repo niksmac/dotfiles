@@ -40,7 +40,6 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
 Plug 'kien/ctrlp.vim'
-Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
@@ -49,6 +48,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'rking/ag.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'godlygeek/tabular'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'sjl/gundo.vim'
 
 call plug#end()
 
@@ -69,9 +71,35 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['standard']
 
 " Color scheme
 set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1
 colorscheme hybrid
+
+function! OpenURL(url)
+
+  if has("win32")
+    exe "!start cmd /cstart /b ".a:url.""
+  elseif $DISPLAY !~ '^\w'
+    exe "silent !tpope open \"".a:url."\""
+  elseif exists(':Start')
+    exe "Start tpope open -T \"".a:url."\""
+  else
+    exe "!tpope open -T \"".a:url."\""
+  endif
+  redraw!
+endfunction
+command! -nargs=1 OpenURL :call OpenURL(<q-args>)
+
+" open URL under cursor in browser
+nnoremap gb :OpenURL <cfile><CR>
+nnoremap gA :OpenURL http://www.answers.com/<cword><CR>
+nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
+nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><CR>
+
+" gundo
+nnoremap <F5> :GundoToggle<CR>
+
