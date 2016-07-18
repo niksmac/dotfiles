@@ -1,0 +1,3 @@
+npm set init.author.name "Nikhil Mohan"
+npm set init.author.email "nikhil@lightrains.com"
+npm set init.author.url "http://nikhilmohan.in"
