@@ -14,15 +14,3 @@ alias sshksum='ssh root@192.168.52.211'
 alias sshgodady='ssh ligh5599@118.139.175.1'
 alias sshether='ssh root@192.168.27.101'
 alias ssheth='ssh root@37.139.31.106'
-
-# Jekyll Awesomeness
-alias jkserve='jekyll clean && jekyll serve'
-alias jkbuild='jekyll build'
-
-alias c='clear'
-alias yd='youtube-dl'
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias tree='tree -I node_modules'
-
-alias copyssh="pbcopy < $HOME/.ssh/id_rsa.pub"
-alias v='nvim'

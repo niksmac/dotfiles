@@ -49,6 +49,29 @@ setup_gitconfig () {
   fi
 }
 
+setup_npmconfig () {
+  if ! [ -f npm/npmrc.symlink ]
+  then
+    info 'setup npmconfig'
+
+    git_credential='cache'
+    if [ "$(uname -s)" == "Darwin" ]
+    then
+      git_credential='osxkeychain'
+    fi
+
+    user ' - What is your npm author name?'
+    read -e npm_authorname
+    user ' - What is your npm author email?'
+    read -e npm_authoremail
+    user ' - What is your npm author url?'
+    read -e npm_authorurl
+
+    sed -e "s/NPMAUTHORNAME/$npm_authorname/g" -e "s/NPMAUTHOREMAIL/$npm_authoremail/g" -e "s/NPMAUTHORURL/$npm_authorurl/g" npm/npmrc.symlink.example > npm/npmrc.symlink
+
+    success 'npmconfig'
+  fi
+}
 
 link_file () {
   local src=$1 dst=$2
@@ -138,6 +161,7 @@ install_dotfiles () {
 }
 
 setup_gitconfig
+setup_npmconfig
 install_dotfiles
 
 # If we're on a Mac, let's install and setup homebrew.
