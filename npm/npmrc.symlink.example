@@ -1,0 +1,3 @@
+npm set init.author.name NPMAUTHORNAME
+npm set init.author.email NPMAUTHOREMAIL
+npm set init.author.url NPMAUTHORURL
