@@ -35,7 +35,7 @@ set regexpengine=1
 " plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 Plug 'Valloric/YouCompleteMe'
 Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
@@ -51,10 +51,11 @@ Plug 'w0ng/vim-hybrid'
 Plug 'godlygeek/tabular'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
+Plug 'scrooloose/nerdcommenter'
 
 call plug#end()
 
-au BufWrite * :Autoformat
+" au BufWrite * :Autoformat
 
 " crlp
 let g:ctrlp_user_command = [
