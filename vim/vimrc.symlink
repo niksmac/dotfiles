@@ -39,17 +39,13 @@ let mapleader = "," " Map leader
 " plugins
 call plug#begin('~/.vim/plugged')
 
-" Plug 'junegunn/vim-easy-align'
 Plug 'Valloric/YouCompleteMe'
 Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-surround'
-Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'rking/ag.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'godlygeek/tabular'
@@ -58,16 +54,23 @@ Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ternjs/tern_for_vim'
 Plug 'isRuslan/vim-es6'
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
 
 call plug#end()
 
 " au BufWrite * :Autoformat
 
 " crlp
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|node_modules)$'
 let g:ctrlp_user_command = [
       \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
       \ 'find %s -type f'
       \ ]
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -86,28 +89,6 @@ let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1
 colorscheme hybrid
 
-function! OpenURL(url)
-
-  if has("win32")
-    exe "!start cmd /cstart /b ".a:url.""
-  elseif $DISPLAY !~ '^\w'
-    exe "silent !tpope open \"".a:url."\""
-  elseif exists(':Start')
-    exe "Start tpope open -T \"".a:url."\""
-  else
-    exe "!tpope open -T \"".a:url."\""
-  endif
-  redraw!
-endfunction
-command! -nargs=1 OpenURL :call OpenURL(<q-args>)
-
-" open URL under cursor in browser
-nnoremap gb :OpenURL <cfile><CR>
-nnoremap gA :OpenURL http://www.answers.com/<cword><CR>
-nnoremap gG :OpenURL http://www.google.com/search?q=<cword><CR>
-
-nnoremap gW :OpenURL http://en.wikipedia.org/wiki/Special:Search?search=<cword><CR>
-
 " gundo
 nnoremap <F5> :GundoToggle<CR>
 
@@ -125,3 +106,11 @@ inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <Up> <nop>
 inoremap <Down> <nop>
+
+" nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+
+" js libs
+let g:used_javascript_libs = 'jquery,react,jasmine'
