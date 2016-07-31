@@ -1,6 +1,7 @@
 # Jekyll Awesomeness
 alias js='jekyll clean && jekyll serve'
 alias jb='jekyll build'
+alias jsf='jekyll clean && jekyll serve --future'
 
 alias c='clear'
 alias yd='youtube-dl'
