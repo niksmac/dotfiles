@@ -91,13 +91,14 @@ colorscheme hybrid
 
 " gundo
 nnoremap <F5> :GundoToggle<CR>
+nnoremap <F6> :SyntasticToggleMode<CR>
 
 " Remove trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
 
 " force vim
 map <Left> :echo "damnit!"<cr>
-map <Right> :echo "you suck!"<cr>
+map <Right> :echo "1 + 1 = ? "<cr>
 map <Up> :echo "this is why you fail"<cr>
 map <Down> :echo "nooooo!"<cr>
 
