@@ -42,7 +42,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
-Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
@@ -57,6 +56,8 @@ Plug 'isRuslan/vim-es6'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'raimondi/delimitmate'
+Plug 'wincent/command-t'
 
 call plug#end()
 
