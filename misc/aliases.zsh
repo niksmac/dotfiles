@@ -10,5 +10,3 @@ alias tree='tree -I node_modules'
 
 alias v='nvim'
 alias speed='speed-test'
-
-alias siz='ls'
