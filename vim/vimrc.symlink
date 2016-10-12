@@ -57,6 +57,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'raimondi/delimitmate'
 Plug 'wincent/command-t'
+Plug 'lambdatoast/elm.vim'
 
 call plug#end()
 
