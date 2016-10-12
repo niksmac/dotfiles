@@ -116,3 +116,9 @@ map <C-n> :NERDTreeToggle<CR>
 
 " js libs
 let g:used_javascript_libs = 'jquery,react,jasmine'
+
+" elm mappings
+nnoremap <leader>el :ElmEvalLine<CR>
+vnoremap <leader>es :<C-u>ElmEvalSelection<CR>
+nnoremap <leader>em :ElmMakeCurrentFile<CR>
+
