@@ -22,7 +22,7 @@ then
 fi
 
 # Install homebrew packages
-brew install grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree
+brew install grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree elm
 
 # Tap cask
 brew tap caskroom/cask
