@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 
-# 'Wi-Fi' or 'Ethernet' or 'Display Ethernet'
-INTERFACE=Wi-Fi
+if [ "$1" == "wifi" ]
+then
+  ifacekey="Wi-Fi"
+
+elif [ "$1" == "Ethernet" ]
+then
+  ifacekey="Ethernet"
+
+elif [ "$1" == "Display*" ]
+then
+  ifacekey="Display Ethernet"
+
+else
+  ifacekey="Wi-Fi"
+fi
+
+
+# 'wifi' or 'Ethernet' or 'Display Ethernet'
+INTERFACE=$ifacekey
 
 # Ask for the administrator password upfront
 sudo -v
@@ -26,6 +43,7 @@ echo "$(tput setaf 64)" # green
 echo "SOCKS proxy 127.0.0.1:9050 enabled."
 echo "$(tput setaf 136)" # orange
 echo "Starting Tor..."
+echo "Starting Tor for $ifacekey"
 echo "$(tput sgr0)" # color reset
 
 tor
