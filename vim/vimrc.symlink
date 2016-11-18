@@ -35,6 +35,11 @@ set regexpengine=1
 set autoread
 set acd
 
+" Swap files
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+
 let mapleader = "," " Map leader
 
 " plugins
@@ -57,7 +62,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'raimondi/delimitmate'
-Plug 'wincent/command-t'
+Plug 'wincent/command-t', {'do': 'cd ruby/command-t && ruby extconf.rb && make'}
 Plug 'lambdatoast/elm.vim'
 
 call plug#end()
@@ -122,4 +127,3 @@ let g:used_javascript_libs = 'jquery,react,jasmine'
 nnoremap <leader>el :ElmEvalLine<CR>
 vnoremap <leader>es :<C-u>ElmEvalSelection<CR>
 nnoremap <leader>em :ElmMakeCurrentFile<CR>
-
