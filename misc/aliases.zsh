@@ -10,3 +10,5 @@ alias tree='tree -I node_modules'
 
 alias v='vim'
 alias speed='speed-test'
+alias ta='tmux a'
+alias epi='elm-package install'
