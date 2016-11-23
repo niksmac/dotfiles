@@ -36,38 +36,7 @@ set autoread
 set acd
 
 " Swap files
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
-
-let mapleader = "," " Map leader
-
-" plugins
-call plug#begin('~/.vim/plugged')
-
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'pangloss/vim-javascript'
-Plug 'Chiel92/vim-autoformat'
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-surround'
-Plug 'w0ng/vim-hybrid'
-Plug 'godlygeek/tabular'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'sjl/gundo.vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'ternjs/tern_for_vim'
-Plug 'isRuslan/vim-es6'
-Plug 'scrooloose/nerdtree'
-Plug 'itchyny/lightline.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'raimondi/delimitmate'
-Plug 'wincent/command-t', {'do': 'cd ruby/command-t && ruby extconf.rb && make'}
-Plug 'lambdatoast/elm.vim'
-
-call plug#end()
-
-" au BufWrite * :Autoformat
+set directory=~/.vim/tmp
 
 " crlp
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|node_modules)$'
