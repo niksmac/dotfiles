@@ -51,6 +51,8 @@ then
   success "Backed up current hosts file to tmp/bakup/hosts.bk"
   info "Copying Host file to /etc/hosts"
   sudo cp tmp/hosts/hosts /etc/hosts
+  info "Clearing DNS Cache"
+  sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
   success "All Good."
 else
   fail "Well, its on you."
