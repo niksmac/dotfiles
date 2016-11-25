@@ -64,7 +64,7 @@ call plug#end()
 " au BufWrite * :Autoformat
 
 
-let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff, */node_modules"
+let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff, */node_modules,*/_site"
 
 
 " syntastic
