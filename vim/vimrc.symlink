@@ -5,7 +5,6 @@ set linebreak " Break lines at word (requires Wrap lines)
 set showbreak=+++ " Wrap-broken line prefix
 set textwidth=100 " Line wrap (number of cols)
 set showmatch " Highlight matching brace
-set langmenu=en_US
 
 set hlsearch  " Highlight all search results
 set smartcase " Enable smart-case search
@@ -35,17 +34,37 @@ set regexpengine=1
 set autoread
 set acd
 
-" Swap files
-set directory=~/.vim/tmp
+let mapleader = "," " Map leader
 
-" crlp
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|node_modules)$'
-let g:ctrlp_user_command = [
-      \ '.git', 'cd %s && git ls-files . -co --exclude-standard',
-      \ 'find %s -type f'
-      \ ]
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+" plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'pangloss/vim-javascript'
+Plug 'Chiel92/vim-autoformat'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'w0ng/vim-hybrid'
+Plug 'godlygeek/tabular'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'sjl/gundo.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ternjs/tern_for_vim'
+Plug 'isRuslan/vim-es6'
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'raimondi/delimitmate'
+Plug 'wincent/command-t'
+Plug 'lambdatoast/elm.vim'
+
+call plug#end()
+
+" au BufWrite * :Autoformat
+
+
+let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff, */node_modules"
 
 
 " syntastic
@@ -91,8 +110,3 @@ map <C-n> :NERDTreeToggle<CR>
 
 " js libs
 let g:used_javascript_libs = 'jquery,react,jasmine'
-
-" elm mappings
-nnoremap <leader>el :ElmEvalLine<CR>
-vnoremap <leader>es :<C-u>ElmEvalSelection<CR>
-nnoremap <leader>em :ElmMakeCurrentFile<CR>
