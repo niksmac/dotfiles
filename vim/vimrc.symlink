@@ -16,7 +16,7 @@ set smartindent " Enable smart-indent
 set smarttab  " Enable smart-tabs
 set softtabstop=4 " Number of spaces per Tab
 
-"" Advanced
+" Advanced
 set ruler " Show row and column ruler information
 set showtabline=0 " Show tab bar
 
@@ -25,6 +25,10 @@ set backspace=indent,eol,start  " Backspace behaviour
 
 " enable filetype detection
 filetype on
+
+" set 'updatetime' to 5 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+au InsertLeave * let &updatetime=updaterestore
 
 " Softtabs, 2 spaces
 set tabstop=2
