@@ -42,6 +42,7 @@ set autoread
 set acd
 
 let mapleader = "\<Space>" " Map leader
+nnoremap <leader><leader> <C-^> " Switch buffers
 
 " plugins
 call plug#begin('~/.vim/plugged')
