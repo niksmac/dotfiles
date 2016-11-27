@@ -71,7 +71,10 @@ call plug#end()
 " au BufWrite * :Autoformat
 
 
-
+" Ignore things
+set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
+set wildignore+=*/bower_components/*,*/node_modules/*
+set wildignore+=*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/log/*,*/tmp/*
 let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff,*/node_modules,*/_site"
 
 " Swap
