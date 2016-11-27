@@ -23,6 +23,9 @@ set showtabline=0 " Show tab bar
 set undolevels=200  " Number of undo levels
 set backspace=indent,eol,start  " Backspace behaviour
 
+" enable filetype detection
+filetype on
+
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
