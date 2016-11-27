@@ -34,7 +34,7 @@ set regexpengine=1
 set autoread
 set acd
 
-let mapleader = "," " Map leader
+let mapleader = "\<Space>" " Map leader
 
 " plugins
 call plug#begin('~/.vim/plugged')
@@ -64,8 +64,11 @@ call plug#end()
 " au BufWrite * :Autoformat
 
 
-let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff, */node_modules,*/_site"
 
+let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff,*/node_modules,*/_site"
+
+" Swap
+set dir=/private/tmp
 
 " syntastic
 set statusline+=%#warningmsg#
