@@ -1,4 +1,4 @@
-open "OneDark.itermcolors"
+open "hybrid-reduced-contrast.itermcolors"
 
-TERM_PROLILE='One Dark';
+TERM_PROLILE='hybrid-reduced-contrast';
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
