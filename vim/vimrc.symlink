@@ -27,8 +27,7 @@ set backspace=indent,eol,start  " Backspace behaviour
 filetype plugin on
 
 " set 'updatetime' to 5 seconds when in insert mode
-au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
-au InsertLeave * let &updatetime=updaterestore
+au CursorHoldI * stopinsert
 
 " Softtabs, 2 spaces
 set tabstop=2
