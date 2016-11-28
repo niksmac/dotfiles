@@ -24,7 +24,7 @@ set undolevels=200  " Number of undo levels
 set backspace=indent,eol,start  " Backspace behaviour
 
 " enable filetype detection
-filetype on
+filetype plugin on
 
 " set 'updatetime' to 5 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
