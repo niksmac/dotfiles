@@ -49,7 +49,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
-Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'w0ng/vim-hybrid'
