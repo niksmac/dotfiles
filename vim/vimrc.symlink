@@ -61,7 +61,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'isRuslan/vim-es6'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'raimondi/delimitmate'
 Plug 'wincent/command-t'
 Plug 'lambdatoast/elm.vim'
@@ -120,6 +119,3 @@ inoremap <Down> <nop>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 map <C-n> :NERDTreeToggle<CR>
-
-" js libs
-let g:used_javascript_libs = 'jquery,react,jasmine'
