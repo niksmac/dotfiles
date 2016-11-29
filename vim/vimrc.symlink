@@ -47,7 +47,6 @@ nnoremap <leader><leader> <C-^> " Switch buffers
 call plug#begin('~/.vim/plugged')
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
-Plug 'pangloss/vim-javascript'
 Plug 'Chiel92/vim-autoformat'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
@@ -65,8 +64,8 @@ Plug 'lambdatoast/elm.vim'
 
 call plug#end()
 
-" au BufWrite * :Autoformat
-
+" autoformat
+noremap <F3> :Autoformat<CR>
 
 " Ignore things
 set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
@@ -120,7 +119,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " lightline
 let g:lightline = {
-      \ 'component': {
-      \   'readonly': '%{&readonly?"⭤":""}',
-      \ }
-      \ }
+  \ 'component': {
+  \   'readonly': '%{&readonly?"⭤":""}',
+  \ }
+  \ }
