@@ -16,6 +16,10 @@ set smartindent " Enable smart-indent
 set smarttab  " Enable smart-tabs
 set softtabstop=4 " Number of spaces per Tab
 
+" Spellcheck for markdown
+autocmd BufRead,BufNewFile *.md setlocal spell
+set complete+=kspell
+
 " Advanced
 set ruler " Show row and column ruler information
 set showtabline=0 " Show tab bar
@@ -27,7 +31,7 @@ set backspace=indent,eol,start  " Backspace behaviour
 filetype plugin on
 
 " set 'updatetime' to 5 seconds when in insert mode
-au CursorHoldI * stopinsert
+" au CursorHoldI * stopinsert
 
 " Softtabs, 2 spaces
 set tabstop=2
