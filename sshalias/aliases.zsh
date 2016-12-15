@@ -11,5 +11,5 @@
 alias sshpegke='ssh root@128.199.76.62'
 alias sshlight='ssh light@192.168.27.100'
 alias sshksum='ssh root@192.168.52.211'
-alias sshgodady='ssh ligh5599@118.139.175.1'
+alias sshgodady='ssh -oHostKeyAlgorithms=+ssh-dss ligh5599@118.139.175.1'
 alias sshether='ssh root@192.168.27.101'
