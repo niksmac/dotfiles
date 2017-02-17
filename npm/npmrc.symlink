@@ -1,4 +1,4 @@
-npm set init.author.name "Nikhil Mohan"
-npm set init.author.email "nikhil@lightrains.com"
-npm set init.author.url "http://nikhilmohan.in"
-prefix=~/.npm-packages
+npm set init.author.name "Nikhil Mohan"=true
+npm set init.author.email "nikhil@lightrains.com"=true
+npm set init.author.url "http://nikhilmohan.in"=true
+prefix=~/.npm-global
