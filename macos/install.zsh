@@ -90,3 +90,32 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 # Auto-Correct Enable (Default)
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool true
+
+
+# Terminal & iTerm 2
+# ==============
+
+# Only use UTF-8 in Terminal.app
+defaults write com.apple.terminal StringEncodings -array 4
+
+# Don’t display the annoying prompt when quitting iTerm
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+
+# Misc
+# ==============
+
+# Increase sound quality for Bluetooth headphones/headsets
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
+# Hide all desktop icons because who need 'em'
+defaults write com.apple.finder CreateDesktop -bool false
+
+# Disable Dashboard
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+# Don’t show Dashboard as a Space
+defaults write com.apple.dock dashboard-in-overlay -bool true
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
