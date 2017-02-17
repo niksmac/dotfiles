@@ -46,7 +46,6 @@ defaults write -g WebKitDeveloperExtras -bool true
 defaults write com.apple.TextEdit RichText -int 0
 
 
-
 # Xcode
 # ==============
 
@@ -59,6 +58,9 @@ xcrun simctl delete unavailable
 
 # Finder
 # ==============
+
+# Always open everything in Finder's list view. This is important.
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 
 # Show All File Extensions
 defaults write -g AppleShowAllExtensions -bool true
