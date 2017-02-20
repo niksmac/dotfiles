@@ -14,7 +14,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Sketch
 # ==============
 
-#Export Compact SVGs
+# Export Compact SVGs
 defaults write com.bohemiancoding.sketch3 exportCompactSVG -bool yes
 
 
@@ -22,7 +22,7 @@ defaults write com.bohemiancoding.sketch3 exportCompactSVG -bool yes
 # ==============
 
 # Set Wallpaper
-sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '~/.dotfiles/osx/study-hard.png'" && killall Dock
+sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '${HOME}/.dotfiles/macos/study-hard.png'" && killall Dock
 
 # Set Login Window Text
 sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Tweet me @niksmac_"
@@ -42,18 +42,7 @@ defaults write -g WebKitDeveloperExtras -bool true
 # ==============
 
 # Use Plain Text Mode as Default
-
 defaults write com.apple.TextEdit RichText -int 0
-
-
-# Xcode
-# ==============
-
-# Install Command Line Tools without Xcode
-xcode-select --install
-
-# Remove All Unavailable Simulators
-xcrun simctl delete unavailable
 
 
 # Finder
