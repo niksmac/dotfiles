@@ -84,6 +84,11 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # Auto-Correct Enable (Default)
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool true
 
+# Enable Key Repeat
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+# Sets a very fast repeat rate, adjust to taste.
+defaults write -g KeyRepeat -int 0.02
 
 # Terminal & iTerm 2
 # ==============
