@@ -27,6 +27,10 @@ sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set v
 # Set Login Window Text
 sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Tweet me @niksmac_"
 
+# Play iOS charging sound when MagSafe is connected.
+defaults write com.apple.PowerChime ChimeOnAllHardware -bool true && \
+open /System/Library/CoreServices/PowerChime.app
+
 
 # Safari
 # ==============
