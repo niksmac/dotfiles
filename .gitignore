@@ -3,3 +3,6 @@ git/gitconfig.symlink
 atom.symlink/
 atom.symlink/blob-store/
 /tmp
+
+node_modules
+yarn.*
