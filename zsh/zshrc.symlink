@@ -42,3 +42,5 @@ done
 
 unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
+
+export PATH="$HOME/.yarn/bin:$PATH"
