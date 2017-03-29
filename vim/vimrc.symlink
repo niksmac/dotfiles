@@ -60,7 +60,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'isRuslan/vim-es6'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
 Plug 'wincent/command-t'
