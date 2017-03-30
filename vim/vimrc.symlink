@@ -67,6 +67,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
 Plug 'wincent/command-t'
 Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
+Plug 'rking/ag.vim'
 
 call plug#end()
 
@@ -129,3 +130,6 @@ let g:lightline = {
   \   'readonly': '%{&readonly?"⭤":""}',
   \ }
   \ }
+
+" open ag.vim
+nnoremap <leader>a :Ag
