@@ -44,6 +44,8 @@ set regexpengine=1
 set autoread
 set acd
 
+set cursorline          " highlight current line"
+
 let mapleader = "\<Space>" " Map leader
 nnoremap <leader><leader> <C-^> " Switch buffers
 
