@@ -33,12 +33,21 @@ sudo -v
 # Keep-alive: update existing `sudo` time stamp until finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-info "Cloning hosts files..."
+if [ -d "./tmp/hosts" ]; then
+  # Will enter here if $DIRECTORY exists, even if it contains spaces
+  # Pulling new changes
+  info "Pulling new changes from the repo"
+  cd ./tmp/hosts
+  git pull
+  cd ..
+  cd ..
+else
+  info "Cloning hosts files from git://StevenBlack/hosts"
+  # Cloning the repo to a temporary location.
+  git clone https://github.com/StevenBlack/hosts.git ./tmp/hosts --depth=1
+  success "Successfully cloned the repo..."
+fi
 
-# Cloning the repo to a temporary location.
-git clone https://github.com/StevenBlack/hosts.git ./tmp/hosts --depth 1
-
-success "Successfully cloned the repo..."
 
 user "Overwrite current hosts file?"
 read -e -n 1 -r
