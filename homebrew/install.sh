@@ -25,7 +25,7 @@ fi
 if test "$(uname)" = "Darwin"
 then
   # Install homebrew packages
-  brew install grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree elm tor yarn
+  brew install grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree elm tor yarn elixir
   # Tap cask
   brew tap caskroom/cask
   # Install cask items
