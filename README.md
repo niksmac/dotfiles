@@ -29,6 +29,9 @@ The main file you'll want to change right off the bat is `zsh/zshrc.symlink`, wh
 
 Everything's built around topic areas. If you're adding a new area to your forked dotfiles — say, "Java" — you can simply add a `java` directory and put files in there. Anything with an extension of `.zsh` will get automatically included into your shell. Anything with an extension of `.symlink` will get symlinked without extension into `$HOME` when you run `script/bootstrap`.
 
+## Blocking ads/tracking websites
+Run `./script/hostsinit` to modify your hosts files so that you dont see any ads like ever. 
+
 ## components
 
 There's a few special files in the hierarchy.
