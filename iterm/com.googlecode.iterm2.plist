@@ -486,10 +486,12 @@
 	<string>511 560 445 103 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>280 441 606 456 0 0 1440 900 </string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>520 579 400 129 0 0 1440 900 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 382 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>281 356 796 473 0 0 1440 900 </string>
+	<string>284 309 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame com.apple.typography_panel_Monaco</key>
 	<string>246 512 260 56 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -501,6 +503,18 @@
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>AWDS Pane Directory</key>
+			<string></string>
+			<key>AWDS Pane Option</key>
+			<string>No</string>
+			<key>AWDS Tab Directory</key>
+			<string></string>
+			<key>AWDS Tab Option</key>
+			<string>No</string>
+			<key>AWDS Window Directory</key>
+			<string></string>
+			<key>AWDS Window Option</key>
+			<string>No</string>
 			<key>Allow Title Reporting</key>
 			<false/>
 			<key>Ambiguous Double Width</key>
@@ -1241,7 +1255,7 @@
 			<key>Set Local Environment Vars</key>
 			<true/>
 			<key>Shortcut</key>
-			<string>A</string>
+			<string></string>
 			<key>Show Mark Indicators</key>
 			<true/>
 			<key>Silence Bell</key>
@@ -3239,7 +3253,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-12-29T06:57:19Z</date>
+	<date>2017-07-04T09:41:16Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -3261,7 +3275,7 @@
 	<key>TabStyle</key>
 	<integer>0</integer>
 	<key>TabViewType</key>
-	<integer>2</integer>
+	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>
@@ -4859,7 +4873,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.13</string>
+	<string>3.0.15</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
