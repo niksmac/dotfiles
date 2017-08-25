@@ -24,3 +24,4 @@ alias genpass='LC_ALL=C tr -dc "[:alpha:][:alnum:]" < /dev/urandom | head -c 20 
 
 # NVM
 alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"'
+alias brewit='brew update && brew upgrade && brew cleanup'
