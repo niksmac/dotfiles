@@ -73,6 +73,13 @@ setup_npmconfig () {
   fi
 }
 
+setup_git_hooks () {
+  mkdir -p ~/.git-templates/hooks
+
+  # give execute permissions 
+  chmod a+x ~/.git-templates/hooks/*
+}
+
 link_file () {
   local src=$1 dst=$2
 
@@ -84,7 +91,7 @@ link_file () {
 
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
-      
+
       local currentSrc="$(readlink $dst)"
 
       user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
