@@ -25,7 +25,7 @@ fi
 if test "$(uname)" = "Darwin"
 then
   # Install homebrew packages
-  brew install grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree elm tor yarn elixir highlight
+  brew install zsh grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree elm tor yarn highlight pre-commit
   # Tap cask
   brew tap caskroom/cask
   # Install cask items
@@ -33,7 +33,7 @@ then
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
-  brew install grc spark tmux youtube-dl the_silver_searcher vim node tree elm tor
+  brew install grc spark tmux youtube-dl the_silver_searcher vim node tree tor pre-commit
 fi
 
 
