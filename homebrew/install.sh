@@ -29,7 +29,7 @@ then
   # Tap cask
   brew tap caskroom/cask
   # Install cask items
-  brew cask install flux
+  brew cask install flux google-chrome transmission vlc gpg-suite
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
