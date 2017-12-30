@@ -44,3 +44,4 @@ unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
 
 export PATH="$HOME/.yarn/bin:$PATH"
+export PATH="/usr/local/opt/node@8/bin:$PATH"
