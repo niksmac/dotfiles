@@ -84,6 +84,11 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 # Disable Creation of Metadata Files on USB Volumes
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
+# Hide all desktop icons because who need 'em'
+defaults write com.apple.finder CreateDesktop -bool false
+
+# Show Status Bar
+defaults write com.apple.finder ShowStatusBar -bool true
 
 # Keyboard
 # ==============
@@ -128,9 +133,6 @@ defaults write com.apple.Dock size-immutable -bool yes && killall Dock
 
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
-
-# Hide all desktop icons because who need 'em'
-defaults write com.apple.finder CreateDesktop -bool false
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
