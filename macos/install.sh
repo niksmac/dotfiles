@@ -118,5 +118,9 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
+# Lock the Dock Size
+defaults write com.apple.Dock size-immutable -bool yes && \
+killall Dock
+
 # Deactivate and Stop the Remote Management Service
 sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
