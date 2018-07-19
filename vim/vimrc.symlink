@@ -1,4 +1,9 @@
 " General
+
+if has('python3')
+  silent! python3 1
+endif
+
 set number  " Show line numbers
 set relativenumber  "This turns on relative numbering
 set linebreak " Break lines at word (requires Wrap lines)
@@ -85,6 +90,9 @@ let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff,*/node_m
 
 " Swap
 set dir=/private/tmp
+
+" YouCompleteMe
+let g:ycm_path_to_python_interpreter="/usr/local/bin/python"
 
 " syntastic
 set statusline+=%#warningmsg#
