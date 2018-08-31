@@ -46,4 +46,6 @@ echo "Starting Tor..."
 echo "Starting Tor for $ifacekey"
 echo "$(tput sgr0)" # color reset
 
+open https://check.torproject.org
+
 tor
