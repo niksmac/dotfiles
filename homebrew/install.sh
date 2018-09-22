@@ -29,7 +29,7 @@ then
   # Tap cask
   brew tap caskroom/cask
   # Install cask items
-  brew cask install flux transmission vlc gpg-suite iterm2
+  brew cask install flux transmission vlc gpg-suite iterm2 brave
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
