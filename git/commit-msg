@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "commit-msg started"
+
+filename="$1"
+lineno=0
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit 1
+}
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+while read -r line
+do
+    [[ "$line" =~ ^#.* ]] && continue
+
+    let lineno+=1
+    length=${#line}
+
+    if [[ $lineno -eq 1 ]]; then
+        [[ $length -gt 50 ]] && fail "Limit the subject line to 50 characters"
+        [[ ! "$line" =~ ^[A-Z].*$ ]] && fail "Capitalise the subject line"
+        [[ "$line" == *. ]] && fail "Do not end the subject line with a period"
+    fi
+
+    [[ $lineno -eq 2 ]] && [[ -n $line ]] && fail "Separate subject from body with a blank line"
+    [[ $lineno -gt 1 ]] && [[ $length -gt 72 ]] && fail "Wrap the body at 72 characters"
+
+    success "commit-message passed"
+
+done < "$filename"
+exit 0
