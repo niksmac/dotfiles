@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Amending the most recent commit message
+#
+# $1 - New commit message.
+#
+# Examples
+#
+#   git gamend New Message
+
+git commit --amend -m "$1"
+git push --force
