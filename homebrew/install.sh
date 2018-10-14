@@ -25,7 +25,7 @@ fi
 if test "$(uname)" = "Darwin"
 then
   # Install homebrew packages
-  brew install zsh zsh-completions grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree tor  highlight git-flow
+  brew install zsh zsh-completions grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree tor highlight git-flow
   # Tap cask
   brew tap caskroom/cask
   # Install cask items
@@ -36,5 +36,6 @@ then
   brew install grc spark tmux youtube-dl the_silver_searcher vim node tree tor pre-commit
 fi
 
-
+# Disable analytics https://docs.brew.sh/Analytics
+brew analytics off
 exit 0
