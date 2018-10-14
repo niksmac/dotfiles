@@ -136,6 +136,3 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
-
-# Deactivate and Stop the Remote Management Service
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
