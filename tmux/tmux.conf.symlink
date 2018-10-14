@@ -57,7 +57,10 @@ bind r source-file ~/.tmux.conf \; display "Reloaded .tmux.conf"
 bind-key a send-prefix
 
 # Set default shell to zsh
-set-option -g default-shell /bin/zsh
+set-option -g default-shell "$(which zsh)"
+
+set -g default-command "$(which zsh)"
+set -g default-shell "$(which zsh)"
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
