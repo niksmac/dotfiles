@@ -21,9 +21,6 @@ defaults write com.bohemiancoding.sketch3 exportCompactSVG -bool yes
 # System
 # ==============
 
-# Set Wallpaper
-sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '${HOME}/.dotfiles/macos/study-hard.png'" && killall Dock
-
 # Set Login Window Text
 sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "Tweet me @niksmac_"
 
