@@ -23,5 +23,5 @@ alias yda='youtube-dl -x -i --audio-format mp3 '
 alias genpass='LC_ALL=C tr -dc "[:alpha:][:alnum:]" < /dev/urandom | head -c 20 | pbcopy | echo "Password copied to clipboard"'
 
 # NVM
-alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"'
+alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
 alias brewit='brew update && brew upgrade && brew cleanup'
