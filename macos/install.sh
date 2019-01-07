@@ -140,3 +140,7 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
+
+# Screenshots into a specfic folder
+mkdir ~/Pictures/Screenshots
+defaults write com.apple.screencapture location ~/Pictures/Screenshots
