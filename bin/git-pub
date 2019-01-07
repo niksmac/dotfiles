@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Publish a new version tag and push
+#
+# $1 - version
+#
+# Examples
+#
+#   git-pub minor
+
+git checkout develop
+git pull
+git checkout master
+git merge develop -m "Merge branch develop"
+
+npm version "$1" --force -m "Version %s"
+git push && git push --tags
