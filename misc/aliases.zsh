@@ -18,7 +18,7 @@ alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resou
 # youtube-dl
 alias ydv='youtube-dl -i -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --ignore-errors '
 # alias yda='youtube-dl -x -i --audio-format mp3 --ignore-errors '
-alias yda='youtube-dl -f bestaudio[ext=m4a] --embed-thumbnail --add-metadata '
+alias yda='youtube-dl -f bestaudio[ext=m4a] --embed-thumbnail --add-metadata --ignore-errors '
 
 # create password
 alias genpass='LC_ALL=C tr -dc "[:alpha:][:alnum:]" < /dev/urandom | head -c 20 | pbcopy | echo "Password copied to clipboard"'
