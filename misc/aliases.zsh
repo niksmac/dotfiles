@@ -26,3 +26,6 @@ alias genpass='LC_ALL=C tr -dc "[:alpha:][:alnum:]" < /dev/urandom | head -c 20 
 # NVM
 alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
 alias brewit='brew update && brew upgrade && brew cleanup'
+
+alias pushall='for i in `git remote`; do git push $i; done;'
+alias pullall='for i in `git remote`; do git pull $i; done;'
