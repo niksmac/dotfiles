@@ -6,7 +6,7 @@ alias jb='jekyll build'
 alias jsf='jekyll clean && jekyll serve --future'
 
 alias c='clear'
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias tree='tree -I node_modules'
 
 alias v='vim'
