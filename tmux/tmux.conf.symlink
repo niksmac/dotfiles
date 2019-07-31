@@ -25,9 +25,11 @@ setw -g clock-mode-style 12
 set -g status-interval 1
 
 # set pane colors - highlight the active pane
-set-option -g pane-border-fg colour235 #base02
-set-option -g pane-active-border-fg colour240 #base01
+# set-option -g pane-border-fg colour235 #base02
+# set-option -g pane-active-border-fg colour240 #base01
 
+# set zsh default shell
+set-option -g default-shell /usr/local/bin/zsh
 # set color for status bar
 set-option -g renumber-windows on
 
@@ -41,10 +43,10 @@ bind c new-window -c "#{pane_current_path}"
 bind-key w run "tmux split-window -l 12 'zsh -ci fzf_windows'"
 
 # pane resizing
-bind k resize -U 5
-bind j resize -D 5
-bind h resize -L 5
-bind l resize -R 5
+bind k resize-pane -U 5
+bind j resize-pane -D 5
+bind h resize-pane -L 5
+bind l resize-pane -R 5
 
 # pane helpers
 bind Space last-pane
