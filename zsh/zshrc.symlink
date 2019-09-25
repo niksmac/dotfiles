@@ -54,3 +54,8 @@ export NVM_DIR="$HOME/.nvm"
 export GEM_HOME=$HOME/gems
 export PATH=$HOME/gems/bin:$PATH
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+
+# zsh history lines
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
