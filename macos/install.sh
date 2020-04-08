@@ -150,3 +150,6 @@ defaults write com.apple.screencapture location ~/Pictures/Screenshots
 
 # Disable crsh reporter
 defaults write com.apple.CrashReporter DialogType none
+
+# Rubberband Scrolling
+defaults write -g NSScrollViewRubberbanding -bool true
