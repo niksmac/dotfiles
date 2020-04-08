@@ -94,6 +94,9 @@ defaults write com.apple.finder CreateDesktop -bool false
 # Show Status Bar
 defaults write com.apple.finder ShowStatusBar -bool true
 
+# Show Full Path in Finder Title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
 # Keyboard
 # ==============
 
