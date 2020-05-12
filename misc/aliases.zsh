@@ -31,3 +31,5 @@ alias pushall='for i in `git remote`; do git push $i; done;'
 alias pullall='for i in `git remote`; do git pull $i; done;'
 
 alias spoofmac='sudo ifconfig en0 ether $(openssl rand -hex 6 | sed "s%\(..\)%\1:%g; s%.$%%")'
+
+alias prettify="prettier --write '**/*.{ts,js,css,html}'"
