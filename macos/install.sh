@@ -157,8 +157,3 @@ defaults write -g NSScrollViewRubberbanding -bool true
 
 # Show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-# Disable Siri analytics
-rm -rfv ~/Library/Assistant/SiriAnalytics.db
-chmod -R 000 ~/Library/Assistant/SiriAnalytics.db
-chflags -R uchg ~/Library/Assistant/SiriAnalytics.db
