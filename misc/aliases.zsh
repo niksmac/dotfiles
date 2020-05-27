@@ -32,4 +32,14 @@ alias pullall='for i in `git remote`; do git pull $i; done;'
 
 alias spoofmac='sudo ifconfig en0 ether $(openssl rand -hex 6 | sed "s%\(..\)%\1:%g; s%.$%%")'
 
+# Code beautify 
 alias prettify="prettier --write '**/*.{ts,js,css,html}'"
+
+# Confirm before overwriting something
+alias cp="cp -i"
+
+# Human-readable sizes
+alias df='df -h']
+
+# Show sizes in MB
+alias free='free -m'
