@@ -59,3 +59,5 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
+
+zplug "MichaelAquilina/zsh-you-should-use"
