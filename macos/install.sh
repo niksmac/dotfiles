@@ -35,6 +35,8 @@ open /System/Library/CoreServices/PowerChime.app
 
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool yes
 
+# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
+defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
 # Safari
 # ==============
