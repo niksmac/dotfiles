@@ -1,0 +1,7 @@
+windows:
+    - name: sample-two-panes
+      root: ~/Code/
+      layout: even-horizontal
+      panes:
+          - git status
+          - pwd
