@@ -12,3 +12,10 @@ brew update
 
 # Install homebrew packages
 $ZSH/homebrew/install.sh 2>&1
+
+
+# update youtube-dl
+youtube-dl -U
+
+# Update zplug 
+zplug update
