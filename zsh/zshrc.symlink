@@ -60,11 +60,11 @@ HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
 
-# Plugin manager zplug 
+# Plugin manager zplug
 export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
 
