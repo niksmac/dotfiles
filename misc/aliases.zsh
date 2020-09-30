@@ -21,7 +21,7 @@ alias ydv='youtube-dl -i -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]
 alias yda='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata --ignore-errors '
 
 # create password
-alias genpass='LC_ALL=C tr -dc "[:alpha:][:alnum:][:graph:]" < /dev/urandom | head -c 16 | pbcopy | echo "Password copied to clipboard"'
+alias genpass='LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | head -c 16 | pbcopy | echo "Password copied to clipboard"'
 
 # NVM
 alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
