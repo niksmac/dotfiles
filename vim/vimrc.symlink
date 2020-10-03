@@ -21,6 +21,9 @@ set smartindent " Enable smart-indent
 set smarttab  " Enable smart-tabs
 set softtabstop=4 " Number of spaces per Tab
 
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
 " Spellcheck for markdown
 autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
