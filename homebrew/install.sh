@@ -27,7 +27,7 @@ then
   # Install homebrew packages
   brew install zsh zsh-completions grc coreutils spark tmux youtube-dl the_silver_searcher vim node wget git tree tor highlight git-flow wrk zplug
   # Tap cask
-  brew tap caskroom/cask
+  brew tap homebrew/cask
   # Install cask items
   brew cask install flux transmission vlc gpg-suite iterm2 brave-browser handbrake
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
