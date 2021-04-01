@@ -67,5 +67,6 @@ source $ZPLUG_HOME/init.zsh
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
+zplug "zsh-users/zsh-autosuggestions"
 
 zplug load
