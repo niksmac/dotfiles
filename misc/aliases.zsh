@@ -10,7 +10,6 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias tree='tree -I node_modules'
 
 alias v='vim'
-alias code='atom'
 alias speed='speed-test'
 alias ta='tmux a'
 alias epi='elm package install'
@@ -55,3 +54,5 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 alias projr="open . && code . && yarn start"
 # - fastify
 alias projf="open . && code . && yarn dev"
+
+alias atom='atom-beta'
