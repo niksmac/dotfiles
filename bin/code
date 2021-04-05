@@ -1,8 +1,0 @@
-#!/bin/sh
-#
-# code
-#
-# `code` opens vscode
-
-export VSCODE_CWD="$PWD"
-open -n -b "com.microsoft.VSCode" --args $* ;
