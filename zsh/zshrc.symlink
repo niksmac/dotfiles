@@ -40,6 +40,11 @@ do
   source $file
 done
 
+plugins=(
+  osx
+  genpass
+)
+
 unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
 
