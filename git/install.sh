@@ -7,7 +7,7 @@ rm -rf ~/.git-templates/hooks/
 mkdir -p ~/.git-templates/hooks/
 
 git config --global core.hooksPath ~/.git-templates/hooks
-git config --global core.excludesfile ~/.gitignore
+git config --global core.excludesfile ~/.gitignore_global
 
 yes | cp -rf ~/.dotfiles/git/commit-msg ~/.git-templates/hooks/
 chmod +x ~/.git-templates/hooks/commit-msg
