@@ -29,7 +29,7 @@ then
   # Tap cask
   # brew tap homebrew/cask
   # Install cask items
-  brew install --cask flux transmission vlc iterm2 brave-browser
+  brew install --cask flux transmission vlc iterm2 brave-browser visual-studio-code
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
