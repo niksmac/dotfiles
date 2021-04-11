@@ -25,15 +25,15 @@ fi
 if test "$(uname)" = "Darwin"
 then
   # Install homebrew packages
-  brew install zsh zsh-completions grc coreutils tmux youtube-dl the_silver_searcher vim node wget git tree tor highlight git-flow wrk zplug yarn
+  brew install -s zsh zsh-completions grc coreutils tmux youtube-dl vim node wget git tree tor git-flow wrk zplug yarn imagemagick
   # Tap cask
   # brew tap homebrew/cask
   # Install cask items
-  brew install --cask flux transmission vlc iterm2 brave-browser visual-studio-code
+  brew install --cask flux transmission vlc iterm2 brave-browser visual-studio-code imageoptim
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
-  brew install grc spark tmux youtube-dl the_silver_searcher vim node tree tor pre-commit
+  brew install grc tmux youtube-dl vim node tree tor pre-commit imagemagick zplug
 fi
 
 # Disable analytics https://docs.brew.sh/Analytics

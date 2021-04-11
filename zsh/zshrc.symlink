@@ -6,6 +6,9 @@ export PROJECTS=~/Code
 
 ZSH_THEME="pure"
 
+# Set Brew path for Apple silicon
+export PATH=/opt/homebrew/bin:$PATH
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -40,10 +43,7 @@ do
   source $file
 done
 
-plugins=(
-  osx
-  genpass
-)
+plugins=(osx genpass)
 
 unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
