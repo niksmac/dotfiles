@@ -69,6 +69,10 @@ SAVEHIST=100000
 export ZPLUG_HOME=$(brew --prefix)/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
+if ! zplug check; then
+    zplug install
+fi
+
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
