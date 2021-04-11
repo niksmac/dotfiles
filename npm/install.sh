@@ -7,6 +7,6 @@
 
 
 # Install homebrew packages
-npm install -g speed-test
+npm install -g speed-test docsify-cli create-react-app nodemon
 
 exit 0
