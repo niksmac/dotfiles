@@ -3,9 +3,7 @@
 
 [hub]
         protocol = https
-[user]
-        name = AUTHORNAME
-        email = AUTHOREMAIL
+
 [credential]
         helper = GIT_CREDENTIAL_HELPER
 [alias]
@@ -20,8 +18,9 @@
         branch = auto
         ui = true
 [core]
-        excludesfile = ~/.gitignore
         editor = vim
+        hooksPath = /Users/nikhil/.git-templates/hooks
+        excludesfile = /Users/nikhil/.gitignore_global
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -40,5 +39,12 @@
         gpgsign = false
 [gpg]
         program = gpg1
+
+[user]
+      	email = nikhil@lightrains.com
+      	name = niksmac
+[pull]
+      	rebase = false
 [init]
-        templatedir = ~/.git-templates
+	       defaultBranch = master
+         templatedir = ~/.git-templates
