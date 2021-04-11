@@ -32,7 +32,7 @@ set -g @continuum-restore 'on'
 # set-option -g pane-active-border-fg colour240 #base01
 
 # set zsh default shell
-set-option -g default-shell /usr/local/bin/zsh
+set-option -g default-shell "$(which zsh)"
 # set color for status bar
 set-option -g renumber-windows on
 
