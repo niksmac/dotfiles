@@ -22,17 +22,17 @@ set -g status-right '%a %d %b | %I:%M %p '
 setw -g clock-mode-style 12
 
 # Statusbar update frequency
-set -g status-interval 1
-
-# tmux continuum
-set -g @continuum-restore 'on'
+set -g status-interval 5
 
 # set pane colors - highlight the active pane
 # set-option -g pane-border-fg colour235 #base02
 # set-option -g pane-active-border-fg colour240 #base01
 
-# set zsh default shell
-set-option -g default-shell "$(which zsh)"
+## set zsh default shell
+# set-option -g default-shell "$(which zsh)"
+# set-option -g default-shell "/opt/homebrew/bin/zsh"
+set-option -g default-shell ${SHELL}
+
 # set color for status bar
 set-option -g renumber-windows on
 
@@ -65,7 +65,9 @@ bind-key a send-prefix
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @resurrect-processes ':all:'
+
+set -g @resurrect-processes 'false'
+set -g @continuum-restore 'on'
 
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
