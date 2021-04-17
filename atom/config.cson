@@ -1,4 +1,6 @@
 "*":
+  "atom-tailwindcss":
+    isDisabledIfNotInPackageJson: false
   core:
     disabledPackages: [
       "background-tips"
