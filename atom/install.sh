@@ -16,7 +16,18 @@ if ! apm check; then
   ATMCOM='apm-beta'
 fi
 
+## Install custom pakcages
+git clone git@github.com:niksmac/atom-tailwindcss-2.git ~/.dotfiles/atom/atom-tailwindcss2
+cd ~/.dotfiles/atom/atom-tailwindcss2
+yarn
+yarn build
+$ATMCOM install
+$ATMCOM link .
+cd -
+
 $ATMCOM install --packages-file "${HOME}/.dotfiles/atom/package-list.txt"
+
+## To get the current package list use `apm-beta|apm list --installed --bare`
 
 yes | rm "${HOME}/.atom/config.cson"
 ln -s "${HOME}/.dotfiles/atom/config.cson" "${HOME}/.atom/config.cson"

@@ -1,4 +1,6 @@
 "*":
+  "atom-import-sort":
+    sortOnSave: true
   "atom-tailwindcss":
     isDisabledIfNotInPackageJson: false
   core:

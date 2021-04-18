@@ -1,6 +1,8 @@
+atom-import-sort@6.0.0
 atom-tailwindcss@0.9.0
 busy-signal@2.0.1
 intentions@1.1.5
 linter@3.3.1
 linter-ui-default@3.3.1
 prettier-atom@0.60.1
+react-snippets@1.2.0
