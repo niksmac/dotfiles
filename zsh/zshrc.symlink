@@ -66,7 +66,7 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 # Plugin manager zplug
-export ZPLUG_HOME=$(brew --prefix)/opt/zplug
+export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
 source $ZPLUG_HOME/init.zsh
 
 if ! zplug check; then
@@ -79,3 +79,7 @@ zplug "peterhurford/up.zsh"
 zplug "zsh-users/zsh-autosuggestions"
 
 zplug load
+
+# Ruby user gems 
+export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
+export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
