@@ -51,8 +51,8 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 ## Start projects
 
 # - react
-alias projr="open . && code . && yarn start"
+alias projr="open . && atom . && yarn start"
 # - fastify
-alias projf="open . && code . && yarn dev"
+alias projf="open . && atom . && yarn dev"
 
 alias atom='atom-beta'
