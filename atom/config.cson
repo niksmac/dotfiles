@@ -23,7 +23,6 @@
     showPanel: true
   "prettier-atom":
     formatOnSaveOptions:
-      enabled: true
       showInStatusBar: true
   welcome:
     showOnStartup: false
