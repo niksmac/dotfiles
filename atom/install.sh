@@ -30,7 +30,7 @@ $ATMCOM install --packages-file "${HOME}/.dotfiles/atom/package-list.txt"
 ## To get the current package list use `apm-beta|apm list --installed --bare`
 
 yes | rm "${HOME}/.atom/config.cson"
-ln -s "${HOME}/.dotfiles/atom/config.cson" "${HOME}/.atom/config.cson"
+ln -sf "${HOME}/.dotfiles/atom/config.cson" "${HOME}/.atom/config.cson"
 
 info "Installed Atom plugins"
 
