@@ -3,11 +3,15 @@
     sortOnSave: true
   "atom-tailwindcss":
     isDisabledIfNotInPackageJson: false
+  "bracket-matcher":
+    alwaysSkipClosingPairs: true
+    highlightMatchingLineNumber: true
   core:
     disabledPackages: [
       "background-tips"
     ]
     telemetryConsent: "no"
+    useTreeSitterParsers: false
   editor:
     autoIndentOnPaste: false
     defaultFontSize: 15
@@ -23,6 +27,7 @@
     showPanel: true
   "prettier-atom":
     formatOnSaveOptions:
+      enabled: true
       showInStatusBar: true
   welcome:
     showOnStartup: false
