@@ -25,7 +25,7 @@ fi
 if test "$(uname)" = "Darwin"
 then
   # Install homebrew packages
-  brew install -s zsh zsh-completions grc coreutils tmux youtube-dl vim node wget git tree tor git-flow wrk zplug yarn imagemagick ffmpeg
+  brew install -s zsh zsh-completions grc coreutils tmux youtube-dl vim node wget git tree tor git-flow wrk zplug yarn imagemagick ffmpeg prettier
   # Tap cask
   # brew tap homebrew/cask
   # Install cask items
