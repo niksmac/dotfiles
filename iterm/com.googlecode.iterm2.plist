@@ -1353,8 +1353,10 @@
 	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
-	<key>OpenNoWindowsAtStartup</key>
+	<key>OpenBookmark</key>
 	<false/>
+	<key>OpenNoWindowsAtStartup</key>
+	<true/>
 	<key>OpenTmuxDashboardIfHiddenWindows</key>
 	<true/>
 	<key>PerPaneBackgroundImage</key>
