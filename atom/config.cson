@@ -11,6 +11,7 @@
       "background-tips"
     ]
     telemetryConsent: "no"
+    useProxySettingsWhenCallingApm: false
     useTreeSitterParsers: false
   editor:
     autoIndentOnPaste: false
@@ -31,3 +32,6 @@
       showInStatusBar: true
   welcome:
     showOnStartup: false
+".css.liquid.scss.source":
+  editor:
+    autoIndentOnPaste: true
