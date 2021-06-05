@@ -6,3 +6,4 @@ atom.symlink/blob-store/
 
 node_modules
 yarn.*
+.DS_Store
