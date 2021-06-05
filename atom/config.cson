@@ -24,8 +24,7 @@
     tabType: "soft"
   "exception-reporting":
     userId: "61e94bcd-10cd-422c-9cea-5111013406aa"
-  "linter-ui-default":
-    showPanel: true
+  "linter-ui-default": {}
   "prettier-atom":
     formatOnSaveOptions:
       enabled: true
