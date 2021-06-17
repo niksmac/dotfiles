@@ -8,12 +8,20 @@ If you're interested in the philosophy behind why projects like these are
 awesome, you might want to [read a post on the
 subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 
-## install
+## Install
 
-Run this:
+Run this for Apple M1:
 
 ```sh
-git clone https://github.com/lightrainstech/dotfiles.git ~/.dotfiles
+git clone https://github.com/niksmac/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+script/bootstrap
+```
+
+If you are not using Apple M1 Mac, please pull [old-mac](https://github.com/niksmac/dotfiles/tree/old-mac) branch
+
+```sh
+git clone --single-branch --branch old-mac https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
@@ -37,15 +45,15 @@ Run `./script/hostsinit` to modify your hosts files so that you dont see any ads
 
 There's a few special files in the hierarchy.
 
-* **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
+- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
   available everywhere.
-* **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
+- **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
   environment.
-* **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
+- **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
   expected to setup `$PATH` or similar.
-* **topic/completion.zsh**: Any file named `completion.zsh` is loaded
+- **topic/completion.zsh**: Any file named `completion.zsh` is loaded
   last and is expected to setup autocomplete.
-* **topic/\*.symlink**: Any files ending in `*.symlink` get symlinked into
+- **topic/\*.symlink**: Any files ending in `*.symlink` get symlinked into
   your `$HOME`. This is so you can keep all of those versioned in your dotfiles
   but still keep those autoloaded files in your home directory. These get
   symlinked in when you run `script/bootstrap`.
