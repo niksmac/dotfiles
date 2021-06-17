@@ -209,3 +209,9 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 
 # Randomize port on launch
 defaults write org.m0k.transmission RandomPort -bool true
+
+
+## Auto pull repo and update weekly...
+# sudo crontab -u "$(whoami)" -e
+# sudo echo '30 3 * * 0 update-dot > /dev/null 2>&1' >> /etc/crontab
+# sudo echo '30 3 * * 0 brewit > /dev/null 2>&1' >> /etc/crontab
