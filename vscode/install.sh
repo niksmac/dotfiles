@@ -5,6 +5,9 @@ info () {
 
 info "Installing vscode plugins"
 
+## Run the below line to get installed plugins list
+# code --list-extensions | xargs -L 1 echo code --install-extension
+
 code --install-extension akamud.vscode-theme-onedark
 code --install-extension amatiasq.sort-imports
 code --install-extension bradlc.vscode-tailwindcss

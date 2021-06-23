@@ -18,7 +18,7 @@
   "terminal.integrated.experimentalLinkProvider": false,
   "terminal.external.osxExec": "iterm",
   "prettier.singleQuote": true,
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "wordWrapColumn",
   "editor.rulers": [80],
   "editor.wordWrapColumn": 80,
   "editor.codeLens": false,
@@ -66,5 +66,6 @@
   },
   "workbench.iconTheme": "atom-icons",
   "workbench.colorTheme": "Atom One Dark",
-  "editor.stickyTabStops": true
+  "editor.stickyTabStops": true,
+  "diffEditor.wordWrap": "on"
 }
