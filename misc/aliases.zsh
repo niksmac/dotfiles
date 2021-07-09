@@ -54,5 +54,3 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 alias projr="open . && atom . && yarn start"
 # - fastify
 alias projf="open . && atom . && yarn dev"
-
-alias atom='atom-beta'
