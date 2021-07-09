@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Get Time to First Byte of an endpoint
+#
+# Usage: ttfb https://example.com
+
+
+curl -w "Connect time: %{time_connect} Time to first byte: %{time_starttransfer} Total time: %{time_total} \n" -o /dev/null "$1"
