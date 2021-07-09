@@ -67,5 +67,13 @@
   "workbench.iconTheme": "atom-icons",
   "workbench.colorTheme": "Atom One Dark",
   "editor.stickyTabStops": true,
-  "diffEditor.wordWrap": "on"
+  "diffEditor.wordWrap": "on",
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.autocomplete.enable": true,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false
+  }
 }
