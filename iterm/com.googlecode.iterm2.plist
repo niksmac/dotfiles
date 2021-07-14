@@ -4,6 +4,8 @@
 <dict>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>OneDark</key>
@@ -936,6 +938,8 @@
 			<integer>1</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Text</key>
+			<string></string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1356,7 +1360,7 @@
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
-	<true/>
+	<false/>
 	<key>OpenTmuxDashboardIfHiddenWindows</key>
 	<true/>
 	<key>PerPaneBackgroundImage</key>
@@ -1434,6 +1438,8 @@
 		<string>Recent Directories</string>
 		<string>Paste History</string>
 	</array>
+	<key>URLHandlersByGuid</key>
+	<dict/>
 	<key>UseBorder</key>
 	<false/>
 	<key>UseLionStyleFullscreen</key>
