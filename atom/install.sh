@@ -10,10 +10,10 @@ success () {
 
 info "Installing Atom plugins"
 
-ATMCOM='atom'
+ATMCOM='apm'
 
 if ! apm check; then
-  ATMCOM='atom-beta'
+  ATMCOM='apm-beta'
 fi
 
 ## Install custom pakcages
