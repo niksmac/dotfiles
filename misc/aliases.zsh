@@ -54,3 +54,8 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 alias projr="open . && a && yarn start"
 # - fastify
 alias projf="open . && a && yarn dev"
+
+
+## Generate secret key
+
+alias genkey="node -e  \"console.log(require('crypto').randomBytes(256).toString('base64'));\""
