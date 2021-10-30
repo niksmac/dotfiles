@@ -17,7 +17,7 @@
     autoIndentOnPaste: false
     defaultFontSize: 15
     fontFamily: "Monaco"
-    fontSize: 16
+    fontSize: 15
     softWrap: true
     softWrapAtPreferredLineLength: true
     softWrapHangingIndent: 80
