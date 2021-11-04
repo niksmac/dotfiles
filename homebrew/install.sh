@@ -5,6 +5,8 @@
 # This installs some of the common dependencies needed (or at least desired)
 # using Homebrew.
 
+export ARCHFLAGS='-arch arm64'
+
 # Check for Homebrew
 if test ! $(which brew)
 then
