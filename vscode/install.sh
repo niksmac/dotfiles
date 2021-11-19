@@ -14,6 +14,7 @@ code --install-extension bradlc.vscode-tailwindcss
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension emroussel.atom-icons
 code --install-extension esbenp.prettier-vscode
+code --install-extension GitHub.copilot
 code --install-extension wix.vscode-import-cost
 code --install-extension Wscats.omi-snippets
 
