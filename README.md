@@ -13,7 +13,7 @@ subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 Run this for Apple M1:
 
 ```sh
-git clone git@github.com:niksmac/dotfiles.git ~/.dotfiles
+git clone https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
@@ -39,7 +39,7 @@ Everything's built around topic areas. If you're adding a new area to your forke
 
 ## Blocking ads/tracking websites
 
-Run `./script/hostsinit` to modify your hosts files so that you dont see any ads like ever. Thanks to [StevenBlack/hosts](https://github.com/StevenBlack/hosts)
+Run `./script/hostsinit` to modify your hosts files so that you don't see any ads like ever. Thanks to [StevenBlack/hosts](https://github.com/StevenBlack/hosts)
 
 ## components
 
