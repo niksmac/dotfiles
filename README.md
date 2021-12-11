@@ -21,7 +21,7 @@ script/bootstrap
 If you are not using Apple M1 Mac, please pull [old-mac](https://github.com/niksmac/dotfiles/tree/old-mac) branch
 
 ```sh
-git clone --single-branch --branch old-mac git@github.com:niksmac/dotfiles.git ~/.dotfiles
+git clone --single-branch --branch old-mac https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
