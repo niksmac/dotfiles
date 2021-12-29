@@ -11,4 +11,4 @@ linter@3.4.0
 linter-ui-default@3.4.1
 prettier-atom@0.60.1
 react@0.18.0
-react-snippets@1.2.0
+react-snippets@2.0.0
