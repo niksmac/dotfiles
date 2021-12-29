@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "commit-msg started"
+echo "Commit-msg started"
 
 filename="$1"
 lineno=0
@@ -30,7 +30,7 @@ do
     [[ $lineno -eq 2 ]] && [[ -n $line ]] && fail "Separate subject from body with a blank line"
     [[ $lineno -gt 1 ]] && [[ $length -gt 72 ]] && fail "Wrap the body at 72 characters"
 
-    success "commit-message passed"
+    success "Commit-message passed"
 
 done < "$filename"
 exit 0
