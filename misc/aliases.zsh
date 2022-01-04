@@ -59,3 +59,5 @@ alias projf="open . && a && yarn dev"
 ## Generate secret key
 
 alias genkey="node -e  \"console.log(require('crypto').randomBytes(256).toString('base64'));\""
+
+alias thefuck='fuck'

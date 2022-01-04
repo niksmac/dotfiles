@@ -43,8 +43,6 @@ do
   source $file
 done
 
-plugins=(osx genpass)
-
 unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
 
@@ -52,8 +50,8 @@ export PATH="$HOME/.yarn/bin:$PATH"
 export PATH="/usr/local/opt/node@8/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_LAZY=1
+export NVM_AUTOLOAD=1
 
 # Install Ruby Gems to ~/gems
 export GEM_HOME=$HOME/gems
@@ -61,13 +59,24 @@ export PATH=$HOME/gems/bin:$PATH
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # zsh history lines
-HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
+export HISTFILE=~/.histfile
+export HISTSIZE=100000
+export SAVEHIST=100000
 
 # Plugin manager zplug
 export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
 source $ZPLUG_HOME/init.zsh
+
+plugins=(
+ genpass
+ git
+ macos
+ git-flow-avh
+ nvm
+ thefuck
+ yarn
+ rand-quote
+)
 
 if ! zplug check; then
     zplug install
@@ -77,6 +86,7 @@ zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
 zplug "zsh-users/zsh-autosuggestions"
+zplug "b4b4r07/enhancd", use:init.sh
 
 zplug load
 
