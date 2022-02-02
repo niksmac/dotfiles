@@ -27,19 +27,17 @@
   "editor.renderIndentGuides": false,
   "editor.tabCompletion": "onlySnippets",
   "editor.formatOnPaste": true,
-  "editor.minimap.enabled": false,
   "files.insertFinalNewline": true,
   "workbench.preferredHighContrastColorTheme": "Solarized Dark",
   "workbench.tips.enabled": false,
   "zenMode.hideStatusBar": false,
-  "window.titleBarStyle": "native",
   "explorer.incrementalNaming": "smart",
   "debug.console.fontSize": 14,
-  "extensions.autoUpdate": false,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
   "extensions.ignoreRecommendations": true,
   "update.mode": "manual",
   "update.showReleaseNotes": false,
-  "tailwindCSS.colorDecorators": "off",
+  "tailwindCSS.colorDecorators": false,
   "tailwindCSS.emmetCompletions": true,
   "workbench.startupEditor": "newUntitledFile",
   "atomKeymap.promptV3Features": true,
@@ -55,7 +53,6 @@
   "files.exclude": {
     "node_modules": true
   },
-  "explorer.confirmDragAndDrop": false,
   "window.zoomLevel": 0.6,
   "markdown.preview.fontSize": 14,
   "terminal.integrated.fontSize": 14,
@@ -74,6 +71,19 @@
     "*": true,
     "yaml": false,
     "plaintext": false,
-    "markdown": false
-  }
+    "markdown": false,
+    "json": false
+  },
+  "json.maxItemsComputed": 10000,
+  "telemetry.telemetryLevel": "off",
+  "window.newWindowDimensions": "fullscreen",
+  "search.exclude": {
+    "**/.git": true
+  },
+  "debug.console.fontFamily": "Monaco",
+  "workbench.activityBar.visible": false,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.quickSuggestionsDelay": 5,
+  "code-runner.enableAppInsights": false
 }
