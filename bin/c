@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# open vscode
+
+
+
+if [ "$1" = "" ] ; then
+  exec code .
+else
+  exec code "$1"
+fi
+
+exit 1
