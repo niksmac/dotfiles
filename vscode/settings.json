@@ -44,7 +44,6 @@
   "editor.multiCursorModifier": "ctrlCmd",
   "workbench.enableExperiments": false,
   "editor.cursorBlinking": "smooth",
-  "explorer.sortOrder": "type",
   "files.associations": {
     ".babelrc": "jsonc",
     ".eslintrc": "jsonc",
@@ -85,5 +84,6 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "editor.quickSuggestionsDelay": 5,
-  "code-runner.enableAppInsights": false
+  "code-runner.enableAppInsights": false,
+  "workbench.editor.pinnedTabSizing": "shrink"
 }
