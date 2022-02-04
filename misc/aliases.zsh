@@ -61,3 +61,5 @@ alias projf="open . && a && yarn dev"
 alias genkey="node -e  \"console.log(require('crypto').randomBytes(256).toString('base64'));\""
 
 alias thefuck='fuck'
+
+alias ff="open -n -a Firefox.app --args -no-remote -P"
