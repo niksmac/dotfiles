@@ -31,7 +31,7 @@ then
   # Tap cask
   # brew tap homebrew/cask
   # Install cask items
-  brew install --cask transmission vlc iterm2 firefox visual-studio-code imageoptim atom slack discord session skype insomnia spotify mullvadvpn telegram dropbox
+  brew install --cask transmission vlc iterm2 firefox visual-studio-code imageoptim atom slack discord session skype insomnia spotify mullvadvpn telegram dropbox app-cleaner
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
