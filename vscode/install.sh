@@ -10,11 +10,14 @@ info "Installing vscode plugins"
 
 code --install-extension akamud.vscode-theme-onedark
 code --install-extension amatiasq.sort-imports
+code --install-extension appcypher.astro
+code --install-extension astro-build.astro-vscode
 code --install-extension bradlc.vscode-tailwindcss
 code --install-extension ChakrounAnas.turbo-console-log
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension emroussel.atom-icons
 code --install-extension esbenp.prettier-vscode
+code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension wix.vscode-import-cost
 code --install-extension Wscats.omi-snippets
 

@@ -85,5 +85,14 @@
   "files.trimTrailingWhitespace": true,
   "editor.quickSuggestionsDelay": 5,
   "code-runner.enableAppInsights": false,
-  "workbench.editor.pinnedTabSizing": "shrink"
+  "workbench.editor.pinnedTabSizing": "shrink",
+  "[astro]": {
+    "editor.formatOnSave": true
+  },
+  "explorer.confirmDelete": false,
+  "cSpell.userWords": [
+    "astro",
+    "Lightrains",
+    "Technolabs"
+  ]
 }
