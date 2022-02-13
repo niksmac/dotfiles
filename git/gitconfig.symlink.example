@@ -19,8 +19,8 @@
         ui = true
 [core]
         editor = vim
-        hooksPath = /Users/nikhil/.git-templates/hooks
-        excludesfile = /Users/nikhil/.gitignore_global
+        hooksPath = ~/.git-templates/hooks
+        excludesfile = ~/.gitignore_global
 [apply]
         whitespace = nowarn
 [mergetool]
@@ -41,8 +41,8 @@
         program = gpg1
 
 [user]
-      	email = nikhil@lightrains.com
-      	name = niksmac
+      	email = ""
+      	name = ""
 [pull]
       	rebase = false
 [init]
