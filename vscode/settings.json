@@ -50,7 +50,7 @@
     ".prettierrc": "jsonc"
   },
   "files.exclude": {
-    "node_modules": true
+    "**/node_modules": true
   },
   "window.zoomLevel": 0.6,
   "markdown.preview.fontSize": 14,
@@ -75,7 +75,6 @@
   },
   "json.maxItemsComputed": 10000,
   "telemetry.telemetryLevel": "off",
-  "window.newWindowDimensions": "fullscreen",
   "search.exclude": {
     "**/.git": true
   },
@@ -94,5 +93,6 @@
     "astro",
     "Lightrains",
     "Technolabs"
-  ]
+  ],
+  "window.restoreFullscreen": true
 }

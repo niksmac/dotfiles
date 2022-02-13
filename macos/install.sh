@@ -87,8 +87,7 @@ defaults write com.apple.Finder FXPreferredViewStyle Nlsv
 defaults write -g AppleShowAllExtensions -bool true
 
 # Adjust Number of Recent Places to 5
-defaults write -g NSNavRecentPlacesLimit -int 5 && \
-killall Finder
+defaults write -g NSNavRecentPlacesLimit -int 5
 
 # Sets default save target to be a local disk, not iCloud.
 defaults write -g NSDocumentSaveNewDocumentsToCloud -bool false
@@ -212,3 +211,19 @@ defaults write org.m0k.transmission RandomPort -bool true
 # sudo crontab -u "$(whoami)" -e
 # sudo echo '30 3 * * 0 update-dot > /dev/null 2>&1' >> /etc/crontab
 # sudo echo '30 3 * * 0 brewit > /dev/null 2>&1' >> /etc/crontab
+
+## Set app icons
+
+# set vscode icon
+yes | cp ./icons/vscode.icns /Applications/Visual\ Studio\ Code.app/Contents/Resources/Code.icns
+
+# set app-cleaner icon
+yes | cp ./icons/app-cleaner.icns /Applications/AppCleaner.app/Contents/Resources/AppCleaner.icns
+
+# set telegram icon
+yes | cp ./icons/telegram.icns /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+touch /Applications/Telegram.app
+
+killall Dock
+
+killall Finder
