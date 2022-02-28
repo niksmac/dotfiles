@@ -94,5 +94,6 @@
     "Lightrains",
     "Technolabs"
   ],
-  "window.restoreFullscreen": true
+  "window.restoreFullscreen": true,
+  "explorer.confirmDragAndDrop": false
 }
