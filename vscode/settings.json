@@ -39,7 +39,6 @@
   "update.showReleaseNotes": false,
   "tailwindCSS.colorDecorators": false,
   "tailwindCSS.emmetCompletions": true,
-  "workbench.startupEditor": "newUntitledFile",
   "atomKeymap.promptV3Features": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "workbench.enableExperiments": false,
@@ -61,7 +60,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.iconTheme": "atom-icons",
-  "workbench.colorTheme": "Atom One Dark",
+  "workbench.colorTheme": "Atomize",
   "editor.stickyTabStops": true,
   "diffEditor.wordWrap": "on",
   "editor.inlineSuggest.enabled": true,
@@ -89,11 +88,23 @@
     "editor.formatOnSave": true
   },
   "explorer.confirmDelete": false,
-  "cSpell.userWords": [
-    "astro",
-    "Lightrains",
-    "Technolabs"
-  ],
+  "cSpell.userWords": ["astro", "Lightrains", "Technolabs"],
   "window.restoreFullscreen": true,
-  "explorer.confirmDragAndDrop": false
+  "explorer.confirmDragAndDrop": false,
+
+  "breadcrumbs.enabled": false,
+  "editor.folding": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": false,
+  "editor.roundedSelection": false,
+  "editor.selectionHighlight": false,
+  "editor.scrollBeyondLastLine": false,
+  "explorer.decorations.colors": false,
+  "explorer.openEditors.visible": 0,
+  "workbench.editor.showIcons": false,
+  "workbench.startupEditor": "none",
+  "workbench.tree.renderIndentGuides": "none",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "timeline.excludeSources": []
 }
