@@ -17,6 +17,7 @@ code --install-extension dbaeumer.vscode-eslint
 code --install-extension emroussel.atom-icons
 code --install-extension emroussel.atomize-atom-one-dark-theme
 code --install-extension esbenp.prettier-vscode
+code --install-extension JuanBlanco.solidity
 code --install-extension rust-lang.rust
 code --install-extension streetsidesoftware.code-spell-checker
 code --install-extension vincaslt.highlight-matching-tag
