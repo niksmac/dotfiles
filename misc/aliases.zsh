@@ -63,3 +63,6 @@ alias genkey="node -e  \"console.log(require('crypto').randomBytes(256).toString
 alias thefuck='fuck'
 
 alias ff="open -n -a Firefox.app --args -no-remote -P"
+
+## Add code alias
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
