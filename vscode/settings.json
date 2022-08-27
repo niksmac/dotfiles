@@ -51,7 +51,6 @@
   "files.exclude": {
     "**/node_modules": true
   },
-  "window.zoomLevel": 0.6,
   "markdown.preview.fontSize": 14,
   "terminal.integrated.fontSize": 14,
   "importCost.javascriptExtensions": ["\\.jsx?$"],
@@ -106,5 +105,6 @@
   "workbench.startupEditor": "none",
   "workbench.tree.renderIndentGuides": "none",
   "diffEditor.ignoreTrimWhitespace": false,
-  "timeline.excludeSources": []
+  "timeline.excludeSources": [],
+  "window.zoomLevel": 1
 }

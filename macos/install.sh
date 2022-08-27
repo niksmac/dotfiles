@@ -228,3 +228,7 @@ touch /Applications/Telegram.app
 killall Dock
 
 killall Finder
+
+## Use TouchID to Authenticate sudo on macOS
+
+sudo perl -pi -e 's/(pam_smartcard.so)/$1\nauth sufficient pam_tid.so/' /etc/pam.d/sudo
