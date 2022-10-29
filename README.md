@@ -10,12 +10,12 @@ subject](http://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/).
 
 ## Install
 
-Run this for Apple M1:
+Run this for Apple Silicon M1 & M2:
 
 ```sh
 git clone https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-script/bootstrap
+script/install && script/bootstrap
 ```
 
 If you are not using Apple M1 Mac, please pull [old-mac](https://github.com/niksmac/dotfiles/tree/old-mac) branch
@@ -23,7 +23,7 @@ If you are not using Apple M1 Mac, please pull [old-mac](https://github.com/niks
 ```sh
 git clone --single-branch --branch old-mac https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-script/bootstrap
+script/install && script/bootstrap
 ```
 
 This will symlink the appropriate files in `.dotfiles` to your home directory.
