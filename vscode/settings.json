@@ -85,7 +85,13 @@
     "editor.formatOnSave": true
   },
   "explorer.confirmDelete": false,
-  "cSpell.userWords": ["astro", "Lightrains", "Metaverse", "Technolabs"],
+  "cSpell.userWords": [
+    "astro",
+    "Lightrains",
+    "Metaverse",
+    "Ninsta",
+    "Technolabs"
+  ],
   "window.restoreFullscreen": true,
   "explorer.confirmDragAndDrop": false,
 
