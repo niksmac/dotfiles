@@ -75,7 +75,6 @@
     "**/.git": true
   },
   "debug.console.fontFamily": "Monaco",
-  "workbench.activityBar.visible": false,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "editor.quickSuggestionsDelay": 5,
@@ -94,8 +93,6 @@
   ],
   "window.restoreFullscreen": true,
   "explorer.confirmDragAndDrop": false,
-
-  "breadcrumbs.enabled": false,
   "editor.folding": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.minimap.enabled": false,
@@ -111,5 +108,12 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "window.zoomLevel": 1,
   "editor.guides.indentation": false,
-  "editor.guides.highlightActiveIndentation": false
+  "editor.guides.highlightActiveIndentation": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "window.nativeFullScreen": false,
+  "window.nativeTabs": true,
+  "workbench.activityBar.visible": false,
+  "github.gitProtocol": "ssh",
+  "git.logLevel": "Warning",
+  "tailwindCSS.lint.invalidApply": "ignore"
 }
