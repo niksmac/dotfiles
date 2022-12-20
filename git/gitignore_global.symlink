@@ -152,7 +152,7 @@ typings/
 .tern-port
 
 # Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-.vscode
+.vscode-test/
+.vscode/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,macos
