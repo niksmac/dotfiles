@@ -10,10 +10,7 @@ export ZSH=$HOME/.dotfiles
 brew update
 
 # Install homebrew packages
-$ZSH/homebrew/install.sh 2>&1
-
-# update youtube-dl
-youtube-dl -U
+$ZSH/homebrew/brew-install.sh 2>&1
 
 # Update zplug
 zplug update
