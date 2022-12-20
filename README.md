@@ -48,7 +48,7 @@ gac "Ref: my local changes"
 # Pull latest changes
 git pull
 
-# Updade
+# Update
 script/install && script/bootstrap
 ```
 
