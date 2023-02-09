@@ -217,8 +217,6 @@ defaults write org.m0k.transmission RandomPort -bool true
 # set vscode icon
 yes | cp ~/.dotfiles/macos/icons/vscode.icns /Applications/Visual\ Studio\ Code.app/Contents/Resources/Code.icns
 
-# set app-cleaner icon
-yes | cp ~/.dotfiles/macos/icons/app-cleaner.icns /Applications/AppCleaner.app/Contents/Resources/AppCleaner.icns
 
 # set telegram icon
 yes | cp ~/.dotfiles/macos/icons/telegram.icns /Applications/Telegram.app/Contents/Resources/AppIcon.icns

@@ -108,5 +108,6 @@
   "workbench.activityBar.visible": false,
   "github.gitProtocol": "ssh",
   "git.logLevel": "Warning",
-  "tailwindCSS.lint.invalidApply": "ignore"
+  "tailwindCSS.lint.invalidApply": "ignore",
+  "editor.unicodeHighlight.invisibleCharacters": false
 }
