@@ -44,7 +44,8 @@
   "files.associations": {
     ".babelrc": "jsonc",
     ".eslintrc": "jsonc",
-    ".prettierrc": "jsonc"
+    ".prettierrc": "jsonc",
+    "*.css": "tailwindcss"
   },
   "files.exclude": {
     "**/node_modules": true
@@ -109,5 +110,16 @@
   "github.gitProtocol": "ssh",
   "git.logLevel": "Warning",
   "tailwindCSS.lint.invalidApply": "ignore",
-  "editor.unicodeHighlight.invisibleCharacters": false
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "settingsSync.ignoredExtensions": [],
+  "highlight-matching-tag.styles": {
+    "opening": {
+      "name": {
+        "underline": "yellow"
+      }
+    }
+  }
 }
