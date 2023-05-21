@@ -14,11 +14,6 @@ alias speed='open https://fast.com'
 alias ta='tmux a'
 alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
-# youtube-dl
-alias ydv='youtube-dl -i -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --ignore-errors '
-# alias yda='youtube-dl -x -i --audio-format mp3 --ignore-errors '
-alias yda='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata --ignore-errors '
-
 # create password
 alias genpass='pwgen 18 1 --numerals 3 --symbols 3 --secure | pbcopy | echo "Password copied to clipboard"'
 

@@ -1,0 +1,14 @@
+ytdl() {
+    if [ "$1" = "video" ]; then
+        shift
+        youtube-dl -i -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --ignore-errors --no-overwrites --download-archive downloaded.txt "$@"
+    elif [ "$1" = "audio" ]; then
+        shift
+        youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 3 --embed-thumbnail --add-metadata --ignore-errors --no-overwrites --download-archive downloaded.txt "$@"
+    elif [ "$1" = "aac" ]; then
+        shift
+        youtube-dl -f bestaudio --extract-audio --audio-format aac --audio-quality 3 --ignore-errors --no-overwrites --download-archive downloaded.txt "$@"
+    else
+        echo "Invalid format. Please specify 'video' or 'audio' as the first argument."
+    fi
+}
