@@ -10,7 +10,7 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias tree='tree -I node_modules'
 
 alias v='vim'
-alias speed='speed-test'
+alias speed='open https://fast.com'
 alias ta='tmux a'
 alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
