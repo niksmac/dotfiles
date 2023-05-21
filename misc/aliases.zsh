@@ -20,7 +20,7 @@ alias ydv='youtube-dl -i -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]
 alias yda='youtube-dl -f bestaudio --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata --ignore-errors '
 
 # create password
-alias genpass='pwgen 16 1 -n 3 -y -v -s | pbcopy | echo "Password copied to clipboard"'
+alias genpass='pwgen 18 1 --numerals 3 --symbols 3 --secure | pbcopy | echo "Password copied to clipboard"'
 
 # NVM
 alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
