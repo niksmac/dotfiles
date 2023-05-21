@@ -75,7 +75,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
 Plug 'wincent/command-t'
-Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown'] }
