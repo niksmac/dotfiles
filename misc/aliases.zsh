@@ -11,7 +11,7 @@ alias ta='tmux a'
 alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 
 # create password
-alias genpass='pwgen 18 1 --numerals 3 --symbols 3 --secure | pbcopy | echo "Password copied to clipboard"'
+alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | pbcopy | echo "Password copied to clipboard"'
 
 # NVM
 alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
