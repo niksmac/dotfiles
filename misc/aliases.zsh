@@ -45,9 +45,9 @@ alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
 ## Start projects
 
 # - react
-alias projr="open . && a && yarn start"
+alias projr="open . && code . && yarn start"
 # - fastify
-alias projf="open . && a && yarn dev"
+alias projf="open . && code . && yarn dev"
 
 
 ## Generate secret key
