@@ -7,6 +7,6 @@
 
 
 # Install homebrew packages
-npm install -g speed-test docsify-cli nodemon
+npm install -g docsify-cli nodemon pm2 serve
 
 exit 0
