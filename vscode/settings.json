@@ -121,5 +121,6 @@
         "underline": "yellow"
       }
     }
-  }
+  },
+  "git.openRepositoryInParentFolders": "never"
 }
