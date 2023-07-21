@@ -123,8 +123,11 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool true
 defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Sets a very fast repeat rate, adjust to taste.
-defaults write -g NSGlobalDomain InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-defaults write -g NSGlobalDomain KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
+# defaults read -g InitialKeyRepeat
+
+defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 # Terminal & iTerm 2
 # ==============
