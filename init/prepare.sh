@@ -7,6 +7,11 @@
 
 export ARCHFLAGS='-arch arm64'
 
+# create necessary directories
+
+mkdir -p $HOME/.zsh/custom
+mkdir -p $HOME/Code
+
 # Check for Homebrew
 if test ! $(which brew)
 then
