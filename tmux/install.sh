@@ -8,6 +8,6 @@ info () {
 
 info "Installing tpm for manage tmux plugins!"
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone htitps://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 exit 0

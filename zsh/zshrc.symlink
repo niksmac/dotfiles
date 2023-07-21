@@ -78,15 +78,15 @@ plugins=(
  rand-quote
 )
 
-if ! zplug check; then
-    zplug install
-fi
-
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "b4b4r07/enhancd", use:init.sh
+
+if ! zplug check; then
+  zplug install
+fi
 
 zplug load
 
