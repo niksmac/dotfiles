@@ -11,20 +11,15 @@ export ARCHFLAGS='-arch arm64'
 
 mkdir -p $HOME/.zsh/custom
 mkdir -p $HOME/Code
+mkdir -p $HOME/.nvm
 
 # Check for Homebrew
 if test ! $(which brew)
 then
   echo "  Installing Homebrew for you."
 
-  # Install the correct homebrew for each OS type
-  if test "$(uname)" = "Darwin"
-  then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
-  then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
-  fi
+  # Install Homebrew (universal command for macOS and Linux)
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 fi
 

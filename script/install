@@ -6,8 +6,11 @@ set -e
 
 cd "$(dirname $0)"/..
 
-sh ./init/prepare.sh
-sh ./homebrew/brew-install.sh
+./init/prepare.sh
+./homebrew/brew-install.sh
 
 # find the installers and run them iteratively
-find . -name install.sh | sort -n -k2 | while read installer ; do sh -c "${installer}" ; done
+find . -name install.sh -type f | sort | while read -r installer; do
+  echo "Running installer: $installer"
+  sh "$installer"
+done
