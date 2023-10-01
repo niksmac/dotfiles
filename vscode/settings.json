@@ -82,7 +82,8 @@
   "code-runner.enableAppInsights": false,
   "workbench.editor.pinnedTabSizing": "shrink",
   "[astro]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "explorer.confirmDelete": false,
   "window.restoreFullscreen": true,
