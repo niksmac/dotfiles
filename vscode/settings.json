@@ -1,6 +1,7 @@
 {
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
+  "telemetry.telemetryLevel": "off",
   "editor.fontFamily": "Monaco, 'Courier New', monospace",
   "editor.fontSize": 15,
   "editor.suggestFontSize": 14,
@@ -62,16 +63,7 @@
   "editor.stickyTabStops": true,
   "diffEditor.wordWrap": "on",
   "editor.inlineSuggest.enabled": true,
-  "github.copilot.autocomplete.enable": true,
-  "github.copilot.enable": {
-    "*": true,
-    "yaml": false,
-    "plaintext": false,
-    "markdown": false,
-    "json": false
-  },
   "json.maxItemsComputed": 10000,
-  "telemetry.telemetryLevel": "off",
   "search.exclude": {
     "**/.git": true
   },
@@ -91,7 +83,7 @@
   "editor.folding": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.minimap.enabled": false,
-  "editor.occurrencesHighlight": false,
+  "editor.occurrencesHighlight": "off",
   "editor.roundedSelection": false,
   "editor.selectionHighlight": false,
   "editor.scrollBeyondLastLine": false,
@@ -107,7 +99,6 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "window.nativeFullScreen": false,
   "window.nativeTabs": true,
-  "workbench.activityBar.visible": false,
   "github.gitProtocol": "ssh",
   "git.logLevel": "Warning",
   "tailwindCSS.lint.invalidApply": "ignore",
@@ -123,5 +114,7 @@
       }
     }
   },
-  "git.openRepositoryInParentFolders": "never"
+  "git.openRepositoryInParentFolders": "never",
+  "breadcrumbs.enabled": false,
+  "workbench.activityBar.location": "hidden"
 }
