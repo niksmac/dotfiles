@@ -8,7 +8,7 @@ then
   brew install zsh zsh-completions grc coreutils tmux youtube-dl vim node wget git tree tor git-flow-avh wrk zplug yarn imagemagick ffmpeg prettier pwgen rustup the_silver_searcher nvm
 
   # Install cask items
-  brew install --cask transmission vlc iterm2 firefox visual-studio-code imageoptim slack discord skype insomnia telegram dropbox exifcleaner keepingyouawake
+  brew install --cask transmission vlc iterm2 firefox visual-studio-code slack discord skype insomnia telegram dropbox exifcleaner keepingyouawake
 elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
 then
   # Install homebrew packages
