@@ -35,7 +35,6 @@
   "extensions.autoUpdate": "onlyEnabledExtensions",
   "extensions.ignoreRecommendations": true,
   "update.mode": "manual",
-  "update.showReleaseNotes": false,
   "tailwindCSS.colorDecorators": false,
   "tailwindCSS.emmetCompletions": true,
   "atomKeymap.promptV3Features": true,
@@ -116,5 +115,7 @@
   },
   "git.openRepositoryInParentFolders": "never",
   "breadcrumbs.enabled": false,
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "window.commandCenter": false,
+  "workbench.layoutControl.enabled": false
 }
