@@ -11,7 +11,6 @@
   "buffer_font_family": "Monaco",
   "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
   "ui_font_size": 16,
-  "autosave": "on_focus_change",
   "format_on_save": "on",
   "vim_mode": false,
   "projects_online_by_default": true,
@@ -22,21 +21,21 @@
     "working_directory": "current_project_directory"
   },
   "features": {
-    "inline_completion_provider": "none",
-    "auto_install_extensions": {
-      "html": true,
-      "astro": true,
-      "atomize": true,
-      "emmet": true,
-      "env": true,
-      "jsonnet": true,
-      "solidity": true,
-      "toml": true
-    },
-    "autosave": {
-      "after_delay": {
-        "milliseconds": 1000
-      }
+    "inline_completion_provider": "none"
+  },
+  "auto_install_extensions": {
+    "html": true,
+    "astro": true,
+    "atomize": true,
+    "emmet": true,
+    "env": true,
+    "jsonnet": true,
+    "solidity": true,
+    "toml": true
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
     }
   },
   "use_autoclose": true,
