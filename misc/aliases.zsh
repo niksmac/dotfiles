@@ -6,6 +6,7 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias tree='tree -I node_modules'
 
 alias v='vim'
+alias z='zed .'
 alias speed='open https://fast.com'
 alias ta='tmux a'
 alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
@@ -55,4 +56,4 @@ alias thefuck='fuck'
 alias ff="open -n -a Firefox.app --args -no-remote -P"
 
 ## Add code alias
-alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+alias code='/Applications/Zed.app/Contents/MacOS/zed'
