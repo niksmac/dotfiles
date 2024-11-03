@@ -562,6 +562,8 @@
 	<string>1DAD6A3D-5056-4E13-B92E-F0BABEB641E8</string>
 	<key>FlashTabBarInFullscreen</key>
 	<false/>
+	<key>ForceKeyboard</key>
+	<false/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideActivityIndicator</key>
@@ -574,6 +576,8 @@
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>KeyboardLocale</key>
+	<string>com.apple.keylayout.USInternational-PC</string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -889,6 +893,8 @@
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>Yes</string>
+			<key>Custom Locale</key>
+			<string>en_US.UTF-8</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -1273,6 +1279,8 @@
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
+			<key>Set Local Environment Vars</key>
+			<integer>2</integer>
 			<key>Shortcut</key>
 			<string></string>
 			<key>Show Status Bar</key>
@@ -1363,7 +1371,7 @@
 	<key>SeparateWindowTitlePerTab</key>
 	<true/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>SoundForEsc</key>
