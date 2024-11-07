@@ -1,4 +1,0 @@
-open "hybrid-reduced-contrast.itermcolors"
-
-TERM_PROLILE='hybrid-reduced-contrast';
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
