@@ -120,5 +120,12 @@
       "model": "gpt-4o"
     },
     "version": "2"
+  },
+  "jupyter": {
+    "kernel_selections": {
+      "python": "conda-env",
+      "typescript": "deno",
+      "javascript": "deno"
+    }
   }
 }
