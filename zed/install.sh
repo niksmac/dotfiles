@@ -1,11 +1,10 @@
 #!/bin/bash
 
-
 ZED_HOME_DIR="$HOME/.dotfiles/zed/"
 
+ln -sf "$ZED_HOME_DIR/settings.json" "$HOME/.config/zed/settings.json"
 
 # ----- symlink snippets
-
 # Define the source subfolder containing JSON files
 SOURCE_DIR="$HOME/.dotfiles/zed/snippets"
 
@@ -26,7 +25,7 @@ done
 
 # ----- symlink prompt templates
 
-# Define the source subfolder containing JSON files
+# Define the source subfolder containing HBS files
 PROMPT_SOURCE_DIR="$HOME/.dotfiles/zed/prompts/templates"
 
 # Define the target directory where symlinks will be created
