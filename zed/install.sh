@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Copy settings
 
 ZED_HOME_DIR="$HOME/.dotfiles/zed/"
+
+ln -sf "$ZED_HOME_DIR/settings.json" "$HOME/.config/zed/settings.json"
 
 
 # ----- symlink snippets
