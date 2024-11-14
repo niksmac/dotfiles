@@ -18,10 +18,18 @@ cd ~/.dotfiles
 script/install && script/bootstrap
 ```
 
-If you are not using Apple M1 Mac, please pull [old-mac](https://github.com/niksmac/dotfiles/tree/old-mac) branch
+If you are not using Intel Mac, please pull [old-mac](https://github.com/niksmac/dotfiles/tree/old-mac) branch
 
 ```sh
 git clone --single-branch --branch old-mac https://github.com/niksmac/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+script/install && script/bootstrap
+```
+
+If you are using Ubuntu, please pull [ubuntu](https://github.com/niksmac/dotfiles/tree/ubuntu) branch
+
+```sh
+git clone --single-branch --branch ubuntu https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/install && script/bootstrap
 ```

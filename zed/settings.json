@@ -1,0 +1,131 @@
+{
+  "theme": {
+    "mode": "dark",
+    "light": "Atomize",
+    "dark": "One Dark"
+  },
+  "tab_size": 2,
+  "preferred_line_length": 80,
+  "soft_wrap": "preferred_line_length",
+  "buffer_font_size": 16.5,
+  "buffer_font_family": "Monaco",
+  "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
+  "ui_font_size": 16,
+  "format_on_save": "on",
+  "vim_mode": false,
+  "projects_online_by_default": true,
+  "terminal": {
+    "font_family": "Monaco",
+    "blinking": "off",
+    "font_size": 16,
+    "working_directory": "current_project_directory"
+  },
+  "features": {
+    "inline_completion_provider": "none"
+  },
+  "auto_install_extensions": {
+    "html": true,
+    "astro": true,
+    "atomize": true,
+    "emmet": true,
+    "env": true,
+    "jsonnet": true,
+    "solidity": true,
+    "toml": true
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "use_autoclose": true,
+  "languages": {
+    "JavaScript": {
+      "tab_size": 2,
+      "format_on_save": "language_server",
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
+  },
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": true
+    }
+  },
+  "journal": {
+    "path": "~",
+    "hour_format": "hour12"
+  },
+  "calls": {
+    "mute_on_join": true,
+    "share_on_join": false
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  },
+  "language_models": {
+    "openai": {
+      "version": "1"
+    }
+  },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/out",
+    "**/dist",
+    "**/.husky",
+    "**/.turbo",
+    "**/.vscode-test",
+    "**/.vscode",
+    "**/.next",
+    "**/.storybook",
+    "**/.tap",
+    "**/.nyc_output",
+    "**/node_modules"
+  ],
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "chat_panel": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-4o"
+    },
+    "version": "2"
+  },
+  "jupyter": {
+    "kernel_selections": {
+      "python": "conda-env",
+      "typescript": "deno",
+      "javascript": "deno"
+    }
+  }
+}
