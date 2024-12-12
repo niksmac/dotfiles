@@ -3,8 +3,14 @@
   "useTabs" : false,
   "semi": false,
   "singleQuote": true,
-  "jsxBracketSameLine": true,
   "trailingComma": "none",
   "arrowParens": "avoid",
   "spaceBeforeFunctionParen": false,
+  "printWidth": 80,
+  "quoteProps": "consistent",
+  "bracketSpacing": true,
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "strict",
+  "endOfLine": "lf",
+  "singleAttributePerLine": true
 }
