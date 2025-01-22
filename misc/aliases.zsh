@@ -20,6 +20,7 @@ alias brewit='brew update && brew upgrade && brew cleanup'
 
 alias pushall='for i in `git remote`; do git push $i; done;'
 alias pullall='for i in `git remote`; do git pull $i; done;'
+alias gll='git fetch --all && git branch -r | grep -v "\->" | while read remote; do git branch --track "${remote#origin/}" "$remote" 2>/dev/null; done && git pull --all'
 
 alias spoofmac='sudo ifconfig en0 ether $(openssl rand -hex 6 | sed "s%\(..\)%\1:%g; s%.$%%")'
 
