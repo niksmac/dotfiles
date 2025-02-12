@@ -7,22 +7,6 @@
     ],
     "description": "Log to the console"
   },
-  "Log warning to console": {
-    "prefix": "warn",
-    "body": [
-      "console.warn($1);",
-      "$0"
-    ],
-    "description": "Log warning to the console"
-  },
-  "Log error to console": {
-    "prefix": "error",
-    "body": [
-      "console.error($1);",
-      "$0"
-    ],
-    "description": "Log error to the console"
-  },
   "Throw Exception": {
     "prefix": "throw",
     "body": [
@@ -31,50 +15,10 @@
     ],
     "description": "Throw Exception"
   },
-  "reactClassComponent": {
-    "prefix": "rcc",
-    "body": "import React, { Component } from 'react';\n\nclass ${1:${TM_FILENAME_BASE}} extends Component {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a React component class with ES6 module system"
-  },
-  "reactReduxComponent": {
-    "prefix": "rrc",
-    "body": "import React, { Component } from 'react';\nimport { connect } from 'react-redux';\n\nfunction mapStateToProps(state) {\n\treturn {\n\n\t};\n}\n\nclass ${1:${TM_FILENAME_BASE}} extends Component {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\nexport default connect(\n\tmapStateToProps,\n)(${1:${TM_FILENAME_BASE}});",
-    "description": "Creates a React component class connected to redux"
-  },
-  "reactReduxDispatchComponent": {
-    "prefix": "rrdc",
-    "body": "import React, { Component } from 'react';\nimport { connect } from 'react-redux';\n\nfunction mapStateToProps(state) {\n\treturn {\n\n\t};\n}\n\nfunction mapDispatchToProps(dispatch) {\n\treturn {\n\n\t};\n}\n\nclass ${1:${TM_FILENAME_BASE}} extends Component {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\nexport default connect(\n\tmapStateToProps,\n)(${1:${TM_FILENAME_BASE}});",
-    "description": "Creates a React component class connected to redux with dispatch"
-  },
-  "reactJustClassComponent": {
-    "prefix": "rcjc",
-    "body": "class ${1:${TM_FILENAME_BASE}} extends Component {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n",
-    "description": "Creates a React component class with ES6 module system"
-  },
-  "reactClassComponentPropTypes": {
-    "prefix": "rccp",
-    "body": "import React, { Component } from 'react';\nimport PropTypes from 'prop-types';\n\nclass ${1:${TM_FILENAME_BASE}} extends Component {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a React component class with PropTypes and ES6 module system"
-  },
-  "reactClassComponentWithMethods": {
-    "prefix": "rcfc",
-    "body": "import React, { Component } from 'react';\nimport PropTypes from 'prop-types';\n\nclass ${1:${TM_FILENAME_BASE}} extends Component {\n\tconstructor(props) {\n\t\tsuper(props);\n\t\tthis.state = {\n\t\t\t\n\t\t}\n\t}\n\n\tstatic getDerivedStateFromProps() {\n\t\treturn null\n\t}\n\n\tcomponentDidMount() {\n\t\t\n\t}\n\n\t// shouldComponentUpdate(nextProps, nextState) {}\n\n\tgetSnapshotBeforeUpdate(prevProps, prevState) {\n\t\treturn null\n\t}\n\n\tcomponentDidUpdate(prevProps, prevState, snapshot) {\n\t\t\n\t}\n\n\tcomponentWillUnmount() {\n\t\t\n\t}\n\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t\n\t\t\t</div>\n\t\t);\n\t}\n}\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\t\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a React component class with PropTypes and all lifecycle methods and ES6 module system"
-  },
-  "reactWithWebpackDefaults": {
-    "prefix": "rwwd",
-    "body": "class ${1:${TM_FILENAME_BASE}} extends React.Component {\n\tconstructor(props) {\n\t\tsuper(props);\n\n\t\tthis.state = {};\n\n\t}\n\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a React component class with constructor, empty state, proptypes and export in ES6 module system without imports. (Mostly used when React, Proptypes are provided by webpack provide plugin)"
-  },
-  "reactPureComponent": {
-    "prefix": "rpc",
-    "body": "import React, { PureComponent } from 'react';\nimport PropTypes from 'prop-types';\n\nclass ${1:${TM_FILENAME_BASE}} extends PureComponent {\n\trender() {\n\t\treturn (\n\t\t\t<div>\n\t\t\t\t$0\n\t\t\t</div>\n\t\t);\n\t}\n}\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a React pure component class with PropTypes and ES6 module system"
-  },
-  "reactStateless": {
-    "prefix": "rsc",
+  "reactFunctionComponent": {
+    "prefix": "rfc",
     "body": "import React from 'react';\n\nconst ${1:${TM_FILENAME_BASE}} = () => {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t);\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a stateless React component without PropTypes and ES6 module system"
+    "description": "Creates a React functional component"
   },
   "reactStatelessProps": {
     "prefix": "rscp",
@@ -119,29 +63,6 @@
     ],
     "description": "Creates a stateless React component as a named function with FlowTypes"
   },
-  "flowClassComponent": {
-    "prefix": "fcc",
-    "body": [
-      "// @flow",
-      "import * as React from 'react';",
-      "type Props = {",
-      "  $0",
-      "};",
-      "type State = {",
-      "  $1",
-      "};",
-      "export class ${2:${TM_FILENAME_BASE}} extends React.Component<Props, State>{",
-      "  render() {",
-      "    return (",
-      "      <div>",
-      "        ",
-      "      </div>",
-      "    );",
-      "  };",
-      "};"
-    ],
-    "description": "Creates a React component class with FlowTypes"
-  },
   "reactStatelessFunction": {
     "prefix": "rsf",
     "body": "import React from 'react';\n\nfunction ${1:${TM_FILENAME_BASE}}(props) {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n}\n\nexport default ${1:${TM_FILENAME_BASE}};",
@@ -157,46 +78,24 @@
     "body": "import React from 'react';\n\nconst ${1:${TM_FILENAME_BASE}} = (props) => (\n\t\t\t$0\n\t);\n\nexport default ${1:${TM_FILENAME_BASE}};",
     "description": "Creates a stateless React component without PropTypes and ES6 module system but with Implicit Return and props"
   },
-  "classConstructor": {
-    "prefix": "con",
-    "body": "constructor(props) {\n\tsuper(props);\n\t$0\n}\n",
-    "description": "Adds a default constructor for the class that contains props as arguments"
-  },
-  "classConstructorContext": {
-    "prefix": "conc",
-    "body": "constructor(props, context) {\n\tsuper(props, context);\n\t$0\n}\n",
-    "description": "Adds a default constructor for the class that contains props and context as arguments"
-  },
   "emptyState": {
     "prefix": "est",
     "body": "this.state = {\n\t$1\n};",
     "description": "Creates empty state object. To be used in a constructor."
   },
-  "componentWillMount": {
-    "prefix": "cwm",
-    "body": "\ncomponentWillMount() {\n\t$0\n}\n",
-    "description": "Invoked once, both on the client and server, immediately before the initial rendering occurs"
-  },
+  
   "componentDidMount": {
     "prefix": "cdm",
     "body": "componentDidMount() {\n\t$0\n}\n",
     "description": "Invoked once, only on the client (not on the server), immediately after the initial rendering occurs."
   },
-  "componentWillReceiveProps": {
-    "prefix": "cwr",
-    "body": "componentWillReceiveProps(nextProps) {\n\t$0\n}\n",
-    "description": "Invoked when a component is receiving new props. This method is not called for the initial render. [DEPRECATION NOTE]: This method is deprecated in React 16.3"
-  },
+  
   "shouldComponentUpdate": {
     "prefix": "scu",
     "body": "shouldComponentUpdate(nextProps, nextState) {\n\t$0\n}\n",
     "description": "Invoked before rendering when new props or state are being received. "
   },
-  "componentWillUpdate": {
-    "prefix": "cwup",
-    "body": "componentWillUpdate(nextProps, nextState) {\n\t$0\n}\n",
-    "description": "Invoked immediately before rendering when new props or state are being received. [DEPRECATION NOTE]: This method is deprecated in React 16.3"
-  },
+  
   "componentDidUpdate": {
     "prefix": "cdup",
     "body": "componentDidUpdate(prevProps, prevState) {\n\t$0\n}\n",
@@ -437,19 +336,25 @@
     "body": "function mapDispatchToProps(dispatch) {\n\treturn {\n\t}\n\n}",
     "description": "Adds the redux mapDispatchToProps function"
   },
+  "useState": {
+    "prefix": "uss",
+    "body": "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:initialState});$0",
+    "description": "Creates a useState hook"
+  },
+
   "useEffect": {
-    "prefix": "usf",
-    "body": "useEffect(() => {\n$0\n})",
-    "description": "Adds use effect"
+    "prefix": "uef",
+    "body": "useEffect(() => {\n\t$0\n});",
+    "description": "Creates a useEffect hook that runs on every render"
   },
-  "useEffectUnMount": {
-    "prefix": "usfu",
-    "body": "useEffect(() => {\n$0 return () => {\n$0\n\t}\n})",
-    "description": "Adds use effect"
+  "useEffectWithCleanup": {
+    "prefix": "uefc",
+    "body": "useEffect(() => {\n\t$1\n\n\treturn () => {\n\t\t$0\n\t};\n});",
+    "description": "Creates a useEffect hook with cleanup function"
   },
-  "useEffectDidMount": {
-    "prefix": "usfd",
-    "body": "useEffect(() => {\n$0\n},[])",
-    "description": "Adds use effect"
+  "useEffectOnMount": {
+    "prefix": "uefm",
+    "body": "useEffect(() => {\n\t$0\n}, []);",
+    "description": "Creates a useEffect hook that only runs once on mount"
   }
 }

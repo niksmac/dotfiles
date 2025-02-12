@@ -7,9 +7,12 @@
   "tab_size": 2,
   "preferred_line_length": 80,
   "soft_wrap": "preferred_line_length",
-  "buffer_font_size": 16,
+  "buffer_font_size": null,
   "buffer_font_family": "Monaco",
-  "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
+  "ui_font_fallbacks": [
+    "Inter",
+    ".SystemUIFont"
+  ],
   "ui_font_size": 16,
   "vim_mode": false,
   "projects_online_by_default": true,
@@ -123,7 +126,8 @@
       "model": "claude-3-5-sonnet-latest"
     },
     "default_width": 420,
-    "version": "2"
+    "version": "2",
+    "enable_experimental_live_diffs": true
   },
   "jupyter": {
     "kernel_selections": {
