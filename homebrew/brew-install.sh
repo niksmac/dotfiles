@@ -1,20 +1,49 @@
-#!/bin/sh
-# Install bew deps
+#!/bin/bash
 
-# Install the correct homebrew for each OS type
-if test "$(uname)" = "Darwin"
-then
-  # Install homebrew packages
-  brew install zsh zsh-completions grc coreutils tmux youtube-dl vim node wget git tree tor git-flow-avh wrk zplug yarn imagemagick ffmpeg prettier pwgen rustup the_silver_searcher nvm
+# Disable analytics before doing anything else
+brew analytics off
 
-  # Install cask items
-  brew install --cask transmission vlc iterm2 firefox visual-studio-code  discord skype insomnia telegram dropbox keepingyouawake zed
-elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
-then
-  # Install homebrew packages
-  brew install grc tmux youtube-dl vim node tree tor pre-commit imagemagick zplug
+# Common packages for all platforms
+COMMON_PACKAGES=(
+  git
+  tmux
+  vim
+  node
+  tree
+  yt-dlp # Modern replacement for youtube-dl
+  ripgrep # Faster alternative to ag/the_silver_searcher
+  fd # Better alternative to find
+  bat # Better cat
+  exa # Better ls
+  zsh
+)
+
+# macOS specific packages
+MACOS_PACKAGES=(
+  coreutils
+  grc
+  git-flow-avh
+  wrk
+  imagemagick
+  ffmpeg
+)
+
+# macOS cask apps
+MACOS_CASKS=(
+  iterm2
+  firefox
+  discord
+  telegram
+  keepingyouawake
+)
+
+if [ "$(uname)" = "Darwin" ]; then
+  echo "Installing macOS packages..."
+  brew install "${COMMON_PACKAGES[@]}" "${MACOS_PACKAGES[@]}"
+  brew install --cask "${MACOS_CASKS[@]}"
+elif [ "$(uname)" = "Linux" ]; then
+  echo "Installing Linux packages..."
+  brew install "${COMMON_PACKAGES[@]}"
 fi
 
-# Disable analytics https://docs.brew.sh/Analytics
-brew analytics off
 exit 0
