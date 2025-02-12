@@ -1,18 +1,13 @@
 {
   "Log to the console": {
     "prefix": "log",
-    "body": [
-      "console.log($1);",
-      "$0"
+    "body": ["console.log($1);", "$0"
     ],
     "description": "Log to the console"
   },
   "Throw Exception": {
     "prefix": "throw",
-    "body": [
-      "throw new Error(\"$1\");",
-      "$0"
-    ],
+    "body": ["throw new Error(\"$1\");", "$0"],
     "description": "Throw Exception"
   },
   "reactFunctionComponent": {
@@ -20,58 +15,15 @@
     "body": "import React from 'react';\n\nconst ${1:${TM_FILENAME_BASE}} = () => {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t);\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
     "description": "Creates a React functional component"
   },
-  "reactStatelessProps": {
-    "prefix": "rscp",
-    "body": "import React from 'react';\nimport PropTypes from 'prop-types';\n\nconst ${1:${TM_FILENAME_BASE}} = props => {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n};\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\t$0\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a stateless React component with PropTypes and ES6 module system"
-  },
-  "reactHookProps": {
-    "prefix": "rhc",
-    "body": "import React,{ useState } from 'react';\nimport PropTypes from 'prop-types';\n\nconst ${1:${TM_FILENAME_BASE}} = props => {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n};\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\t$0\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a stateless React component with PropTypes and ES6 module system"
-  },
   "reactMemo": {
     "prefix": "rscm",
     "body": "import React, { memo } from 'react';\n\nconst ${1:${TM_FILENAME_BASE}} = memo(() => {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t);\n});\n\nexport default ${1:${TM_FILENAME_BASE}};",
     "description": "Creates a memoized stateless React component without PropTypes and ES6 module system"
   },
-  "reactMemoProps": {
-    "prefix": "rscpm",
-    "body": "import React, { memo } from 'react';\nimport PropTypes from 'prop-types';\n\nconst ${1:${TM_FILENAME_BASE}} = memo((props) => {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n});\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\t$0\n};\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a memoized stateless React component with PropTypes and ES6 module system"
-  },
-  "flowStatelessComponent": {
-    "prefix": "fsc",
-    "body": "// @flow \nimport * as React from 'react';\ntype Props = {\n\t$0\n};\nexport const ${1:${TM_FILENAME_BASE}} = (props: Props) => {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n};",
-    "description": "Creates a stateless React component with FlowTypes and ES6 module system"
-  },
-  "flowStatelessFunction": {
-    "prefix": "fsf",
-    "body": [
-      "// @flow",
-      "import * as React from 'react';",
-      "type Props = {",
-      "  $0",
-      "};",
-      "export function ${1:${TM_FILENAME_BASE}}(props: Props) {",
-      "  return (",
-      "    <div>",
-      "      ",
-      "    </div>",
-      "  );",
-      "};"
-    ],
-    "description": "Creates a stateless React component as a named function with FlowTypes"
-  },
   "reactStatelessFunction": {
     "prefix": "rsf",
     "body": "import React from 'react';\n\nfunction ${1:${TM_FILENAME_BASE}}(props) {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n}\n\nexport default ${1:${TM_FILENAME_BASE}};",
     "description": "Creates a stateless React component as a named function without PropTypes"
-  },
-  "reactStatelessFunctionProps": {
-    "prefix": "rsfp",
-    "body": "import React from 'react';\nimport PropTypes from 'prop-types';\n\n${1:${TM_FILENAME_BASE}}.propTypes = {\n\t$0\n};\n\nfunction ${1:${TM_FILENAME_BASE}}(props) {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n}\n\nexport default ${1:${TM_FILENAME_BASE}};",
-    "description": "Creates a stateless React component as a named function with PropTypes"
   },
   "reactStatelessImplicitReturn": {
     "prefix": "rsi",
@@ -83,238 +35,10 @@
     "body": "this.state = {\n\t$1\n};",
     "description": "Creates empty state object. To be used in a constructor."
   },
-  
-  "componentDidMount": {
-    "prefix": "cdm",
-    "body": "componentDidMount() {\n\t$0\n}\n",
-    "description": "Invoked once, only on the client (not on the server), immediately after the initial rendering occurs."
-  },
-  
-  "shouldComponentUpdate": {
-    "prefix": "scu",
-    "body": "shouldComponentUpdate(nextProps, nextState) {\n\t$0\n}\n",
-    "description": "Invoked before rendering when new props or state are being received. "
-  },
-  
-  "componentDidUpdate": {
-    "prefix": "cdup",
-    "body": "componentDidUpdate(prevProps, prevState) {\n\t$0\n}\n",
-    "description": "Invoked immediately after the component's updates are flushed to the DOM."
-  },
-  "componentWillUnmount": {
-    "prefix": "cwun",
-    "body": "componentWillUnmount() {\n\t$0\n}\n",
-    "description": "Invoked immediately before a component is unmounted from the DOM."
-  },
-  "componentRender": {
-    "prefix": "ren",
-    "body": "render() {\n\treturn (\n\t\t<div>\n\t\t\t$0\n\t\t</div>\n\t);\n}",
-    "description": "When called, it should examine this.props and this.state and return a single child element."
-  },
-  "componentSetStateObject": {
-    "prefix": "sst",
-    "body": "this.setState($0);",
-    "description": "Performs a shallow merge of nextState into current state"
-  },
-  "componentSetStateFunc": {
-    "prefix": "ssf",
-    "body": "this.setState((state, props) => { return { $0 }});\n",
-    "description": "Performs a shallow merge of nextState into current state"
-  },
-  "componentProps": {
-    "prefix": "props",
-    "body": "this.props.$0",
-    "description": "Access component's props"
-  },
-  "componentState": {
-    "prefix": "state",
-    "body": "this.state.$0",
-    "description": "Access component's state"
-  },
   "bindThis": {
     "prefix": "bnd",
     "body": "this.$1 = this.$1.bind(this);$0",
     "description": "Binds the this of a method. To be used inside a constructor"
-  },
-  "propTypes": {
-    "prefix": "rpt",
-    "body": "${1:$TM_FILENAME_BASE}.propTypes = {\n\t$2\n};",
-    "description": "Creates empty propTypes declaration"
-  },
-  "defaultProps": {
-    "prefix": "rdp",
-    "body": "${1:$TM_FILENAME_BASE}.defaultProps = {\n\t$2\n};",
-    "description": "Creates empty defaultProps declaration"
-  },
-  "propTypeArray": {
-    "prefix": "pta",
-    "body": "PropTypes.array,",
-    "description": "Array prop type"
-  },
-  "propTypeArrayRequired": {
-    "prefix": "ptar",
-    "body": "PropTypes.array.isRequired,",
-    "description": "Array prop type required"
-  },
-  "propTypeBool": {
-    "prefix": "ptb",
-    "body": "PropTypes.bool,",
-    "description": "Bool prop type"
-  },
-  "propTypeBoolRequired": {
-    "prefix": "ptbr",
-    "body": "PropTypes.bool.isRequired,",
-    "description": "Bool prop type required"
-  },
-  "propTypeFunc": {
-    "prefix": "ptf",
-    "body": "PropTypes.func,",
-    "description": "Func prop type"
-  },
-  "propTypeFuncRequired": {
-    "prefix": "ptfr",
-    "body": "PropTypes.func.isRequired,",
-    "description": "Func prop type required"
-  },
-  "propTypeNumber": {
-    "prefix": "ptn",
-    "body": "PropTypes.number,",
-    "description": "Number prop type"
-  },
-  "propTypeNumberRequired": {
-    "prefix": "ptnr",
-    "body": "PropTypes.number.isRequired,",
-    "description": "Number prop type required"
-  },
-  "propTypeObject": {
-    "prefix": "pto",
-    "body": "PropTypes.object,",
-    "description": "Object prop type"
-  },
-  "propTypeObjectRequired": {
-    "prefix": "ptor",
-    "body": "PropTypes.object.isRequired,",
-    "description": "Object prop type required"
-  },
-  "propTypeString": {
-    "prefix": "pts",
-    "body": "PropTypes.string,",
-    "description": "String prop type"
-  },
-  "propTypeStringRequired": {
-    "prefix": "ptsr",
-    "body": "PropTypes.string.isRequired,",
-    "description": "String prop type required"
-  },
-  "propTypeSymbol": {
-    "prefix": "ptsm",
-    "body": "PropTypes.symbol,",
-    "description": "Symbol prop type"
-  },
-  "propTypeSymbolRequired": {
-    "prefix": "ptsmr",
-    "body": "PropTypes.symbol.isRequired,",
-    "description": "Symbol prop type required"
-  },
-  "propTypeAny": {
-    "prefix": "ptan",
-    "body": "PropTypes.any,",
-    "description": "Any prop type"
-  },
-  "propTypeAnyRequired": {
-    "prefix": "ptanr",
-    "body": "PropTypes.any.isRequired,",
-    "description": "Any prop type required"
-  },
-  "propTypeNode": {
-    "prefix": "ptnd",
-    "body": "PropTypes.node,",
-    "description": "Anything that can be rendered: numbers, strings, elements or an array"
-  },
-  "propTypeNodeRequired": {
-    "prefix": "ptndr",
-    "body": "PropTypes.node.isRequired,",
-    "description": "Anything that can be rendered: numbers, strings, elements or an array required"
-  },
-  "propTypeElement": {
-    "prefix": "ptel",
-    "body": "PropTypes.element,",
-    "description": "React element prop type"
-  },
-  "propTypeElementRequired": {
-    "prefix": "ptelr",
-    "body": "PropTypes.element.isRequired,",
-    "description": "React element prop type required"
-  },
-  "propTypeInstanceOf": {
-    "prefix": "pti",
-    "body": "PropTypes.instanceOf($0),",
-    "description": "Is an instance of a class prop type"
-  },
-  "propTypeInstanceOfRequired": {
-    "prefix": "ptir",
-    "body": "PropTypes.instanceOf($0).isRequired,",
-    "description": "Is an instance of a class prop type required"
-  },
-  "propTypeEnum": {
-    "prefix": "pte",
-    "body": "PropTypes.oneOf(['$0']),",
-    "description": "Prop type limited to specific values by treating it as an enum"
-  },
-  "propTypeEnumRequired": {
-    "prefix": "pter",
-    "body": "PropTypes.oneOf(['$0']).isRequired,",
-    "description": "Prop type limited to specific values by treating it as an enum required"
-  },
-  "propTypeOneOfType": {
-    "prefix": "ptet",
-    "body": "PropTypes.oneOfType([\n\t$0\n]),",
-    "description": "An object that could be one of many types"
-  },
-  "propTypeOneOfTypeRequired": {
-    "prefix": "ptetr",
-    "body": "PropTypes.oneOfType([\n\t$0\n]).isRequired,",
-    "description": "An object that could be one of many types required"
-  },
-  "propTypeArrayOf": {
-    "prefix": "ptao",
-    "body": "PropTypes.arrayOf($0),",
-    "description": "An array of a certain type"
-  },
-  "propTypeArrayOfRequired": {
-    "prefix": "ptaor",
-    "body": "PropTypes.arrayOf($0).isRequired,",
-    "description": "An array of a certain type required"
-  },
-  "propTypeObjectOf": {
-    "prefix": "ptoo",
-    "body": "PropTypes.objectOf($0),",
-    "description": "An object with property values of a certain type"
-  },
-  "propTypeObjectOfRequired": {
-    "prefix": "ptoor",
-    "body": "PropTypes.objectOf($0).isRequired,",
-    "description": "An object with property values of a certain type required"
-  },
-  "propTypeObjectOfShape": {
-    "prefix": "ptoos",
-    "body": "PropTypes.objectOf(PropTypes.shape($0)),",
-    "description": "An object whose keys are known ahead of time"
-  },
-  "propTypeObjectOfShapeRequired": {
-    "prefix": "ptoosr",
-    "body": "PropTypes.objectOf(PropTypes.shape($0)).isRequired,",
-    "description": "An object whose keys are known ahead of time required"
-  },
-  "propTypeShape": {
-    "prefix": "ptsh",
-    "body": "PropTypes.shape({\n\t$0\n}),",
-    "description": "An object taking on a particular shape"
-  },
-  "propTypeShapeRequired": {
-    "prefix": "ptshr",
-    "body": "PropTypes.shape({\n\t$0\n}).isRequired,",
-    "description": "An object taking on a particular shape required"
   },
   "getSnapshotBeforeUpdate": {
     "prefix": "gsbu",
@@ -341,7 +65,6 @@
     "body": "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(${2:initialState});$0",
     "description": "Creates a useState hook"
   },
-
   "useEffect": {
     "prefix": "uef",
     "body": "useEffect(() => {\n\t$0\n});",
