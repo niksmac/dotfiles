@@ -6,6 +6,7 @@
 
 # Ask for the administrator password upfront
 sudo -v
+set -e # Exit on error
 
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -214,17 +215,6 @@ defaults write org.m0k.transmission RandomPort -bool true
 # sudo crontab -u "$(whoami)" -e
 # sudo echo '30 3 * * 0 update-dot > /dev/null 2>&1' >> /etc/crontab
 # sudo echo '30 3 * * 0 brewit > /dev/null 2>&1' >> /etc/crontab
-
-## Set app icons
-
-# set vscode icon
-yes | cp ~/.dotfiles/macos/icons/vscode.icns /Applications/Visual\ Studio\ Code.app/Contents/Resources/Code.icns
-
-
-# set telegram icon
-yes | cp ~/.dotfiles/macos/icons/telegram.icns /Applications/Telegram.app/Contents/Resources/AppIcon.icns
-
-touch /Applications/Telegram.app
 
 killall Dock
 
