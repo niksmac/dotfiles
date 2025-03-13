@@ -1,8 +1,13 @@
 {
+  "icon_theme": "Zed (Default)",
+  "edit_predictions": {
+    "disabled_globs": [],
+    "mode": "subtle"
+  },
   "theme": {
     "mode": "dark",
     "light": "Atomize",
-    "dark": "One Dark"
+    "dark": "One Dark Pro"
   },
   "tab_size": 2,
   "preferred_line_length": 80,
@@ -111,16 +116,13 @@
     "diagnostics": false,
     "metrics": false
   },
-  "chat_panel": {
-    "button": false
-  },
   "notification_panel": {
     "button": false
   },
   "assistant": {
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
+      "model": "claude-3-7-sonnet-latest"
     },
     "default_width": 420,
     "version": "2",
@@ -154,6 +156,6 @@
     "line_numbers": true,
     "code_actions": false,
     "runnables": false,
-    "folds": false
+    "folds": true
   }
 }

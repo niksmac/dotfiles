@@ -29,7 +29,7 @@ done
 PROMPT_SOURCE_DIR="$HOME/.dotfiles/zed/prompts/templates"
 
 # Define the target directory where symlinks will be created
-PROMPT_TARGET_DIR="$HOME/.config/zed/prompts/templates"
+PROMPT_TARGET_DIR="$HOME/.config/zed/prompt_overrides"
 
 # Create the target directory if it doesn't exist
 mkdir -p "$PROMPT_TARGET_DIR"
