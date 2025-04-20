@@ -1,6 +1,6 @@
 {
   "show_edit_predictions": true,
-  "icon_theme": "Charmed Icons",
+  "icon_theme": "Zed (Default)",
   "edit_predictions": {
     "mode": "subtle"
   },
@@ -12,12 +12,11 @@
   "tab_size": 2,
   "preferred_line_length": 80,
   "soft_wrap": "preferred_line_length",
+  "show_wrap_guides": true,
+  "wrap_guides": [80, 120],
   "buffer_font_size": null,
   "buffer_font_family": "Monaco",
-  "ui_font_fallbacks": [
-    "Inter",
-    ".SystemUIFont"
-  ],
+  "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
   "ui_font_size": 16,
   "vim_mode": false,
   "projects_online_by_default": true,
@@ -38,7 +37,6 @@
     "emmet": true,
     "env": true,
     "jsonnet": true,
-    "solidity": true,
     "toml": true
   },
   "use_autoclose": true,
@@ -53,10 +51,7 @@
     {
       "external": {
         "command": "prettier",
-        "arguments": [
-          "--stdin-filepath",
-          "{buffer_path}"
-        ]
+        "arguments": ["--stdin-filepath", "{buffer_path}"]
       }
     }
   ],
@@ -92,6 +87,99 @@
     "enabled": true,
     "coloring": "indent_aware"
   },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet-latest"
+    },
+    "default_width": 420,
+    "version": "2",
+    "enable_experimental_live_diffs": true,
+    "max_tokens": 200000,
+    "mode": {
+      "budget_tokens": 4096
+    },
+    "inline_assistant_model": {
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet"
+    },
+    "commit_message_model": {
+      "provider": "openai",
+      "model": "gpt-4o-mini"
+    },
+    "thread_summary_model": {
+      "provider": "google",
+      "model": "gpt-4o-mini"
+    }
+  },
+  "outline_panel": {
+    "button": false,
+    "default_width": 240,
+    "dock": "left",
+    "file_icons": true,
+    "folder_icons": true,
+    "git_status": true,
+    "indent_size": 20,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "indent_guides": {
+      "show": "always"
+    },
+    "scrollbar": {
+      "show": null
+    }
+  },
+  "jupyter": {
+    "kernel_selections": {
+      "python": "conda-env",
+      "typescript": "deno",
+      "javascript": "deno"
+    }
+  },
+  "search": {
+    "whole_word": true,
+    "case_sensitive": true,
+    "include_ignored": false,
+    "regex": false
+  },
+  "seed_search_query_from_cursor": "selection",
+  "completions": {
+    "words": "enabled",
+    "lsp": true,
+    "lsp_fetch_timeout_ms": 0,
+    "lsp_insert_mode": "replace_suffix"
+  },
+  "project_panel": {
+    "button": true,
+    "default_width": 240,
+    "file_icons": true,
+    "dock": "left",
+    "folder_icons": true,
+    "git_status": true,
+    "indent_size": 14,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "show_diagnostics": "all",
+    "scrollbar": {
+      "show": "never"
+    },
+    "indent_guides": {
+      "show": "never"
+    }
+  },
+  "gutter": {
+    "line_numbers": true,
+    "code_actions": false,
+    "runnables": false,
+    "folds": false
+  },
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -112,51 +200,5 @@
     "**/.tap",
     "**/.nyc_output",
     "**/node_modules"
-  ],
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  },
-  "notification_panel": {
-    "button": false
-  },
-  "assistant": {
-    "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
-    },
-    "default_width": 420,
-    "version": "2",
-    "enable_experimental_live_diffs": true
-  },
-  "jupyter": {
-    "kernel_selections": {
-      "python": "conda-env",
-      "typescript": "deno",
-      "javascript": "deno"
-    }
-  },
-  "project_panel": {
-    "button": true,
-    "default_width": 220,
-    "file_icons": true,
-    "dock": "left",
-    "folder_icons": true,
-    "git_status": true,
-    "indent_size": 20,
-    "auto_reveal_entries": true,
-    "auto_fold_dirs": true,
-    "scrollbar": {
-      "show": null
-    },
-    "indent_guides": {
-      "show": "always"
-    }
-  },
-  "gutter": {
-    "line_numbers": true,
-    "code_actions": false,
-    "runnables": false,
-    "folds": true
-  }
+  ]
 }
