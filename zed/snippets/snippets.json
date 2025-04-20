@@ -1,0 +1,7 @@
+{
+  "Console Log (Advanced)": {
+    "prefix": "cll",
+    "body": ["console.log('${1:variable}:', ${1:variable});$0"],
+    "description": "Log variable advanced"
+  }
+}

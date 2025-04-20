@@ -1,8 +1,7 @@
 {
   "Log to the console": {
     "prefix": "log",
-    "body": ["console.log($1);", "$0"
-    ],
+    "body": ["console.log($1);", "$0"],
     "description": "Log to the console"
   },
   "Throw Exception": {
@@ -25,5 +24,69 @@
       "$0"
     ],
     "description": "React functional component"
+  },
+  "React state variable": {
+    "prefix": "rstate",
+    "body": ["const [${1:state}, set${1}] = useState(${2:initialValue});$0"],
+    "description": "Create a React state variable using useState hook"
+  },
+  "Console Log with Label": {
+    "prefix": "cll",
+    "body": ["console.log('${1:label}:', ${2:object});$0"],
+    "description": "Console.log with a descriptive label"
+  },
+  "React Effect Hook": {
+    "prefix": "reffect",
+    "body": [
+      "useEffect(() => {",
+      "  ${1:// Effect code}",
+      "  $0",
+      "  ${2:// return () => {",
+      "  //   // Cleanup code",
+      "  // };}",
+      "}, [${3:dependencies}]);"
+    ],
+    "description": "React useEffect hook with dependencies and optional cleanup"
+  },
+  "Try Catch Block": {
+    "prefix": "trycatch",
+    "body": [
+      "try {",
+      "  ${1:// Try code}",
+      "  $0",
+      "} catch (error) {",
+      "  ${2:console.error(error);}",
+      "}"
+    ],
+    "description": "Try-catch error handling block"
+  },
+  "Arrow Function": {
+    "prefix": "arrow",
+    "body": [
+      "const ${1:functionName} = (${2:parameters}) => {",
+      "  ${3:// function body}",
+      "  $0",
+      "};"
+    ],
+    "description": "ES6 arrow function"
+  },
+  "Async Function": {
+    "prefix": "async",
+    "body": [
+      "async function ${1:functionName}(${2:parameters}) {",
+      "  try {",
+      "    ${3:// function body}",
+      "    $0",
+      "  } catch (error) {",
+      "    console.error(error);",
+      "  }",
+      "}"
+    ],
+    "description": "Async function with try-catch"
+  },
+  "Import Statement": {
+    "prefix": "imp",
+    "body": ["import ${2:{ $3 \\}} from '${1:module}';$0"],
+    "description": "ES6 import statement"
   }
 }
