@@ -1,7 +1,7 @@
 {
-  "icon_theme": "Zed (Default)",
+  "show_edit_predictions": true,
+  "icon_theme": "Charmed Icons",
   "edit_predictions": {
-    "disabled_globs": [],
     "mode": "subtle"
   },
   "theme": {
@@ -14,7 +14,10 @@
   "soft_wrap": "preferred_line_length",
   "buffer_font_size": null,
   "buffer_font_family": "Monaco",
-  "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
+  "ui_font_fallbacks": [
+    "Inter",
+    ".SystemUIFont"
+  ],
   "ui_font_size": 16,
   "vim_mode": false,
   "projects_online_by_default": true,
@@ -51,8 +54,6 @@
       "external": {
         "command": "prettier",
         "arguments": [
-          "--config",
-          "/Users/niksmac/.prettierrc",
           "--stdin-filepath",
           "{buffer_path}"
         ]
