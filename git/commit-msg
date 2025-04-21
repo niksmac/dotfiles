@@ -1,36 +1,90 @@
 #!/bin/sh
 
-echo "Commit-msg started"
+# Git commit-msg hook to validate commit message format
+# Enforces conventional commits for specific types and capitalization rules
 
+# File containing the commit message
 filename="$1"
-lineno=0
+temp_issues=""
+valid=true
+hook_dir="$(dirname "$0")"
+verbs_file="${hook_dir}/imperative_verbs.txt"
 
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
-  exit 1
+# Output formatting
+fail() {
+  temp_issues="${temp_issues}  [\033[0;31mFAIL\033[0m] $1\n"
+  valid=false
 }
-success () {
+
+success() {
   printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
 }
 
-while read -r line
-do
-    [[ "$line" =~ ^#.* ]] && continue
+# Check if verb is in imperative mood
+is_imperative_verb() {
+  if [ -f "$verbs_file" ]; then
+    verb=$(echo "$1" | tr '[:lower:]' '[:upper:]')
+    grep -q "^$verb$" "$verbs_file"
+    return $?
+  fi
+  # If verbs file doesn't exist, skip this check
+  return 0
+}
 
-    let lineno+=1
-    length=${#line}
+# Conventional commit types
+conventional_types="feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert"
 
-    if [[ $lineno -eq 1 ]]; then
-        [[ $length -gt 80 ]] && fail "Limit the subject line to 80 characters"
-        [[ ! "$line" =~ ^[A-Z].*$ ]] && fail "Capitalise the subject line"
-        [[ "$line" == *. ]] && fail "Do not end the subject line with a period"
+# Check if file is empty
+if [ ! -s "$filename" ]; then
+  fail "Empty commit message"
+  echo "${temp_issues}"
+  exit 1
+fi
+
+lineno=0
+# Process each line of the commit message
+while IFS= read -r line || [ -n "$line" ]; do
+  # Skip commented lines
+  if echo "$line" | grep -q "^#"; then
+    continue
+  fi
+
+  lineno=$((lineno + 1))
+  length=${#line}
+
+  # First line validation (subject line)
+  if [ $lineno -eq 1 ]; then
+    # Check subject line length
+    if [ $length -gt 80 ]; then
+      fail "Limit the subject line to 80 characters"
     fi
 
-    [[ $lineno -eq 2 ]] && [[ -n $line ]] && fail "Separate subject from body with a blank line"
-    [[ $lineno -gt 1 ]] && [[ $length -gt 72 ]] && fail "Wrap the body at 72 characters"
+    # Check if it's a conventional commit
+    if echo "$line" | grep -qE "^(${conventional_types}):[[:space:]]"; then
+      # Extract the content after the type prefix
+      content=$(echo "$line" | sed -E "s/^(${conventional_types}):[[:space:]](.*)/\2/")
 
-    success "Commit-message passed"
+      # Check capitalization of the first word after the prefix
+      if ! echo "$content" | grep -qE "^[A-Z]"; then
+        fail "Capitalize the first word after the commit type"
+      fi
 
-done < "$filename"
+      # Check if first word is imperative
+      first_word=$(echo "$content" | awk '{print $1}')
+      if ! is_imperative_verb "$first_word"; then
+        fail "First word after type should be an imperative verb (e.g., Add, Fix, Update)"
+      fi
+    else
+      # Not a conventional commit, check first letter capitalization
+      if ! echo "$line" | grep -qE "^[A-Z]"; then
+        fail "Capitalize the subject line or use a conventional commit format (type: Subject)"
+      fi
+
+      # Check if first word is imperative
+      first_word=$(echo "$line" |issues}\n"
+  exit 1
+else
+  success "Commit message format validated successfully"
+fi
+
 exit 0
