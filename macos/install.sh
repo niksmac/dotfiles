@@ -27,14 +27,14 @@ defaults write com.apple.PowerChime ChimeOnAllHardware -bool true && \
 open /System/Library/CoreServices/PowerChime.app
 
 
-# Mail
-# ===============
-# Show Attachments as Icons
+# # Mail
+# # ===============
+# # Show Attachments as Icons
 
-defaults write com.apple.mail DisableInlineAttachmentViewing -bool yes
+# defaults write com.apple.mail DisableInlineAttachmentViewing -bool yes
 
-# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+# # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
+# defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
 # Safari
 # ==============
@@ -127,8 +127,8 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 # defaults read -g InitialKeyRepeat
 
-defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+defaults write -g InitialKeyRepeat -int 25 # normal minimum is 15 (225 ms)
+defaults write -g KeyRepeat -int 5 # normal minimum is 2 (30 ms)
 
 # Terminal & iTerm 2
 # ==============
@@ -160,7 +160,7 @@ defaults write com.apple.Dock size-immutable -bool yes && killall Dock
 # ==============
 
 # Increase sound quality for Bluetooth headphones/headsets
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 58
 
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
@@ -210,16 +210,20 @@ defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
 # Randomize port on launch
 defaults write org.m0k.transmission RandomPort -bool true
 
+# Quit Transmission when downloads complete
+defaults write org.m0k.transmission QuitWhenDone -bool true
+
 
 ## Auto pull repo and update weekly...
 # sudo crontab -u "$(whoami)" -e
 # sudo echo '30 3 * * 0 update-dot > /dev/null 2>&1' >> /etc/crontab
 # sudo echo '30 3 * * 0 brewit > /dev/null 2>&1' >> /etc/crontab
 
-killall Dock
-
-killall Finder
-
 ## Use TouchID to Authenticate sudo on macOS
 
 sudo perl -pi -e 's/(pam_smartcard.so)/$1\nauth sufficient pam_tid.so/' /etc/pam.d/sudo
+
+
+killall Dock
+
+killall Finder

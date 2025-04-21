@@ -178,7 +178,7 @@
     "line_numbers": true,
     "code_actions": false,
     "runnables": false,
-    "folds": false
+    "folds": true
   },
   "file_scan_exclusions": [
     "**/.git",
