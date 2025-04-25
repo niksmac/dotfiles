@@ -107,7 +107,7 @@
       "budget_tokens": 4096
     },
     "inline_assistant_model": {
-      "provider": "anthropic",
+      "provider": "zed.dev",
       "model": "claude-3-5-sonnet"
     },
     "commit_message_model": {
@@ -115,9 +115,12 @@
       "model": "gpt-4o-mini"
     },
     "thread_summary_model": {
-      "provider": "google",
+      "provider": "openai",
       "model": "gpt-4o-mini"
     }
+  },
+  "git_panel": {
+    "default_width": 240
   },
   "outline_panel": {
     "button": false,
@@ -134,6 +137,24 @@
     },
     "scrollbar": {
       "show": null
+    }
+  },
+  "project_panel": {
+    "button": true,
+    "default_width": 200,
+    "file_icons": true,
+    "dock": "left",
+    "folder_icons": true,
+    "git_status": true,
+    "indent_size": 14,
+    "auto_reveal_entries": true,
+    "auto_fold_dirs": true,
+    "show_diagnostics": "all",
+    "scrollbar": {
+      "show": "never"
+    },
+    "indent_guides": {
+      "show": "never"
     }
   },
   "jupyter": {
@@ -155,24 +176,6 @@
     "lsp": true,
     "lsp_fetch_timeout_ms": 0,
     "lsp_insert_mode": "replace_suffix"
-  },
-  "project_panel": {
-    "button": true,
-    "default_width": 240,
-    "file_icons": true,
-    "dock": "left",
-    "folder_icons": true,
-    "git_status": true,
-    "indent_size": 14,
-    "auto_reveal_entries": true,
-    "auto_fold_dirs": true,
-    "show_diagnostics": "all",
-    "scrollbar": {
-      "show": "never"
-    },
-    "indent_guides": {
-      "show": "never"
-    }
   },
   "gutter": {
     "line_numbers": true,
