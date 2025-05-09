@@ -78,11 +78,6 @@
   "tailwindCSS.includeLanguages": {
     "plaintext": "html"
   },
-  "language_models": {
-    "openai": {
-      "version": "1"
-    }
-  },
   "indent_guides": {
     "enabled": true,
     "coloring": "indent_aware"
@@ -95,9 +90,10 @@
     "button": false
   },
   "assistant": {
+    "default_profile": "ask",
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
+      "provider": "openai",
+      "model": "gpt-4o"
     },
     "default_width": 420,
     "version": "2",
