@@ -21,6 +21,11 @@ set -s escape-time 0
 set -g status-right '%a %d %b | %I:%M %p '
 setw -g clock-mode-style 12
 
+# Pomodoro Status bar
+set -g status-right "#{pomodoro_status}"
+set -g @pomodoro_granularity 'on'
+set -g status-interval 1
+
 # Statusbar update frequency
 set -g status-interval 5
 
@@ -65,6 +70,7 @@ bind-key a send-prefix
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'olimorris/tmux-pomodoro-plus'
 
 set -g @resurrect-processes 'false'
 set -g @continuum-restore 'on'
