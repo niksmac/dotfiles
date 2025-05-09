@@ -224,6 +224,14 @@ defaults write org.m0k.transmission QuitWhenDone -bool true
 sudo perl -pi -e 's/(pam_smartcard.so)/$1\nauth sufficient pam_tid.so/' /etc/pam.d/sudo
 
 
+# Setup mpv configurations for supporitng applications
+
+mkdir -p ~/Library/Application\ Support/mpv
+
+ln -sf ~/.dotfiles/macos/mpv.conf ~/Library/Application\ Support/mpv/mpv.conf
+
+
+
 killall Dock
 
 killall Finder
