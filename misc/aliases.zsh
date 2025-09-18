@@ -62,3 +62,15 @@ alias code='/Applications/Zed.app/Contents/MacOS/zed'
 ## Remove metadata
 alias meta_clean='exiftool -all= -overwrite_original'
 alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
+
+
+alias ytaudio='yt-dlp -f bestaudio \
+  --extract-audio \
+  --audio-format flac \
+  --audio-quality 0 \
+  --write-thumbnail \
+  --embed-thumbnail \
+  --add-metadata \
+  --restrict-filenames \
+  --no-overwrites \
+  --no-post-overwrites'
