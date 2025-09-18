@@ -576,6 +576,8 @@
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>IRMemory</key>
+	<integer>4</integer>
 	<key>KeyboardLocale</key>
 	<string>com.apple.keylayout.USInternational-PC</string>
 	<key>New Bookmarks</key>
