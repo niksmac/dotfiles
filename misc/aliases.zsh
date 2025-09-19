@@ -64,7 +64,7 @@ alias meta_clean='exiftool -all= -overwrite_original'
 alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
 
 
-alias ytaudio='yt-dlp -f bestaudio \
+alias yda='yt-dlp -f bestaudio \
   --extract-audio \
   --audio-format flac \
   --audio-quality 0 \
