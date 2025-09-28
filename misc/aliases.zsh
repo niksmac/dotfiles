@@ -64,13 +64,28 @@ alias meta_clean='exiftool -all= -overwrite_original'
 alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
 
 
-alias yda='yt-dlp -f bestaudio \
-  --extract-audio \
-  --audio-format flac \
-  --audio-quality 0 \
-  --write-thumbnail \
-  --embed-thumbnail \
-  --add-metadata \
-  --restrict-filenames \
-  --no-overwrites \
-  --no-post-overwrites'
+# Usage: ydla [audio_format] <youtube_url>
+# Example: ydla mp3 https://www.youtube.com/watch?v=xxxx
+ydla() {
+  f="${1:-flac}"
+  shift
+  yt-dlp -f bestaudio \
+    --extract-audio \
+    --audio-format "$f" \
+    --audio-quality 0 \
+    --write-thumbnail \
+    --embed-thumbnail \
+    --add-metadata \
+    --restrict-filenames \
+    --no-overwrites \
+    --no-post-overwrites \
+    --download-archive ".ydla-archive.txt" "$@" && \
+  file=$(ls -t *."$f" 2>/dev/null | head -n1)
+  [ -f "$file" ] && \
+  album=$(exiftool -s3 -Album "$file") && \
+  artist=$(exiftool -s3 -Artist "$file") && \
+  if [ -z "$album" ] && [ -n "$artist" ]; then
+    exiftool -overwrite_original "-Album=$artist" "$file" >/dev/null
+  fi
+}
+alias ydla=ydla

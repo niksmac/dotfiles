@@ -194,7 +194,7 @@
     "default_profile": "write",
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-sonnet-4"
+      "model": "claude-opus-4"
     },
     "default_width": 420,
     "inline_assistant_model": {
