@@ -231,6 +231,8 @@ mkdir -p ~/Library/Application\ Support/mpv
 ln -sf ~/.dotfiles/macos/mpv.conf ~/Library/Application\ Support/mpv/mpv.conf
 
 
+# displays app switcher on all the displays
+defaults write com.apple.dock appswitcher-all-displays -bool true
 
 killall Dock
 
