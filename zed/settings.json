@@ -1,4 +1,14 @@
 {
+  "use_system_window_tabs": true,
+  "debugger": {
+    "button": true
+  },
+  "diagnostics": {
+    "button": true
+  },
+  "status_bar": {
+    "active_language_button": true
+  },
   "context_servers": {
     "mcp-server-context7": {
       "source": "extension",
@@ -35,6 +45,7 @@
   "ui_font_size": 16,
   "vim_mode": false,
   "terminal": {
+    "button": true,
     "font_family": "Monaco",
     "blinking": "off",
     "font_size": 16,
@@ -48,6 +59,7 @@
     "modal_max_width": "medium"
   },
   "tabs": {
+    "file_icons": false,
     "close_position": "right",
     "git_status": true,
     "activate_on_close": "history",
@@ -120,6 +132,7 @@
     "button": false
   },
   "agent": {
+    "message_editor_min_lines": 6,
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "single_file_review": true,
@@ -194,12 +207,12 @@
     "default_profile": "write",
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-opus-4"
+      "model": "claude-sonnet-4"
     },
     "default_width": 420,
     "inline_assistant_model": {
-      "provider": "openai",
-      "model": "gpt-4.1"
+      "provider": "zed.dev",
+      "model": "claude-opus-4-1-thinking"
     },
     "commit_message_model": {
       "provider": "openai",
@@ -249,6 +262,7 @@
     }
   },
   "search": {
+    "button": true,
     "whole_word": true,
     "case_sensitive": true,
     "include_ignored": false,
