@@ -35,6 +35,7 @@ COMMON_PACKAGES=(
   fd # Better alternative to find
   bat # Better cat
   zsh
+  biome
 )
 
 # macOS specific packages
