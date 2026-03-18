@@ -46,6 +46,7 @@ MACOS_PACKAGES=(
   wrk
   imagemagick
   ffmpeg
+  opencode
 )
 
 # macOS cask apps
