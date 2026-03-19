@@ -220,7 +220,16 @@ defaults write org.m0k.transmission QuitWhenDone -bool true
 
 ## Use TouchID to Authenticate sudo on macOS
 
-sudo perl -pi -e 's/(pam_smartcard.so)/$1\nauth sufficient pam_tid.so/' /etc/pam.d/sudo
+grep -q 'pam_tid.so' /etc/pam.d/sudo || {
+  sudo cp /etc/pam.d/sudo /etc/pam.d/sudo.bak
+  sudo awk '
+    /^auth[[:space:]]+sufficient[[:space:]]+pam_smartcard\.so$/ {
+      print "auth       sufficient     pam_tid.so"
+    }
+    { print }
+  ' /etc/pam.d/sudo | sudo tee /etc/pam.d/sudo.new > /dev/null && \
+  sudo mv /etc/pam.d/sudo.new /etc/pam.d/sudo
+}
 
 
 # Setup mpv configurations for supporitng applications
