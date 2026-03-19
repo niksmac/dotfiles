@@ -80,10 +80,11 @@ plugins=(
 )
 
 zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
+zplug "zsh-users/zsh-autosuggestions"
 zplug "MichaelAquilina/zsh-you-should-use"
 zplug "peterhurford/up.zsh"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "b4b4r07/enhancd", use:init.sh
+zplug "b4b4r07/enhancd", use:"init.sh"
 
 if ! zplug check; then
   zplug install
@@ -99,13 +100,6 @@ export PATH="$(brew --prefix)/sbin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # set locale
 export LANG=en_US.UTF-8
