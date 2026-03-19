@@ -7,6 +7,6 @@
 
 
 # Install homebrew packages
-npm install -g docsify-cli nodemon pm2 serve
+npm install -g docsify-cli pm2 serve
 
 exit 0

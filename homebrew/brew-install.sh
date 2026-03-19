@@ -54,7 +54,6 @@ MACOS_CASKS=(
   iterm2
   firefox
   discord
-  telegram
   keepingyouawake
 )
 
