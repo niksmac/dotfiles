@@ -32,6 +32,10 @@ Before writing, the agent must infer and keep in mind:
    - Demonstrate Lightrains’s ability to deliver real outcomes
    - Change how the reader thinks about a problem or approach
    - Drive a next step: contact us, talk to sales, try a demo, download a resource
+3. Where should I save the file?
+   - Save all blog posts to: `/src/pages/blogs/`
+   - Filename format: kebab-case (e.g., scaling-rag-pipeline-qdrant-production.md)
+   - No uppercase, no spaces, use hyphens
 
 The post should make it obvious, within the first few paragraphs, who it is for and what they get out of it.
 
@@ -254,6 +258,7 @@ The agent must enforce these rules every time:
 8. **No changelog disguised as a blog**: Release notes and small tweaks go to changelog, not here.
 9. **Err on the side of depth**: Too detailed is safer than too shallow.
 10. **Write the post you wish existed** when you first tackled this problem.
+11. **File format verified:** Correct frontmatter structure, kebab-case filename, saved to `/src/pages/blogs/`
 
 ---
 
@@ -303,9 +308,44 @@ When using this skill, the agent should:
    - The core takeaway.
    - Where this fits in the content map (which of the 5 post types).
 
-This keeps the content opinionated, technically credible, and useful for both engineers and CXO-level readers who care about outcomes.
+### 14.1. Lightrains Blog File Format
 
+#### All blog posts must use this exact frontmatter structure:
+
+```markdown
 ---
+layout: '../../layouts/BlogLayout.astro'
+title: 'Your Blog Title Here'
+date: 'YYYY-MM-DD HH:MM:SS +0530'
+meta: 'filename.jpg'
+author: 'agent' # or real person's name
+excerpt: 'One-sentence summary for SEO and previews'
+subtitle: 'Longer summary (can be 1-2 sentences) describing what readers will learn'
+tags: ['Tag1', 'Tag2', 'Tag3']
+---
+```
+
+**Frontmatter field rules:**
+
+- layout: Always ../../layouts/BlogLayout.astro (relative path from blogs folder)
+- title: Use the same working title from the outline, in double quotes
+- date: Current date in IST timezone format YYYY-MM-DD HH:MM:SS +0530
+- meta: Image filename without path, must match .jpg file in images folder
+- author: Use 'agent' for now, or real name if available
+- excerpt: 15-25 words, describes value proposition
+- subtitle: 25-50 words, more descriptive, can match excerpt or expand
+- tags: Array of 2-4 relevant tags, capitalize first letter of each
+
+**Markdown formatting rules:**
+
+- Use ## for all section headings (no # H1, it's in title)
+- Use ### for subsections
+- Use **bold** for emphasis, not _italics_
+- Use > blockquote for callouts and highlights
+- Use code blocks with language identifier: javascript, bash, etc.
+- Use ASCII diagrams or mermaid for system architecture
+- Include author notes at the end (for internal use only):
+- This keeps the content opinionated, technically credible, and useful for both engineers and CXO-level readers who care about outcomes.
 
 Do you already have 2–3 flagship topics or case studies in mind that you want this skill to be especially good at (for example, AI agents in enterprise, a specific blockchain project, or a standout client win)?
 
