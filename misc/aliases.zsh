@@ -116,5 +116,3 @@ ydla() {
     exiftool -overwrite_original "-Album=$artist" "$file" >/dev/null
   fi
 }
-
-alias ydla=ydla

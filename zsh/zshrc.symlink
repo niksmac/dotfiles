@@ -48,11 +48,6 @@ unset config_files
 export PATH=$PATH:$HOME/.npm-packages/bin
 
 export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="/usr/local/opt/node@8/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-export NVM_LAZY=1
-export NVM_AUTOLOAD=1
 
 # Install Ruby Gems to ~/gems
 export GEM_HOME=$HOME/gems
@@ -73,7 +68,7 @@ plugins=(
  git
  macos
  git-flow-avh
- nvm
+ fnm
  thefuck
  yarn
  rand-quote
@@ -97,9 +92,7 @@ export PATH="$(brew --prefix)/opt/ruby/bin:$PATH"
 export PATH="$HOME/.gem/ruby/3.0.0/bin:$PATH"
 export PATH="$(brew --prefix)/sbin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+eval "$(fnm env --use-on-cd)"
 
 # set locale
 export LANG=en_US.UTF-8
