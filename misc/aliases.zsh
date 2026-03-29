@@ -116,3 +116,7 @@ ydla() {
     exiftool -overwrite_original "-Album=$artist" "$file" >/dev/null
   fi
 }
+
+## Force-kill any process using a given port
+# Example: freeport 3000 or freeport 8080
+freeport() { sudo lsof -t -i:$1 | xargs -r sudo kill -9; }
