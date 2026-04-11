@@ -14,12 +14,7 @@ for skill_path in "$SKILLS_DIR"/*/SKILL.md; do
     target_path="$TARGET_BASE/$skill_name/SKILL.md"
 
     mkdir -p "$(dirname "$target_path")"
-    
-    if [ -L "$target_path" ] && [ "$(readlink -f "$target_path")" = "$(readlink -f "$skill_path")" ]; then
-        echo "Already linked: $skill_name"
-        continue
-    fi
-    
+
     rm -f "$target_path"
     ln -s "$skill_path" "$target_path"
     echo "Linked: $skill_name"
