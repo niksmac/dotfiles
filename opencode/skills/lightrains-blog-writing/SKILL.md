@@ -16,6 +16,22 @@ Trigger this skill when the user mentions:
 
 If it could plausibly live on the Lightrains blog, use this skill.
 
+## Before Starting
+
+**Check for context first:**
+If `marketing-context.md` exists, read it. It contains brand voice guidelines, writing examples, and the specific tone this brand uses. That context is your voice blueprint. Use it — don't improvise a voice when the brief already defines one.
+
+Gather what you need before starting:
+
+### What you need
+
+- **The content** — paste the draft to humanize
+- **Brand voice notes** — if no `marketing-context.md`, ask: "Is your voice direct/casual/technical/irreverent? Give me one example of writing you love."
+- **Audience** — who reads this? (This changes what "human" sounds like)
+- **Goal** — what should this piece do? (Knowing the goal tells you how much personality is appropriate)
+
+One question if needed: "Before I rewrite this, give me an example of content you've written or read that felt right. Specific is better than descriptive."
+
 ---
 
 ## 1. Audience and Intent
@@ -76,6 +92,7 @@ The following phrases must not appear:
   - "That being said", "It's worth noting that", "At the end of the day"
   - "Without further ado", "As you might know"
 - "In this blog post, we will explore..." (just start)
+- **Em-dashes (--)**: Never use em-dashes in content. Replace with commas, periods, or restructure sentences. This applies to both regular text and frontmatter.
 
 If you ever reach for one of these, rewrite with something concrete and specific.
 
@@ -248,17 +265,18 @@ If none of these are present, the content probably belongs in docs or changelog,
 
 The agent must enforce these rules every time:
 
-1. **Real byline**: Use a real person’s name and role (no "The Lightrains Team").
+1. **Real byline**: Use a real person's name and role (no "The Lightrains Team").
 2. **Working code only**: No pseudo-code masquerading as production unless clearly labeled.
-3. **No "we’re excited to announce"** or other banned phrases.
-4. **Systems → diagram**: Any multi-component system must have a diagram or at least a clear description of one.
-5. **Performance claims → numbers**: Always include baseline and after numbers, and conditions.
-6. **Decisions → alternatives**: If you mention a decision, mention at least one alternative and why it lost.
+3. **No "we're excited to announce"** or other banned phrases.
+4. **Systems diagram**: Any multi-component system must have a diagram or at least a clear description of one.
+5. **Performance claims numbers**: Always include baseline and after numbers, and conditions.
+6. **Decisions alternatives**: If you mention a decision, mention at least one alternative and why it lost.
 7. **Audience clarity**: The author should be able to answer "Who is this for?" in one sentence.
 8. **No changelog disguised as a blog**: Release notes and small tweaks go to changelog, not here.
 9. **Err on the side of depth**: Too detailed is safer than too shallow.
 10. **Write the post you wish existed** when you first tackled this problem.
-11. **File format verified:** Correct frontmatter structure, kebab-case filename, saved to `/src/pages/blogs/`
+11. **File format verified**: Correct frontmatter structure, kebab-case filename, saved to `/src/pages/blogs/`
+12. **No em-dashes**: Check entire post (including frontmatter) for em-dashes (--). Replace with commas, periods, or restructure.
 
 ---
 
