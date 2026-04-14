@@ -58,6 +58,8 @@ alias ff="open -n -a Firefox.app --args -no-remote -P"
 
 ## Add code alias
 alias code='/Applications/Zed.app/Contents/MacOS/zed'
+alias codex='open . && zed . && opencode'
+alias oc='opencode'
 
 ## Remove metadata
 alias meta_clean='exiftool -all= -overwrite_original'
