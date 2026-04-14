@@ -15,7 +15,6 @@ alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resou
 alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | pbcopy | echo "Password copied to clipboard"'
 
 # NVM
-alias loadnvm='[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh" && nvm use'
 alias brewit='brew update && brew upgrade && brew cleanup'
 
 alias pushall='for i in `git remote`; do git push $i; done;'
@@ -38,14 +37,6 @@ alias free='free -m'
 
 # Flush DNS cache
 alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
-
-
-## Start projects
-
-# - react
-alias projr="open . && code . && yarn start"
-# - fastify
-alias projf="open . && code . && yarn dev"
 
 
 ## Generate secret key
