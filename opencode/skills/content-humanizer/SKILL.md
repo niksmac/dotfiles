@@ -64,6 +64,7 @@ The model loves certain words because they appear frequently in its training dat
 - "navigate" (metaphorical: "navigate this challenge")
 - "robust," "comprehensive," "holistic"
 - "foster," "facilitate," "ensure"
+- "at its core"
 
 **2. Hedging Chains** 🔴
 AI hedges constantly. It hedges because it doesn't know if it's right. Humans hedge sometimes — but not in every sentence.

@@ -325,6 +325,16 @@ When using this skill, the agent should:
    - Who this is for.
    - The core takeaway.
    - Where this fits in the content map (which of the 5 post types).
+6. Not use overused terms like;
+   - "delve," "delve into," "delve deeper"
+   - "landscape" (as in "the current AI landscape")
+   - "crucial," "vital," "pivotal"
+   - "leverage" (when "use" works fine)
+   - "furthermore," "moreover," "in addition"
+   - "navigate" (metaphorical: "navigate this challenge")
+   - "robust," "comprehensive," "holistic"
+   - "foster," "facilitate," "ensure"
+   - "at its core"
 
 ### 14.1. Lightrains Blog File Format
 
@@ -366,9 +376,3 @@ tags: ['Tag1', 'Tag2', 'Tag3']
 - This keeps the content opinionated, technically credible, and useful for both engineers and CXO-level readers who care about outcomes.
 
 Do you already have 2–3 flagship topics or case studies in mind that you want this skill to be especially good at (for example, AI agents in enterprise, a specific blockchain project, or a standout client win)?
-
-<user_response_autocomplete>
-Yes focus on AI agents for enterprises
-Yes highlight our standout blockchain case study
-I want it tuned for multiple flagship topics
-</user_response_autocomplete>
