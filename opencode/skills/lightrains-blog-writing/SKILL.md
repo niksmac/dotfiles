@@ -216,7 +216,73 @@ When in doubt, rewrite the title after the draft is done to reflect the sharpest
 
 ---
 
-## 9. Closings That Create Motion
+## 9. SEO: Keywords, Meta, and Internal Linking
+
+### Keyword Strategy
+
+Before drafting, the agent must:
+
+1. **Identify a primary keyword** (one per post): the specific term your target reader would search for. Prefer problem-oriented or solution-oriented phrases over generic category terms.
+   - Good: "AI agent orchestration production patterns"
+   - Bad: "AI agents"
+
+2. **Identify 2-3 secondary keywords**: closely related terms that support the primary keyword. These appear naturally in headings, image alt text, and body copy.
+
+3. **Keyword placement rules:**
+   - Primary keyword must appear in: the title, the first 150 words, at least one `##` heading, and the `excerpt` frontmatter field.
+   - Secondary keywords should be distributed across subheadings and body paragraphs. Never force them; reword the heading so the keyword fits naturally.
+
+4. **No keyword stuffing.** If a keyword feels awkward in context, remove it. Reader clarity always wins over search density.
+
+### Meta Optimization
+
+Every post must optimize these fields:
+
+- **Title tag** (the `title` frontmatter): 50-60 characters. Lead with the primary keyword when possible. Make it specific and click-worthy (see Section 8 for title quality rules).
+- **Excerpt** (`excerpt` frontmatter): 15-25 words. Include the primary keyword once. This doubles as the meta description in search results.
+- **Subtitle** (`subtitle` frontmatter): 25-50 words. Expand on the excerpt, include a secondary keyword if it fits naturally.
+- **URL slug** (derived from filename): kebab-case, include primary keyword, no stop words, no dates. Keep it under 5 hyphenated segments.
+  - Good: `ai-agent-orchestration-production-patterns.md`
+  - Bad: `how-we-built-ai-agents-for-our-client-in-2024.md`
+
+### Internal Linking
+
+Internal links connect blog posts to high-value pages on the site. They drive readers toward conversion points and signal topic authority to search engines.
+
+**Before writing or editing any blog post, the agent must:**
+
+1. **Scan the project directory structure** to map the site. Use `list_directory` and `find_path` to discover:
+   - Service pages (commonly under `/src/pages/services/` or similar)
+   - Offering or solution pages (e.g., `/src/pages/solutions/`, `/src/pages/offerings/`)
+   - Feature or product pages (e.g., `/src/pages/features/`, `/src/pages/products/`)
+   - Other blog posts in `/src/pages/blogs/`
+
+2. **Identify pillar content.** A pillar page is any top-level page that represents a core business capability. Detect them by:
+   - Directory: pages in `/services/`, `/solutions/`, `/offerings/`, `/features/`, `/products/`
+   - Filename: matches a core business term (e.g., `ai-consulting.astro`, `blockchain-development.astro`, `smart-contract-audit.astro`)
+   - Navigation: pages linked from main nav or footer layout components
+
+3. **Build an internal link map** for the current post. Identify 3-5 relevant targets:
+   - Services or solutions related to the post's subject.
+   - Features or capabilities mentioned or demonstrated in the post.
+   - Adjacent blog posts covering related topics.
+
+4. **Insert contextual internal links:**
+   - Place 2-4 internal links to pillar pages per post (not counting blog-to-blog links).
+   - Link from relevant body text using descriptive anchor text. Never use "click here" or "learn more."
+     - Good: "our [AI agent development services](/services/ai-agents) help teams..."
+     - Bad: "[click here](/services/ai-agents) to learn about our AI services"
+   - Link to at least one service or offering page within the first half of the post.
+   - Link to at least one feature or capability page in the second half.
+   - Cross-link to 1-2 related blog posts where the connection adds value.
+
+5. **Link format:** Use the resolved URL path for consistency.
+   - Blog to service page: `/services/ai-agents`
+   - Blog to blog: `/blogs/related-post-slug`
+
+---
+
+## 10. Closings That Create Motion
 
 Never end with generic hype ("We can’t wait to see what you build!") or a recap of headings.
 
@@ -228,7 +294,7 @@ Close with one or more of:
 
 ---
 
-## 10. Lightrains Content Map (Top 5 Post Types)
+## 11. Lightrains Content Map (Top 5 Post Types)
 
 Use this table to pick the right format before writing.
 
@@ -242,7 +308,7 @@ Use this table to pick the right format before writing.
 
 ---
 
-## 11. The "Would I Share This?" Test
+## 12. The "Would I Share This?" Test
 
 Before considering a draft "done", the agent must check:
 
@@ -261,7 +327,7 @@ If none of these are present, the content probably belongs in docs or changelog,
 
 ---
 
-## 12. Non-Negotiables (Checklist)
+## 13. Non-Negotiables (Checklist)
 
 The agent must enforce these rules every time:
 
@@ -277,10 +343,13 @@ The agent must enforce these rules every time:
 10. **Write the post you wish existed** when you first tackled this problem.
 11. **File format verified**: Correct frontmatter structure, kebab-case filename, saved to `/src/pages/blogs/`
 12. **No em-dashes**: Check entire post (including frontmatter) for em-dashes (--). Replace with commas, periods, or restructure.
+13. **Primary keyword placed**: Title, first 150 words, one ## heading, and excerpt all contain the primary keyword.
+14. **Internal links present**: At least 2 links to pillar pages (services, offerings, features) and 1 cross-link to a related blog post.
+15. **URL slug is clean**: Kebab-case filename with primary keyword, no dates, no stop words, under 5 segments.
 
 ---
 
-## 13. Review and Editing Workflow
+## 14. Review and Editing Workflow
 
 When the agent is asked to review or edit a draft, it should:
 
@@ -311,7 +380,7 @@ When giving feedback:
 
 ---
 
-## 14. How the Agent Should Respond
+## 15. How the Agent Should Respond
 
 When using this skill, the agent should:
 
@@ -336,7 +405,7 @@ When using this skill, the agent should:
    - "foster," "facilitate," "ensure"
    - "at its core"
 
-### 14.1. Lightrains Blog File Format
+### 15.1. Lightrains Blog File Format
 
 #### All blog posts must use this exact frontmatter structure:
 
