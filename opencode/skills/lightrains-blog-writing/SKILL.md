@@ -420,7 +420,7 @@ author: 'agent' # or real person's name
 excerpt: 'One-sentence summary for SEO and previews'
 subtitle: 'Longer summary (can be 1-2 sentences) describing what readers will learn'
 tags: ['Tag1', 'Tag2', 'Tag3']
-faqs: []
+faqItems: []
 ---
 ```
 
@@ -435,10 +435,11 @@ faqs: []
 - subtitle: 25-50 words, more descriptive, can match excerpt or expand
 - tags: Array of 2-4 relevant tags, capitalize first letter of each
 - faqs: Array of FAQ objects. Leave as `[]` unless the user explicitly asks for FAQs. When requested, use this structure:
+
   ```yaml
-  faqs:
-    - question: 'What is the main benefit of X?'
-      answer: 'Short, direct answer in the Lightrains voice (2-4 sentences max). No fluff.'
+  faqItems:
+    - q: 'What is the main benefit of X?'
+      a: 'Short, direct answer in the Lightrains voice (2-4 sentences max). No fluff.'
   ```
 
   - Generate 3-6 FAQs that address real reader questions, not softball filler.
