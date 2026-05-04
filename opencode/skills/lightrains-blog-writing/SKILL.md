@@ -412,13 +412,15 @@ When using this skill, the agent should:
 ```markdown
 ---
 layout: '../../layouts/BlogLayout.astro'
-title: 'Your Blog Title Here'
+title: 'Blog Title Here SEO optimized'
+heroText: 'short, punchy, headline-style (30–55 chars)' # Example: `"2026 Outsourcing Trends: How AI-First Offshore Teams Help You Ship Faster"` → `"Then vs Now: Outsourcing 2026"`
 date: 'YYYY-MM-DD HH:MM:SS +0530'
 meta: 'filename.jpg'
 author: 'agent' # or real person's name
 excerpt: 'One-sentence summary for SEO and previews'
 subtitle: 'Longer summary (can be 1-2 sentences) describing what readers will learn'
 tags: ['Tag1', 'Tag2', 'Tag3']
+faqs: []
 ---
 ```
 
@@ -432,6 +434,17 @@ tags: ['Tag1', 'Tag2', 'Tag3']
 - excerpt: 15-25 words, describes value proposition
 - subtitle: 25-50 words, more descriptive, can match excerpt or expand
 - tags: Array of 2-4 relevant tags, capitalize first letter of each
+- faqs: Array of FAQ objects. Leave as `[]` unless the user explicitly asks for FAQs. When requested, use this structure:
+  ```yaml
+  faqs:
+    - question: 'What is the main benefit of X?'
+      answer: 'Short, direct answer in the Lightrains voice (2-4 sentences max). No fluff.'
+  ```
+
+  - Generate 3-6 FAQs that address real reader questions, not softball filler.
+  - Each answer must be factually grounded in the post content.
+  - Use the same voice and banned-language rules as the rest of the post.
+  - Prioritize questions that a reader would actually search for (SEO-minded).
 
 **Markdown formatting rules:**
 

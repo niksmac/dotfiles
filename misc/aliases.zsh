@@ -113,3 +113,7 @@ ydla() {
 ## Force-kill any process using a given port
 # Example: freeport 3000 or freeport 8080
 freeport() { sudo lsof -t -i:$1 | xargs -r sudo kill -9; }
+
+## Cloudflare quick tunnel
+# Usage: cft 3000 (defaults to port 3000)
+cft() { cloudflared tunnel --url http://localhost:${1:-3000} 2>&1 | grep --line-buffered "trycloudflare.com"; }
