@@ -30,7 +30,7 @@ alias prettify="prettier --write '**/*.{ts,js,jsx,css,html}'"
 alias cp="cp -i"
 
 # Human-readable sizes
-alias df='df -h']
+alias df='df -h'
 
 # Show sizes in MB
 alias free='free -m'

@@ -1,8 +1,34 @@
 {
+  "cli_default_open_behavior": "existing_window",
+  "collaboration_panel": {
+    "dock": "right"
+  },
+  "ui_font_family": "Monaco",
   "languages": {
-    "JavaScript": { "formatter": { "language_server": { "name": "biome" } } },
-    "TypeScript": { "formatter": { "language_server": { "name": "biome" } } },
-    "CSS": { "formatter": { "language_server": { "name": "biome" } } }
+    "JavaScript": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "TypeScript": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    },
+    "CSS": {
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
   },
   "lsp": {
     "vtsls": {
@@ -38,7 +64,7 @@
     "button": true
   },
   "diagnostics": {
-    "button": true
+    "button": false
   },
   "status_bar": {
     "active_language_button": true
@@ -46,40 +72,24 @@
   "context_servers": {
     "mcp-server-context7": {
       "enabled": true,
-      "settings": {
-        "default_minimum_tokens": "8000"
-      }
+      "remote": false,
+      "settings": {}
     }
   },
   "language_models": {
     "openai_compatible": {
-      "Z.AI": {
+      "Z.ai": {
         "api_url": "https://api.z.ai/api/coding/paas/v4",
         "available_models": [
           {
-            "name": "glm-4.7",
-            "display_name": "GLM-4.7",
+            "name": "GLM-5.1",
             "max_tokens": 200000,
-            "max_output_tokens": 128000,
-            "max_completion_tokens": 128000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
             "capabilities": {
               "tools": true,
               "images": false,
               "parallel_tool_calls": true,
-              "prompt_cache_key": true,
-              "chat_completions": true
-            }
-          },
-          {
-            "name": "glm-4.7-flash",
-            "display_name": "GLM-4.7-Flash",
-            "max_tokens": 200000,
-            "max_output_tokens": 128000,
-            "max_completion_tokens": 128000,
-            "capabilities": {
-              "tools": false,
-              "images": false,
-              "parallel_tool_calls": false,
               "prompt_cache_key": true,
               "chat_completions": true
             }
@@ -96,6 +106,7 @@
   "show_edit_predictions": true,
   "icon_theme": "Warm Charmed Icons",
   "edit_predictions": {
+    "provider": "zed",
     "mode": "eager"
   },
   "disable_ai": false,
@@ -121,9 +132,6 @@
     "font_size": 16,
     "working_directory": "current_project_directory",
     "dock": "bottom"
-  },
-  "features": {
-    "edit_prediction_provider": "zed"
   },
   "file_finder": {
     "modal_max_width": "medium"
@@ -183,7 +191,7 @@
     "share_on_join": false
   },
   "title_bar": {
-    "show_branch_icon": true,
+    "show_branch_status_icon": true,
     "show_branch_name": true,
     "show_project_items": true,
     "show_onboarding_banner": false,
@@ -199,10 +207,11 @@
     "diagnostics": false,
     "metrics": false
   },
-  "notification_panel": {
-    "button": false
-  },
   "agent": {
+    "dock": "right",
+    "tool_permissions": {
+      "default": "allow"
+    },
     "show_turn_stats": true,
     "favorite_models": [
       {
@@ -210,7 +219,7 @@
         "model": "glm-4.6"
       },
       {
-        "provider": "Z.AI",
+        "provider": "Z.ai",
         "model": "GLM-4.7"
       }
     ],
@@ -218,12 +227,13 @@
     "enable_feedback": false,
     "message_editor_min_lines": 10,
     "use_modifier_to_send": true,
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
     "single_file_review": true,
     "profiles": {
       "ask": {
         "name": "Ask",
         "tools": {
+          "search_web": true,
           "contents": true,
           "diagnostics": true,
           "fetch": true,
@@ -233,8 +243,7 @@
           "read_file": true,
           "open": false,
           "grep": true,
-          "thinking": true,
-          "web_search": true
+          "thinking": true
         },
         "enable_all_context_servers": false,
         "context_servers": {}
@@ -265,6 +274,7 @@
       "write": {
         "name": "Write",
         "tools": {
+          "search_web": false,
           "copy_path": true,
           "create_directory": true,
           "create_file": true,
@@ -280,18 +290,16 @@
           "grep": true,
           "terminal": false,
           "thinking": true,
-          "web_search": false,
           "open": true
         },
         "enable_all_context_servers": true,
         "context_servers": {}
       }
     },
-    "always_allow_tool_actions": true,
     "default_profile": "write",
     "default_model": {
-      "provider": "Z.AI",
-      "model": "glm-4.7"
+      "provider": "Z.ai",
+      "model": "GLM-5.1"
     },
     "default_width": 420,
     "inline_assistant_model": {
@@ -308,12 +316,14 @@
     }
   },
   "git_panel": {
+    "dock": "left",
+    "tree_view": false,
     "default_width": 240
   },
   "outline_panel": {
     "button": false,
     "default_width": 240,
-    "dock": "left",
+    "dock": "right",
     "file_icons": true,
     "folder_icons": true,
     "git_status": true,
