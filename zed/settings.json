@@ -95,6 +95,24 @@
             }
           }
         ]
+      },
+      "opencode": {
+        "api_url": "https://opencode.ai/zen/v1/chat/completions",
+        "available_models": [
+          {
+            "name": "big-pickle",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true
+            }
+          }
+        ]
       }
     }
   },
@@ -223,7 +241,18 @@
         "model": "GLM-4.7"
       }
     ],
-    "notify_when_agent_waiting": "all_screens",
+    "default_model": {
+      "provider": "Z.ai",
+      "model": "GLM-5.1"
+    },
+    "commit_message_model": {
+      "provider": "opencode",
+      "model": "big-pickle"
+    },
+    "thread_summary_model": {
+      "provider": "openai",
+      "model": "gpt-4o-mini"
+    },
     "enable_feedback": false,
     "message_editor_min_lines": 10,
     "use_modifier_to_send": true,
@@ -247,29 +276,6 @@
         },
         "enable_all_context_servers": false,
         "context_servers": {}
-      },
-      "minimal-zed": {
-        "name": "Minimal - Zed",
-        "tools": {
-          "open": true,
-          "find_path": true,
-          "grep": true,
-          "now": true,
-          "read_file": true
-        },
-        "enable_all_context_servers": false,
-        "context_servers": {
-          "mcp-server-context7": {
-            "tools": {
-              "get-library-docs": true
-            }
-          },
-          "mcp-server-sequential-thinking": {
-            "tools": {
-              "sequentialthinking": true
-            }
-          }
-        }
       },
       "write": {
         "name": "Write",
@@ -297,23 +303,7 @@
       }
     },
     "default_profile": "write",
-    "default_model": {
-      "provider": "Z.ai",
-      "model": "GLM-5.1"
-    },
-    "default_width": 420,
-    "inline_assistant_model": {
-      "provider": "Z.AI",
-      "model": "GLM-4.5-Air"
-    },
-    "commit_message_model": {
-      "provider": "openai",
-      "model": "gpt-4o-mini"
-    },
-    "thread_summary_model": {
-      "provider": "openai",
-      "model": "gpt-4o-mini"
-    }
+    "default_width": 420
   },
   "git_panel": {
     "dock": "left",
