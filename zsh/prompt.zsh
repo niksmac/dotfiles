@@ -46,32 +46,43 @@ need_push () {
   fi
 }
 
-ruby_version() {
-  if (( $+commands[rbenv] ))
+node_version() {
+  if (( $+commands[fnm] ))
   then
-    echo "$(rbenv version | awk '{print $1}')"
-  fi
-
-  if (( $+commands[rvm-prompt] ))
+    echo "$(fnm current 2>/dev/null | sed 's/^v//')"
+  elif (( $+commands[node] ))
   then
-    echo "$(rvm-prompt | awk '{print $1}')"
+    echo "$(node --version 2>/dev/null | sed 's/^v//')"
   fi
 }
 
-rb_prompt() {
-  if ! [[ -z "$(ruby_version)" ]]
+python_env() {
+  if [[ -n "$CONDA_DEFAULT_ENV" ]]
   then
-    echo "%{$fg_bold[yellow]%}$(ruby_version)%{$reset_color%} "
-  else
-    echo ""
+    echo "conda:$CONDA_DEFAULT_ENV"
+  elif [[ -n "$VIRTUAL_ENV" ]]
+  then
+    echo "venv:$(basename $VIRTUAL_ENV)"
+  elif (( $+commands[pyenv] ))
+  then
+    echo "$(pyenv version-name 2>/dev/null)"
   fi
+}
+
+runtime_prompt() {
+  local parts=()
+  local nv="$(node_version)"
+  local pv="$(python_env)"
+  [[ -n "$nv" ]] && parts+="%{$fg_bold[green]%}node@$nv%{$reset_color%}"
+  [[ -n "$pv" ]] && parts+="%{$fg_bold[yellow]%}$pv%{$reset_color%}"
+  echo "${(j: :)parts}"
 }
 
 directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(rb_prompt)in $(directory_name) $(git_dirty)$(need_push)\n› '
+export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push) $(runtime_prompt)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
