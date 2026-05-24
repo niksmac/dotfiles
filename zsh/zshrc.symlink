@@ -107,3 +107,6 @@ export LC_CTYPE=en_US.UTF-8
 
 # fnm
 eval "$(fnm env --use-on-cd)"
+
+# Pi
+export PATH="/Users/niksmac/.local/share/fnm/node-versions/v24.15.0/installation/bin:$PATH"
