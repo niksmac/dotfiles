@@ -4,20 +4,24 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_DIR="$SCRIPT_DIR/skills"
-TARGET_BASE="$HOME/.config/opencode/skills"
+CONFIG_DIR="$HOME/.config/opencode"
 
-mkdir -p "$TARGET_BASE"
+SKILLS_TARGET="$CONFIG_DIR/skills"
+mkdir -p "$SKILLS_TARGET"
 
 for skill_path in "$SKILLS_DIR"/*/SKILL.md; do
     [ -e "$skill_path" ] || continue
     skill_name="$(basename "$(dirname "$skill_path")")"
-    target_path="$TARGET_BASE/$skill_name/SKILL.md"
+    target_path="$SKILLS_TARGET/$skill_name/SKILL.md"
 
     mkdir -p "$(dirname "$target_path")"
-
     rm -f "$target_path"
     ln -s "$skill_path" "$target_path"
     echo "Linked: $skill_name"
 done
+
+rm -f "$CONFIG_DIR/opencode.json"
+ln -s "$SCRIPT_DIR/opencode.json" "$CONFIG_DIR/opencode.json"
+echo "Linked: opencode.json"
 
 echo "Done!"
