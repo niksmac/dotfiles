@@ -1,6 +1,8 @@
 ---
 name: lp-implementation-builder
-description: Implement the approved landing page in code, reusing the project’s stack, components, and design system.
+description: Implement the approved landing page in code, reusing the project's stack, components, and design system.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-implementation-builder

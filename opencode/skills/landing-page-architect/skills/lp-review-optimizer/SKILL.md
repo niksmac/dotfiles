@@ -1,6 +1,8 @@
 ---
 name: lp-review-optimizer
 description: Review the implemented page for UX, clarity, trust, conversion, and suggest high-impact improvements.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-review-optimizer

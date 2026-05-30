@@ -1,6 +1,8 @@
 ---
 name: lp-ux-a11y-audit
 description: Run a lightweight accessibility audit on the landing page and identify semantic, contrast, keyboard, and form issues.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-ux-a11y-audit

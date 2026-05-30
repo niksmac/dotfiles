@@ -1,6 +1,8 @@
 ---
 name: lp-project-auditor
 description: Read the current project to identify the tech stack, design system, reusable UI patterns, and constraints before planning a landing page.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-project-auditor

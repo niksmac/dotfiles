@@ -1,6 +1,8 @@
 ---
 name: landing-page-architect
 description: Orchestrate a family of landing-page skills to plan, design, and implement high-converting pages with an explicit approval gate before code changes.
+metadata:
+  author: github.com/niksmac
 ---
 
 # Landing Page Architect

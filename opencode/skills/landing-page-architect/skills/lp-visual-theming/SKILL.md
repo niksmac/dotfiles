@@ -1,6 +1,8 @@
 ---
 name: lp-visual-theming
 description: Map the approved wireframe to existing components and design tokens so the landing page feels native to the project.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-visual-theming

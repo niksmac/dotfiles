@@ -1,6 +1,8 @@
 ---
 name: lp-copy-wireframer
 description: Produce a low-fidelity wireframe and copy outline for each landing-page section.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-copy-wireframer

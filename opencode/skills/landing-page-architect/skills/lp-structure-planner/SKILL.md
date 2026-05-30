@@ -1,6 +1,8 @@
 ---
 name: lp-structure-planner
 description: Choose page type and plan section order using landing-page and homepage usability best practices.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-structure-planner

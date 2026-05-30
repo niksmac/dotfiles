@@ -1,6 +1,8 @@
 ---
 name: lp-intent-mapper
 description: Clarify and structure a landing-page or homepage request into a precise, confirmed brief that downstream skills can use.
+metadata:
+  author: github.com/niksmac
 ---
 
 # lp-intent-mapper

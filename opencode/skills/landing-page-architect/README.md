@@ -1,6 +1,6 @@
 # Landing Page Architect Skills
 
-Anthropic-style Agent Skills for planning, designing, and implementing high‑converting landing pages (and homepage‑like entry pages).
+Agent Skills for planning, designing, and implementing high‑converting landing pages (and homepage‑like entry pages).
 
 The bundle is designed as a **composable skill family**:
 
@@ -17,32 +17,34 @@ The bundle is designed as a **composable skill family**:
 ## Structure
 
 ```text
-skills/
-  landing-page-architect/
-    SKILL.md
-  lp-intent-mapper/
-    SKILL.md
-  lp-project-auditor/
-    SKILL.md
-  lp-structure-planner/
-    SKILL.md
-  lp-copy-wireframer/
-    SKILL.md
-  lp-visual-theming/
-    SKILL.md
-  lp-implementation-builder/
-    SKILL.md
-  lp-review-optimizer/
-    SKILL.md
-  lp-ux-a11y-audit/
-    SKILL.md
+landing-page-architect/
+├── SKILL.md
+├── index.md
+├── README.md
+└── skills/
+    ├── lp-intent-mapper/
+    │   └── SKILL.md
+    ├── lp-project-auditor/
+    │   └── SKILL.md
+    ├── lp-structure-planner/
+    │   └── SKILL.md
+    ├── lp-copy-wireframer/
+    │   └── SKILL.md
+    ├── lp-visual-theming/
+    │   └── SKILL.md
+    ├── lp-implementation-builder/
+    │   └── SKILL.md
+    ├── lp-review-optimizer/
+    │   └── SKILL.md
+    └── lp-ux-a11y-audit/
+        └── SKILL.md
 ```
 
-Each `SKILL.md` follows the Anthropic pattern: frontmatter (`name`, `description`) plus markdown instructions, examples, and delegation rules.[web:46][web:43]
+Each `SKILL.md` follows the [Agent Skills](https://agentskills.io) format: frontmatter (`name`, `description`) plus markdown instructions, examples, and delegation rules.
 
 ## Usage
 
-1. Install this repo (or copy individual skills) into your Claude Skills setup.
+1. Install this repo (or copy individual skills) into your agent's skills directory.
 2. Load **`landing-page-architect`** in your agent.
 3. Let it:
    - interview you (`lp-intent-mapper`),
