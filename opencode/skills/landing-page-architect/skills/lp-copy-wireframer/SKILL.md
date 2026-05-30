@@ -1,8 +1,9 @@
 ---
 name: lp-copy-wireframer
-description: Produce a low-fidelity wireframe and copy outline for each landing-page section.
+description: Produce a low-fidelity wireframe and copy outline for each landing-page section, including layout, headlines, benefits, form fields, and microcopy. Use when the page structure is set and you need per-section content direction, or when the user asks for "copy," "content," or "wireframes."
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-copy-wireframer

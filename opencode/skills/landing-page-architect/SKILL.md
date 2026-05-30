@@ -1,8 +1,9 @@
 ---
 name: landing-page-architect
-description: Orchestrate a family of landing-page skills to plan, design, and implement high-converting pages with an explicit approval gate before code changes.
+description: Orchestrate a family of sub-skills to plan, design, and implement high-converting landing pages and homepage-like entry pages. Use when the user asks to create or redesign a landing page, campaign page, or homepage, even if they don't specify the page type or goal upfront.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # Landing Page Architect
@@ -20,14 +21,14 @@ by delegating work to subskills instead of doing everything yourself.
 
 Subskills you coordinate:
 
-- `lp-intent-mapper`
-- `lp-project-auditor`
-- `lp-structure-planner`
-- `lp-copy-wireframer`
-- `lp-visual-theming`
-- `lp-implementation-builder`
-- `lp-review-optimizer`
-- `lp-ux-a11y-audit`
+- `skills/lp-intent-mapper/SKILL.md`
+- `skills/lp-project-auditor/SKILL.md`
+- `skills/lp-structure-planner/SKILL.md`
+- `skills/lp-copy-wireframer/SKILL.md`
+- `skills/lp-visual-theming/SKILL.md`
+- `skills/lp-implementation-builder/SKILL.md`
+- `skills/lp-review-optimizer/SKILL.md`
+- `skills/lp-ux-a11y-audit/SKILL.md`
 
 ---
 
@@ -41,8 +42,8 @@ Use `landing-page-architect` whenever:
 
 Do **not** use this skill when:
 
-- The user only wants copy tweaks for a single section → you can answer directly or call `lp-copy-wireframer` alone.
-- The user wants general UX advice, not implementation → consider `lp-review-optimizer` without the build step.
+- The user only wants copy tweaks for a single section → you can answer directly or call `skills/lp-copy-wireframer/SKILL.md` alone.
+- The user wants general UX advice, not implementation → consider `skills/lp-review-optimizer/SKILL.md` without the build step.
 
 ---
 
@@ -50,27 +51,27 @@ Do **not** use this skill when:
 
 Always follow this high‑level sequence:
 
-1. **Intent → `lp-intent-mapper`**
-2. **Project context → `lp-project-auditor`**
-3. **Structure → `lp-structure-planner`**
-4. **Wireframe & copy outline → `lp-copy-wireframer`**
+1. **Intent → `skills/lp-intent-mapper/SKILL.md`**
+2. **Project context → `skills/lp-project-auditor/SKILL.md`**
+3. **Structure → `skills/lp-structure-planner/SKILL.md`**
+4. **Wireframe & copy outline → `skills/lp-copy-wireframer/SKILL.md`**
 5. **Approval gate (no code yet)**
-6. **Visual theming → `lp-visual-theming`**
-7. **Implementation → `lp-implementation-builder`**
-8. **UX/CRO review → `lp-review-optimizer`**
-9. **Accessibility review → `lp-ux-a11y-audit`**
+6. **Visual theming → `skills/lp-visual-theming/SKILL.md`**
+7. **Implementation → `skills/lp-implementation-builder/SKILL.md`**
+8. **UX/CRO review → `skills/lp-review-optimizer/SKILL.md`**
+9. **Accessibility review → `skills/lp-ux-a11y-audit/SKILL.md`**
 
 You may loop through steps 3–5 multiple times if the user wants to adjust the plan.
 
 ---
 
-## Step 1 – Map intent (delegate to `lp-intent-mapper`)
+## Step 1 – Map intent (delegate to `skills/lp-intent-mapper/SKILL.md`)
 
 **When to call**: Immediately after the user asks for a landing page, unless a complete brief is already present.
 
 **What to do**:
 
-- Load `lp-intent-mapper`.
+- Load `skills/lp-intent-mapper/SKILL.md`.
 - Let it question the user and produce a `Landing Page Brief` containing:
   - primary goal
   - page role (campaign_landing / product_landing / homepage_like)
@@ -89,13 +90,13 @@ You may loop through steps 3–5 multiple times if the user wants to adjust the 
 
 ---
 
-## Step 2 – Audit the project (delegate to `lp-project-auditor`)
+## Step 2 – Audit the project (delegate to `skills/lp-project-auditor/SKILL.md`)
 
 **When to call**: Once intent is clear and you’re connected to a codebase or project.
 
 **What to do**:
 
-- Load `lp-project-auditor` to scan:
+- Load `skills/lp-project-auditor/SKILL.md` to scan:
   - framework & routing,
   - CSS/system & design tokens,
   - reusable components (hero, CTA, testimonials, pricing, FAQ, etc.),
@@ -108,13 +109,13 @@ You may loop through steps 3–5 multiple times if the user wants to adjust the 
 
 ---
 
-## Step 3 – Plan structure (delegate to `lp-structure-planner`)
+## Step 3 – Plan structure (delegate to `skills/lp-structure-planner/SKILL.md`)
 
 **When to call**: After you have both the intent brief and the project audit.
 
 **What to do**:
 
-- Load `lp-structure-planner` with:
+- Load `skills/lp-structure-planner/SKILL.md` with:
   - the Landing Page Brief, and
   - the Project Audit summary.
 - Ask it to return:
@@ -135,13 +136,13 @@ If the structure feels mismatched, you can call the planner again with hints lik
 
 ---
 
-## Step 4 – Wireframe & copy outline (delegate to `lp-copy-wireframer`)
+## Step 4 – Wireframe & copy outline (delegate to `skills/lp-copy-wireframer/SKILL.md`)
 
 **When to call**: After the structure looks reasonable.
 
 **What to do**:
 
-- Load `lp-copy-wireframer` with:
+- Load `skills/lp-copy-wireframer/SKILL.md` with:
   - section list,
   - brief (including objections and traffic messages).
 - Ask it to produce:
@@ -189,7 +190,7 @@ Then say something like:
 
 If the user requests changes:
 
-- call `lp-structure-planner` and/or `lp-copy-wireframer` again as needed,
+- call `skills/lp-structure-planner/SKILL.md` and/or `skills/lp-copy-wireframer/SKILL.md` again as needed,
 - update the plan, and
 - repeat the approval step.
 
@@ -197,13 +198,13 @@ Only proceed when the user explicitly approves.
 
 ---
 
-## Step 6 – Visual theming (delegate to `lp-visual-theming`)
+## Step 6 – Visual theming (delegate to `skills/lp-visual-theming/SKILL.md`)
 
 **When to call**: After user approval of the structure and outline.
 
 **What to do**:
 
-- Load `lp-visual-theming` with:
+- Load `skills/lp-visual-theming/SKILL.md` with:
   - Project Audit,
   - Planned Structure,
   - Wireframe & copy outline.
@@ -217,14 +218,14 @@ Use this plan as the blueprint for code changes in the next step.
 
 ---
 
-## Step 7 – Implement (delegate to `lp-implementation-builder`)
+## Step 7 – Implement (delegate to `skills/lp-implementation-builder/SKILL.md`)
 
 **When to call**: Only after user approval and after theming is done.
 
 **What to do**:
 
 - Make clear you are now switching to implementation.
-- Load `lp-implementation-builder` with:
+- Load `skills/lp-implementation-builder/SKILL.md` with:
   - Component & Theme Plan,
   - structure and wireframe.
 
@@ -239,14 +240,14 @@ After it reports an Implementation Summary, offer to show or diff the key files,
 
 ---
 
-## Step 8 – Review (delegate to `lp-review-optimizer` and `lp-ux-a11y-audit`)
+## Step 8 – Review (delegate to `skills/lp-review-optimizer/SKILL.md` and `skills/lp-ux-a11y-audit/SKILL.md`)
 
 **When to call**: After implementation.
 
 **What to do**:
 
-- Load `lp-review-optimizer` for UX & CRO.
-- Load `lp-ux-a11y-audit` for accessibility.
+- Load `skills/lp-review-optimizer/SKILL.md` for UX & CRO.
+- Load `skills/lp-ux-a11y-audit/SKILL.md` for accessibility.
 
 Summarise back to the user:
 
@@ -269,7 +270,7 @@ Offer to apply specific fixes if the user wants another iteration.
 ### Example 2 – Audit and refine existing homepage
 
 - User: “Our homepage gets traffic but doesn’t convert; we’re okay changing copy and layout.”
-- You: still call `lp-intent-mapper` and `lp-project-auditor`, but skip `lp-implementation-builder` initially and run `lp-review-optimizer` + `lp-ux-a11y-audit` first to produce a prioritized change list, then implement only the agreed changes.
+- You: still call `skills/lp-intent-mapper/SKILL.md` and `skills/lp-project-auditor/SKILL.md`, but skip `skills/lp-implementation-builder/SKILL.md` initially and run `skills/lp-review-optimizer/SKILL.md` + `skills/lp-ux-a11y-audit/SKILL.md` first to produce a prioritized change list, then implement only the agreed changes.
 
 ---
 

@@ -1,8 +1,9 @@
 ---
 name: lp-implementation-builder
-description: Implement the approved landing page in code, reusing the project's stack, components, and design system.
+description: Implement the approved landing page in code, reusing the project's stack, components, and design system. Use when the page plan is approved and needs to be built, or the user asks to "build," "code," "implement," or "generate" the page.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-implementation-builder

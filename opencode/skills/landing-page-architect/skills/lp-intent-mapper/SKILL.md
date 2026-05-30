@@ -1,8 +1,9 @@
 ---
 name: lp-intent-mapper
-description: Clarify and structure a landing-page or homepage request into a precise, confirmed brief that downstream skills can use.
+description: Clarify and structure a landing-page or homepage request into a precise, confirmed brief covering goal, audience, offer, traffic sources, and objections. Use when the user's request is vague, missing key details, or when the page's purpose and audience aren't clearly defined.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-intent-mapper

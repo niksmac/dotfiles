@@ -1,8 +1,9 @@
 ---
 name: lp-ux-a11y-audit
-description: Run a lightweight accessibility audit on the landing page and identify semantic, contrast, keyboard, and form issues.
+description: Run a lightweight accessibility audit on the landing page covering semantics, contrast, keyboard navigation, forms, and motion preferences. Use when the page code is ready and needs checked against WCAG-aligned heuristics, even if the user only asks to "check accessibility" or "make it accessible."
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-ux-a11y-audit

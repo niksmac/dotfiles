@@ -1,8 +1,9 @@
 ---
 name: lp-visual-theming
-description: Map the approved wireframe to existing components and design tokens so the landing page feels native to the project.
+description: Map the approved wireframe to existing components, design tokens, and responsive behavior rules so the landing page feels native to the project. Use when the page structure is approved but the visual implementation — component selection, tokens, breakpoints — hasn't been decided.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-visual-theming

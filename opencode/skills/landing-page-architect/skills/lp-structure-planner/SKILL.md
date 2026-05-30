@@ -1,8 +1,9 @@
 ---
 name: lp-structure-planner
-description: Choose page type and plan section order using landing-page and homepage usability best practices.
+description: Choose page type and plan section order using landing-page and homepage usability best practices. Use when the intent and project are understood but the section layout, page type (lead gen, sales, homepage), and above-the-fold content still need to be decided.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-structure-planner

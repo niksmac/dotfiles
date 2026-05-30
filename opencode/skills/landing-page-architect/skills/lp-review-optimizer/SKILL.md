@@ -1,8 +1,9 @@
 ---
 name: lp-review-optimizer
-description: Review the implemented page for UX, clarity, trust, conversion, and suggest high-impact improvements.
+description: Review the implemented page for UX, clarity, trust, and conversion, and suggest high-impact improvements. Use after a page is built to catch usability issues, optimize for conversion rate, or identify what to A/B test, even if the user only asks to "review" or "improve" the page.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-review-optimizer

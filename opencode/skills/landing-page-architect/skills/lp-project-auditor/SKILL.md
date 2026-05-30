@@ -1,8 +1,9 @@
 ---
 name: lp-project-auditor
-description: Read the current project to identify the tech stack, design system, reusable UI patterns, and constraints before planning a landing page.
+description: Read the current project to identify the tech stack, design system, reusable UI patterns, and constraints before planning a landing page. Use when connected to a codebase and the project context needs to be understood before deciding what to build or reuse.
 metadata:
   author: github.com/niksmac
+compatibility: Designed for OpenCode
 ---
 
 # lp-project-auditor
