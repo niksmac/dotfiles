@@ -346,6 +346,7 @@ The agent must enforce these rules every time:
 13. **Primary keyword placed**: Title, first 150 words, one ## heading, and excerpt all contain the primary keyword.
 14. **Internal links present**: At least 2 links to pillar pages (services, offerings, features) and 1 cross-link to a related blog post.
 15. **URL slug is clean**: Kebab-case filename with primary keyword, no dates, no stop words, under 5 segments.
+16. **No contradicting statements**: Scan the full draft for statements that undermine or contradict each other (e.g., an aggregate figure and a stratified figure presented without a bridge, or a claim in one section that implicitly conflicts with data in another). Flag mismatches explicitly and restructure or add a bridge sentence to resolve them. This applies to numbers, claims, and logical implications.
 
 ---
 
