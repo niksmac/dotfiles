@@ -69,13 +69,6 @@
   "status_bar": {
     "active_language_button": true
   },
-  "context_servers": {
-    "mcp-server-context7": {
-      "enabled": true,
-      "remote": false,
-      "settings": {}
-    }
-  },
   "language_models": {
     "openai_compatible": {
       "Z.ai": {
