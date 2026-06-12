@@ -73,7 +73,7 @@ zplug "zsh-users/zsh-completions", defer:2
 # Useful helpers
 zplug "MichaelAquilina/zsh-you-should-use", defer:3
 zplug "peterhurford/up.zsh", defer:3
-zplug "b4b4r07/enhancd", use:"init.sh", defer:2
+zplug "babarot/enhancd", use:"init.sh", defer:2
 
 # Load oh-my-zsh plugins only if you really use them
 zplug "plugins/git", from:oh-my-zsh
@@ -102,11 +102,5 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# Deno
-[[ -f "$HOME/.deno/env" ]] && source "$HOME/.deno/env"
-
 # fnm
 eval "$(fnm env --use-on-cd)"
-
-# Pi
-export PATH="/Users/niksmac/.local/share/fnm/node-versions/v24.15.0/installation/bin:$PATH"
