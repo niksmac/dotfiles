@@ -8,7 +8,7 @@ Run the following steps:
 
 1. Checkout develop and pull latest
 2. Checkout master and merge develop with message "Merge branch develop"
-3. Run `npm version $1 --force -m "Version %s"` to create the version tag
+3. Run `npm version ${1:-patch} --force -m "Version %s"` to create the version tag
 4. Push commits and tags
 5. Checkout develop back
 
