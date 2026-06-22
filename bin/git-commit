@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Format and execute a conventional commit
+#
+# $1 - subject (Conventional Commits format: <Type>: <Subject>)
+# $2 - body (optional, multi-line supported)
+#
+# Examples
+#
+#   git-commit "Feat: Add user authentication"
+#   git-commit "Feat: Add login" "Implements OAuth2 flow\nAdds session management"
+
+subject="$1"
+body="$2"
+
+if [ -n "$body" ]; then
+  git commit -m "$subject" -m "$body"
+else
+  git commit -m "$subject"
+fi
