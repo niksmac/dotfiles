@@ -1,5 +1,5 @@
 ---
-name: humanizer
+name: humanizer-v2
 version: 2.5.1
 description: |
   Remove signs of AI-generated writing from text. Use when editing or reviewing
