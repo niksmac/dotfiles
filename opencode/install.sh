@@ -9,6 +9,8 @@ CONFIG_DIR="$HOME/.config/opencode"
 SKILLS_TARGET="$CONFIG_DIR/skills"
 mkdir -p "$SKILLS_TARGET"
 
+find -L "$SKILLS_TARGET" -type l -exec rm {} + 2>/dev/null || true
+
 for skill_path in "$SKILLS_DIR"/*/SKILL.md; do
     [ -e "$skill_path" ] || continue
     skill_name="$(basename "$(dirname "$skill_path")")"
@@ -22,6 +24,9 @@ done
 
 COMMANDS_TARGET="$CONFIG_DIR/commands"
 mkdir -p "$COMMANDS_TARGET"
+
+find -L "$COMMANDS_TARGET" -type l -exec rm {} + 2>/dev/null || true
+
 for cmd_path in "$SCRIPT_DIR/commands"/*.md; do
     [ -e "$cmd_path" ] || continue
     cmd_name="$(basename "$cmd_path")"
