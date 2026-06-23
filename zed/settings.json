@@ -2,7 +2,7 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
-        "mode": "plan"
+        "mode": "build"
       },
       "type": "registry"
     }
