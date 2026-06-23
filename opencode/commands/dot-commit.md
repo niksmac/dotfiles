@@ -8,9 +8,12 @@ Here are the commit rules:
 
 !`cat ~/.dotfiles/git/README.md`
 
-Here are the valid imperative verbs:
+**Enforce these rules strictly:**
 
-!`cat ~/.dotfiles/git/imperative_verbs.txt`
+1. **Capitalization**: The first word after the type prefix **must** be capitalized. `feat: Add...` ✅ — `feat: add...` ❌
+2. **Valid types only**: Only use: feat, fix, docs, style, refactor, perf, test, chore, build, ci, revert. Never "feature", "Feature", or any other variant.
+3. **Type lowercase**: The type must be all lowercase followed by `: `.
+4. **Valid imperative verb**: The first word after the type (or first word of subject for non-Conventional Commits) must be one of: Add, Allow, Bump, Build, Change, Clean, Configure, Create, Decrease, Delete, Deploy, Deprecate, Disable, Document, Enable, Enhance, Ensure, Extract, Fix, Format, Implement, Improve, Include, Increase, Inject, Integrate, Introduce, Make, Manage, Merge, Migrate, Modify, Move, Optimize, Perform, Prevent, Provide, Refactor, Refresh, Release, Remove, Rename, Render, Reorder, Replace, Resolve, Restructure, Revert, Revise, Separate, Set, Setup, Simplify, Split, Start, Stop, Support, Test, Trim, Update, Upgrade, Use, Verify.
 
 Generate a commit message for the staged changes below following those rules.
 
