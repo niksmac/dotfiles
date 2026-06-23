@@ -10,9 +10,9 @@ Here are the commit rules:
 
 **Enforce these rules strictly:**
 
-1. **Capitalization**: The first word after the type prefix **must** be capitalized. `feat: Add...` ✅ — `feat: add...` ❌
-2. **Valid types only**: Only use: feat, fix, docs, style, refactor, perf, test, chore, build, ci, revert. Never "feature", "Feature", or any other variant.
-3. **Type lowercase**: The type must be all lowercase followed by `: `.
+1. **Capitalization**: The first word and the type prefix **must** be capitalized. `Feat: Add...` ✅ — `feat: add...` ❌
+2. **Valid types only**: Only use: Feat, Fix, Docs, Style, Ref, Perf, Test, Chore, Build, CI, Revert. Never "feature", "Feature", or any other variant.
+3. **Type Capitalization**: The type must Capitalized followed by `: `.
 4. **Valid imperative verb**: The first word after the type (or first word of subject for non-Conventional Commits) must be one of: Add, Allow, Bump, Build, Change, Clean, Configure, Create, Decrease, Delete, Deploy, Deprecate, Disable, Document, Enable, Enhance, Ensure, Extract, Fix, Format, Implement, Improve, Include, Increase, Inject, Integrate, Introduce, Make, Manage, Merge, Migrate, Modify, Move, Optimize, Perform, Prevent, Provide, Refactor, Refresh, Release, Remove, Rename, Render, Reorder, Replace, Resolve, Restructure, Revert, Revise, Separate, Set, Setup, Simplify, Split, Start, Stop, Support, Test, Trim, Update, Upgrade, Use, Verify.
 
 Generate a commit message for the staged changes below following those rules.
@@ -24,6 +24,7 @@ Current staged changes:
 !`git diff --cached`
 
 Check the staged diff for hardcoded secret values — actual credentials, not variable names. Look for patterns like:
+
 - `sk-[A-Za-z0-9\-_]{10,}` (OpenAI/LLM API keys)
 - `gh[pousr]_[A-Za-z0-9]{10,}` (GitHub tokens)
 - `AKIA[A-Z0-9]{16}` (AWS access keys)
