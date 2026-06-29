@@ -30,10 +30,10 @@ COMMON_PACKAGES=(
   vim
   node
   tree
-  yt-dlp # Modern replacement for youtube-dl
-  ripgrep # Faster alternative to ag/the_silver_searcher
-  fd # Better alternative to find
-  bat # Better cat
+  yt-dlp
+  ripgrep
+  fd
+  bat
   zsh
   biome
 )
@@ -60,12 +60,10 @@ MACOS_CASKS=(
 if [ "$(uname)" = "Darwin" ]; then
   echo "Installing macOS packages..."
 
-  # Install common and macOS-specific packages
   for pkg in "${COMMON_PACKAGES[@]}" "${MACOS_PACKAGES[@]}"; do
     install_if_not_present "$pkg"
   done
 
-  # Install casks
   for cask in "${MACOS_CASKS[@]}"; do
     install_cask_if_not_present "$cask"
   done
@@ -73,7 +71,6 @@ if [ "$(uname)" = "Darwin" ]; then
 elif [ "$(uname)" = "Linux" ]; then
   echo "Installing Linux packages..."
 
-  # Install common packages
   for pkg in "${COMMON_PACKAGES[@]}"; do
     install_if_not_present "$pkg"
   done

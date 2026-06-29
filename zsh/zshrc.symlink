@@ -5,9 +5,6 @@ export ZSH_CUSTOM=$HOME/.zsh/custom
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
 
-# Set Brew path for Apple silicon
-export PATH=/opt/homebrew/bin:$PATH
-
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -15,8 +12,8 @@ if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
 fi
-
 # all of our zsh files
+
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
 
@@ -46,67 +43,83 @@ export PATH=$PATH:$HOME/.npm-packages/bin
 
 export PATH="$HOME/.yarn/bin:$PATH"
 
-# Install Ruby Gems to ~/gems
-export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
+export NVM_LAZY=1
+export NVM_AUTOLOAD=1
 
-# -----------------------------
-# zplug
-# -----------------------------
-
-unsetopt notify
-
-export ZPLUG_HOME="$(brew --prefix zplug)"
-source "$ZPLUG_HOME/init.zsh"
-
-zstyle ':zplug:*' verbose false
-
-# zplug itself
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
-
-# Better shell UX
-zplug "zsh-users/zsh-autosuggestions", defer:2
-zplug "zsh-users/zsh-syntax-highlighting", defer:3
-zplug "zsh-users/zsh-completions", defer:2
-
-# Useful helpers
-zplug "MichaelAquilina/zsh-you-should-use", defer:3
-zplug "peterhurford/up.zsh", defer:3
-zplug "b4b4r07/enhancd", use:"init.sh", defer:2
-
-# Load oh-my-zsh plugins only if you really use them
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/macos", from:oh-my-zsh
-zplug "plugins/fnm", from:oh-my-zsh
-zplug "plugins/yarn", from:oh-my-zsh
-
-# Optional: can slow shell startup
-# zplug "plugins/thefuck", from:oh-my-zsh
-# zplug "plugins/git-flow-avh", from:oh-my-zsh
-# zplug "plugins/rand-quote", from:oh-my-zsh
-# zplug "plugins/genpass", from:oh-my-zsh
-
-zplug check || zplug install
-
-zplug load
-
-# Homebrew
-export PATH="$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/sbin:$PATH"
-
-# Ruby gems
-export PATH="$HOME/.gem/ruby/$(ruby -e 'print RbConfig::CONFIG["ruby_version"]')/bin:$PATH"
 
 # Locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# Deno
-[[ -f "$HOME/.deno/env" ]] && source "$HOME/.deno/env"
+# zsh history lines
+export HISTFILE=~/.histfile
+export HISTSIZE=100000
+export SAVEHIST=100000
+
+# Plugin manager zplug
+export ZPLUG_HOME="$HOME/plugins/zplug"
+source $ZPLUG_HOME/init.zsh
+
+zstyle ':zplug:*' verbose false
+
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "zsh-users/zsh-syntax-highlighting", defer:3
+zplug "zsh-users/zsh-completions", defer:2
+zplug "MichaelAquilina/zsh-you-should-use", defer:3
+zplug "peterhurford/up.zsh", defer:3
+zplug "b4b4r07/enhancd", use:"init.sh", defer:2
+
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/fnm", from:oh-my-zsh
+zplug "plugins/yarn", from:oh-my-zsh
+
+zplug check || zplug install
+
+zplug load
+
+# miniconda
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
 # fnm
-eval "$(fnm env --use-on-cd)"
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell bash)"
+fi
 
-# Pi
-export PATH="/Users/niksmac/.local/share/fnm/node-versions/v24.15.0/installation/bin:$PATH"
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# opencode
+export PATH="/$HOME/.opencode/bin:$PATH"
