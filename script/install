@@ -1,16 +1,31 @@
 #!/usr/bin/env bash
 #
 # Run all dotfiles installers.
-
+#
 set -e
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 
-./init/prepare.sh
-./homebrew/brew-install.sh
+# Load OS detection for conditional installer dispatch.
+# init/env must be POSIX-sh compatible so it can be `source`d here.
+if [ -f "init/env" ]; then source "init/env"; fi
+
+"$(pwd)"/init/prepare.sh
+
+# If brew CLI exists, run the installer. It handles uname internally.
+if command -v brew >/dev/null 2>&1; then
+  "$(pwd)"/homebrew/brew-install.sh
+fi
 
 # find the installers and run them iteratively
-find . -name install.sh -type f | sort | while read -r installer; do
-  echo "Running installer: $installer"
-  sh "$installer"
+# Sort by path so /linux/* runs before /macos/* when restoring across machines.
+find "$(pwd)" -name install.sh -type f | sort | while IFS= read -r installer; do
+  case "$installer" in
+    # Linux-only installers: run only on Linux hosts.
+    */linux/*|/linux/*)  if "$IS_LINUX"; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    # macOS-only installers: run only on macOS hosts.
+    */macos/*|/macos/*)  if "$IS_MAC";   then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    # Everything else (shared / neutral installers): always run.
+    *)                   echo "Running $installer"; sh "$installer" ;;
+  esac
 done

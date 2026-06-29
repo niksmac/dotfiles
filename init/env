@@ -1,0 +1,30 @@
+#!/bin/sh
+
+OS="$(uname -s)"
+ARCH="$(uname -m)"
+
+OS_NAME="unknown"
+case "$OS" in
+  Darwin) OS_NAME="macos" ;;
+  Linux)  OS_NAME="linux" ;;
+esac
+
+export OS OS_NAME ARCH
+
+IS_MAC=false
+IS_LINUX=false
+[ "$OS_NAME" = "macos" ] && IS_MAC=true
+[ "$OS_NAME" = "linux" ] && IS_LINUX=true
+export IS_MAC IS_LINUX
+
+# Homebrew / Linuxbrew on PATH only if present.
+if [ -d /opt/homebrew ]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+if [ -d /home/linuxbrew/.linuxbrew ]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
+
+# Canonical tool homes.
+export NVM_DIR="${HOME}/.nvm"
+export ZPLUG_HOME="${HOME}/.local/share/zplug"

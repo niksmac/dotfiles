@@ -1,16 +1,26 @@
-#!/bin/sh
-#
-# dot
+#!/usr/bin/env zsh
 #
 # `dot` handles installation, updates, things like that. Run it periodically
 # to make sure you're on the latest and greatest.
+
 export ZSH=$HOME/.dotfiles
 
+# Linuxbrew path
+if [ -d /home/linuxbrew/.linuxbrew ]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
+
 # Upgrade homebrew
-brew update
+if command -v brew &>/dev/null; then
+  brew update
+fi
 
 # Install homebrew packages
-$ZSH/homebrew/brew-install.sh 2>&1
+if [ -f "$ZSH/homebrew/brew-install.sh" ]; then
+  $ZSH/homebrew/brew-install.sh 2>&1
+fi
 
 # Update zplug
-zplug update
+if command -v zplug &>/dev/null; then
+  zplug update
+fi
