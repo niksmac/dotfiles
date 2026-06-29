@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # Create session if none exists
-new-session -n $HOST
+new-session -n "#{host_short}"
 
 # improve colors
 set -g default-terminal "screen-256color"
