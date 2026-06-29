@@ -81,24 +81,6 @@
   },
   "language_models": {
     "openai_compatible": {
-      "Z.ai": {
-        "api_url": "https://api.z.ai/api/coding/paas/v4",
-        "available_models": [
-          {
-            "name": "GLM-5.1",
-            "max_tokens": 200000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": true,
-              "prompt_cache_key": true,
-              "chat_completions": true
-            }
-          }
-        ]
-      },
       "opencode": {
         "api_url": "https://opencode.ai/zen/v1/chat/completions",
         "available_models": [
@@ -151,7 +133,6 @@
   "ui_font_size": 16,
   "format_on_save": "on",
   "vim_mode": false,
-  "projects_online_by_default": true,
   "terminal": {
     "font_family": "Monaco",
     "blinking": "off",
@@ -188,15 +169,6 @@
     "mute_on_join": true,
     "share_on_join": false
   },
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html"
-  },
   "indent_guides": {
     "enabled": true,
     "coloring": "indent_aware"
@@ -226,17 +198,11 @@
     "diagnostics": false,
     "metrics": false
   },
-  "chat_panel": {
-    "button": "never"
-  },
-  "notification_panel": {
-    "button": false
-  },
   "agent": {
     "dock": "right",
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-4o"
+      "provider": "opencode",
+      "model": "big-pickle"
     }
   },
   "jupyter": {
