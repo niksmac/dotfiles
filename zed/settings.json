@@ -1,4 +1,6 @@
 {
+  "search_wrap": true,
+  "relative_line_numbers": "wrapped",
   "agent_servers": {
     "opencode": {
       "default_config_options": {
@@ -136,7 +138,7 @@
   },
   "tab_size": 2,
   "preferred_line_length": 80,
-  "soft_wrap": "prefer_line",
+  "soft_wrap": "bounded",
   "show_wrap_guides": true,
   "wrap_guides": [80, 100],
   "buffer_font_size": null,
