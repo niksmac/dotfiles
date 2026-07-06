@@ -2,11 +2,11 @@
 export ZSH=$HOME/.dotfiles
 export ZSH_CUSTOM=$HOME/.zsh/custom
 
+# Load OS detection and canonical tool paths (brew, zplug, fnm, etc.)
+source "$ZSH/init/env"
+
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
-
-# Set Brew path for Apple silicon
-export PATH=/opt/homebrew/bin:$PATH
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -49,7 +49,6 @@ export PATH="$HOME/.yarn/bin:$PATH"
 # Install Ruby Gems to ~/gems
 export GEM_HOME=$HOME/gems
 export PATH=$HOME/gems/bin:$PATH
-export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # -----------------------------
 # zplug
@@ -57,7 +56,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 unsetopt notify
 
-export ZPLUG_HOME="$(brew --prefix zplug)"
 source "$ZPLUG_HOME/init.zsh"
 
 zstyle ':zplug:*' verbose false
@@ -102,5 +100,13 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# fnm
+# fnm — Node.js version manager
 eval "$(fnm env --use-on-cd)"
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/niksmac/.lmstudio/bin"
+# End of LM Studio CLI section
+

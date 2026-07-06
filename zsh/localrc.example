@@ -1,0 +1,18 @@
+# ~/.localrc — Secrets and local overrides
+#
+# Copy this file to ~/.localrc and fill in your values.
+# This file is gitignored by default so your secrets stay out of version control.
+#
+# It is sourced automatically by zshrc.symlink.
+
+# Project directory (override the default ~/Code)
+# export PROJECTS=~/Projects
+
+# API keys and tokens
+# export CONTEXT7_API_KEY="sk-..."
+# export OPENAI_API_KEY="sk-..."
+# export ANTHROPIC_API_KEY="sk-ant-..."
+# export GITHUB_TOKEN="ghp_..."
+
+# Homebrew mirror / custom prefixes (rarely needed)
+# export HOMEBREW_BOTTLE_DOMAIN="..."
