@@ -19,7 +19,7 @@ set incsearch " Searches for strings incrementally
 set autoindent  " Auto-indent new lines
 set smartindent " Enable smart-indent
 set smarttab  " Enable smart-tabs
-set softtabstop=4 " Number of spaces per Tab
+set softtabstop=2 " Number of spaces per Tab
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -60,52 +60,34 @@ nnoremap <leader><leader> <C-^> " Switch buffers
 " plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'Chiel92/vim-autoformat'
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'w0ng/vim-hybrid'
 Plug 'godlygeek/tabular'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'isRuslan/vim-es6'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'raimondi/delimitmate'
-Plug 'wincent/command-t'
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown'] }
 
 call plug#end()
 
-" autoformat
-noremap <F3> :Autoformat<CR>
+" autoformat via prettier (falls back to vim-autoformat)
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+noremap <F3> :Prettier<CR>
 
 " Ignore things
 set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
 set wildignore+=*/bower_components/*,*/node_modules/*
 set wildignore+=*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/log/*,*/tmp/*
-let g:CommandTWildIgnore=&wildignore . ",*/bower_components,*/elm-stuff,*/node_modules,*/_site"
-
 " Swap
-set dir=/private/tmp
-
-" YouCompleteMe
-let g:ycm_path_to_python_interpreter="/usr/local/bin/python"
-
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['standard']
+set directory=$HOME/.vim/swap//
 
 " Color scheme
 set background=dark
@@ -113,24 +95,10 @@ let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1
 colorscheme hybrid
 
-" gundo
-nnoremap <F5> :GundoToggle<CR>
-nnoremap <F6> :SyntasticToggleMode<CR>
-
 " Remove trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
 
-" force vim
-map <Left> :echo "damnit!"<cr>
-map <Right> :echo "1 + 1 = ? "<cr>
-map <Up> :echo "this is why you fail"<cr>
-map <Down> :echo "nooooo!"<cr>
 
-" evil mode
-inoremap <Left> <nop>
-inoremap <Right> <nop>
-inoremap <Up> <nop>
-inoremap <Down> <nop>
 
 " nerdtree
 autocmd StdinReadPre * let s:std_in=1
