@@ -5,6 +5,9 @@ export ZSH_CUSTOM=$HOME/.zsh/custom
 # Load OS detection and canonical tool paths (brew, zplug, fnm, etc.)
 source "$ZSH/init/env"
 
+# Disable XON/XOFF so Ctrl+S passes through (freezes terminal otherwise on Linux)
+stty -ixon
+
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
 
