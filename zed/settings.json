@@ -4,6 +4,7 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
+        "model": "opencode/big-pickle",
         "mode": "build"
       },
       "type": "registry"

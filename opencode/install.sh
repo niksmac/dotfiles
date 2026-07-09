@@ -41,9 +41,9 @@ ln -s "$SCRIPT_DIR/opencode.json" "$CONFIG_DIR/opencode.json"
 echo "Linked: opencode.json"
 
 
-# Sync the same OpenCode-managed skills into Hermes
-if [ -x "${SCRIPT_DIR}/skills/sync-skills.sh" ]; then
-  "${SCRIPT_DIR}/skills/sync-skills.sh"
+# Sync the shared ~/.dotfiles/skills/ into Hermes
+if [ -x "${HOME}/.dotfiles/skills/sync-skills.sh" ]; then
+  "${HOME}/.dotfiles/skills/sync-skills.sh"
 fi
 
 echo "Done!"
