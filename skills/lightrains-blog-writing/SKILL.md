@@ -228,12 +228,11 @@ Every post must optimize these fields:
 
 Before writing or editing any blog post:
 
-1. **Scan project directories** to map the site: service pages in `/services/`, solution pages in `/solutions/`, other blogs in `/src/pages/blogs/`, etc.
--2. **Map internal targets:** pick 2–4 pillar pages, 1–2 related blog posts from `llms.txt`.
-3. **Insert contextual internal links** using descriptive anchor text.
+1. **Map internal targets:** pick 2–4 pillar pages, 1–2 related blog posts from `llms.txt`.
+2. **Insert contextual internal links** using descriptive anchor text.
    - At least **2 links to pillar pages** (services, offerings, features) per post.
--   - At least **1 cross-link to a related blog post** using `llms.txt`.
-4. **Link to Lightrains service offering pages** from relevant body text to enhance SEO and conversion. Use natural anchors. Service pages:
+   - At least **1 cross-link to a related blog post** using `llms.txt`.
+3. **Link to Lightrains service offering pages** from relevant body text to enhance SEO and conversion. Use natural anchors. Service pages:
    - Technology Consulting: https://lightrains.com/consulting
    - AI, ML & CV Development: https://lightrains.com/consulting/ai-ml-cv-development/
    - Blockchain Consulting / Blockchain Development: https://lightrains.com/consulting/blockchain-development/
@@ -243,7 +242,7 @@ Before writing or editing any blog post:
    - Product Development: https://lightrains.com/consulting/product-development/
    - NFT Marketplace Development: https://lightrains.com/consulting/nft-marketplace-development/
 
--5. **Links discovery:** Fetch `https://lightrains.com/llms.txt` to find URLs of existing Lightrains blog posts and relevant external resources. Insert them as `[source title](URL)` where they add context or supporting evidence. Do not list bare URLs.
+  4. **Links discovery:** Fetch `https://lightrains.com/llms.txt` to find URLs of existing Lightrains blog posts and relevant external resources. Insert them as `[source title](URL)` where they add context or supporting evidence. Do not list bare URLs.
 
 ## 13. Closings That Create Motion
 
@@ -282,7 +281,7 @@ If none of these are present, the content probably belongs in docs or changelog,
 ## 16. Non-Negotiables (Checklist)
 
 The agent must enforce these rules every time:
-1. **Real byline**: Use a real person's name and role (no "The Lightrains Team").
+1. **Real byline**: Use a real person's name and role, or reuse an author key from `src/data/authors.json` such as `agent`.
 2. **Working code only**: No pseudo-code masquerading as production unless clearly labeled.
 3. **No banned phrases**: No "we're excited to announce", "seamless", "empower", etc.
 4. **Systems diagram**: Any multi-component system has a diagram or a clear description.
@@ -304,7 +303,15 @@ The agent must enforce these rules every time:
 20. **Service page links**: Include at least one in-content link to a Lightrains service page from the approved list.
 21. **Output archive**: After generating `.md` files, bundle them into a `.zip` archive and provide it.
 
-## 17. Review and Editing Workflow
+## 17. Originality, Repo References, and Author/Meta Hygiene
+
+Lightrains posts should read like original technical writing, not lightly paraphrased external summaries. When adapting research or third-party commentary:
+- Do not include repo links, package names, or source-specific author artifacts unless explicitly requested.
+- Rephrase the mechanism, experiment, or framing as a general Lightrains post. Keep the insight; drop the source-specific provenance.
+- Frontmatter `author` must use a key that exists in `src/data/authors.json`. If the desired author is missing, either reuse an existing key such as `agent` or add the new author to `authors.json` first. Unregistered guest names will cause a runtime author-rendering failure.
+- `meta` should be a generic image filename that matches assets in the repo. Do not carry over external-source asset names unless the file exists locally.
+
+## 18. Review and Editing Workflow
 
 When the agent is asked to review or edit a draft, it should:
 
@@ -329,10 +336,10 @@ When giving feedback:
 - Explain briefly **why** it fails the standard (e.g., too vague, too salesy, missing numbers).
 - Propose a rewritten version that meets the Lightrains standard.
 
-## 18. How the Agent Should Respond
+## 19. How the Agent Should Respond
 
 When using this skill, the agent should:
-1. Fetch `https://lightrains.com/llms.txt` and identify the three most relevant topics aligned with Lightrains’ expertise from the indexed pages.
+1. Fetch `https://lightrains.com/llms.txt` and identify the three most relevant topics aligned to Lightrains’ expertise from the indexed pages.
 2. Search for recent credible sources within the past 90 days.
 3. Suggest a **working title** and a short outline aligned to the structure above for each topic.
 4. Draft or revise content in the Lightrains voice, enforcing all non-negotiables.
@@ -344,7 +351,7 @@ When using this skill, the agent should:
 8. Not use overused terms like: "delve", "landscape", "crucial", "leverage" (when "use" works), "furthermore", "navigate" (metaphorical), "robust", "comprehensive", "holistic", "foster", "facilitate", "ensure", "at its core".
 9. Ensure every inline citation is in the form `[source title](URL)`. Strip any artifacts that resemble `【...†...】`.
 
-## 19. Frontmatter and Markdown Formatting
+## 20. Frontmatter and Markdown Formatting
 
 ### Frontmatter
 

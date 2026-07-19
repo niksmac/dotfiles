@@ -1,13 +1,13 @@
 ---
 name: linkedin-self-improving-system
-description: Use when building, operating, or iterating a self-improving LinkedIn content system. Covers voice skill construction, performance analytics loop, distribution rules, and applying confirmed patterns to future post drafts.
-version: 1.0.0
+description: Use when building, operating, or iterating a self-improving LinkedIn content system. Covers voice skill construction, performance analytics loop, distribution rules, applying confirmed patterns to future post drafts, and finalizing drafts through a mandatory humanizer and verifier pass.
+version: 1.1.0
 author: niksmac
 license: MIT
 metadata:
   hermes:
     tags: [linkedin, social-media, content-system, voice, analytics]
-    related_skills: [linkedin-automation]
+    related_skills: [humanizer-v2, lightrains-content-humanizer, comfyui, linkedin-automation]
 ---
 
 # Self-Improving LinkedIn System
@@ -49,11 +49,68 @@ A loose internal guide, not a rigid template.
 - How backup evidence or examples are introduced
 - How the post closes and what CTA shape is used
 
-### Topic Angles
+### Finalization Pipeline
 
-List the 5-8 themes the user actually posts about. Specific to their world.
+Every draft goes through both steps before publish. Do not skip the verifier because the humanizer cleaned things up.
 
-### Reference Posts
+#### Step 1: Humanizer Pass
+
+Run the full humanizer stack against the draft.
+
+- Prefer `lightrains-content-humanizer` when the piece needs personality injection.
+- Prefer `humanizer-v2` when the draft is already on-voice but carries AI tells.
+- If unsure, run both: first `lightrains-content-humanizer` for Detect + Humanize + Voice Injection, then `humanizer-v2` for anti-AI spot checks.
+
+Use the writing skill as the voice source. Match the calibration anchors in that file. Do not produce clean but voiceless prose.
+
+#### Step 2: Verifier Pass
+
+After humanizing, run this checklist against the draft.
+
+Content checks
+- Hook is a stat, direct challenge, or counterintuitive statement. No soft-service openers.
+- Transitions use sharp contrast, not signpost announcements.
+- No paragraph longer than three sentences.
+- Lists are numbered for breakdowns, bulleted for feature/argument stacks.
+- Close is imperative or a reframe question. No weak filler like "Let me know your thoughts below!"
+- Topic matches one of the seven angles.
+- Post length matches the stated target bucket.
+- First-person perspective is used only when it adds credibility or personality.
+- Specific claims remain specific. No "Many companies" without a named anchor.
+
+Voice checks
+- Reads like one of the reference posts. If it reads unlike them, rebuild.
+- No verbose 2015-style corporate filler.
+- No corporate hedging.
+- No vague superlatives.
+- Emphasis uses bold. Italics are reserved for irony or quoted contrast.
+- Humor is dry if present, never performative.
+
+Technical checks
+- No more than two em dashes.
+- At most one emoji, and none structurally load-bearing.
+- Zero curly quotes.
+- No markdown artifacts.
+
+Ban compliance
+- Verify the post does not contain banned terms from `linkedin-automation` if that skill is in use.
+- If a banned term slipped through, remove or replace it before the post goes live.
+
+## Topic Angles
+
+1. AI/ML strategy and practice
+2. AI adoption, hiring, and implementation reality
+3. Web3 / blockchain / decentralization
+4. Product and engineering management
+5. Future of work and credentialism
+6. Startup/founder guidance
+7. Technology literacy / cutting through hype
+8. Developer tools and platform infrastructure
+9. Billing and payments tooling
+
+Default behavior: reference active fundraising projects naturally when the topic angle and hook fit. Do not force them into posts where they weaken the argument. When in doubt, treat them as optional credibility anchors, not mandatory plugs.
+
+## Reference Posts
 
 Paste in 3-5 full post examples. Label each with: what made it work, what angle it took. These are calibration anchors.
 
@@ -64,116 +121,121 @@ Save under one of:
 - User-local skill mirror: `~/.hermes/skills/linkedin-writing/SKILL.md`
 - Canonical dotfiles skill tree: `~/.dotfiles/skills/linkedin-self-improving-system/SKILL.md`
 
-Preferred path is `~/.dotfiles/skills/linkedin-self-improving-system/WRITING.md` and `~/.dotfiles/skills/linkedin-self-improving-system/PERFORMANCE.md` so the two layers remain separate but co-located.
+Preferred skill files:
+- `.../WRITING.md` for Layer 1
+- `.../PERFORMANCE.md` for Layer 2
 
-## Layer 2 — Build the Performance Skill
+Operational files live in `/archive/hermes/linkedin-self-improving-system/`. The skill definition files live under `~/.dotfiles/skills/linkedin-self-improving-system/`. Never write scratch or operational data into `.dotfiles` unless the user explicitly asks.
 
-Only build after 8-10 posts have been logged. The writing skill alone gives consistency; the performance skill gives improvement signals.
+## Article Hero Images
 
-### Data Store
+Article hero images are optional but preferred for LinkedIn. Generation follows a manual-first workflow unless the user asks for full automation.
 
-A running log of every post with one row per post. Fields:
-- Post ID, URL, date, posting time
-- Impressions, members reached, engagement rate
-- Hook type: question, statement, problem-consequence, story open
-- Narrative structure: list, story, argument, case study
-- Topic angle
-- Post length bucket: short <150w, medium 150-250w, long 250w+
-- First 2-hour engagement signal: yes/no
+### Workflow
 
-### Pattern Engine
+1. Create prompt specs in `/archive/hermes/linkedin-self-improving-system/heroes/prompts/`
+2. Save outputs in `/archive/hermes/linkedin-self-improving-system/heroes/outputs/`
+3. Test prompts manually in the ComfyUI web UI first; only run generation after prompt approval
+4. Finalize only after visual approval
 
-Patterns move through confidence levels:
-- Tentative: 2-3 posts showing the same signal
-- Emerging: 4-6 confirming it
-- Confirmed: 7+ posts, strong signal
+### Retry Policy
 
-Only Confirmed patterns become Active Rules.
+If a generated image misses the subject or drifts to generic interior/product photography:
+- Do not rerun the same prompt.
+- Update the prompt first with stronger style language, explicit subject framing, and targeted negative prompts.
+- If local generation still misses, hand the revised prompt specs to the user for manual retesting in an externally approved UI.
 
-### Active Rules
+### Preferred Models
 
-Short list of specific, measurable rules. Not "post more" but:
-- "Problem-consequence hooks outperform question hooks by 2x"
-- "Posts under 150 words get higher engagement rate on Thursdays"
-- "Commenting on 3 others before posting increases first-wave signal"
+- Prefer a photorealistic/person-friendly SDXL checkpoint over base SDXL for editorial hero images.
+- Base SDXL tends to render interiors literally and miss lifestyle/human subjects when prompt composition is ambiguous.
+- Preferred checkpoints:
+  - `juggernautXL_juggXIByRundiffusion.safetensors` via CivitAI
+  - `RealVisXL_V5.0`
+- Retry policy: after 2 SDXL runs collapse to interiors/devices, switch to **Flux locally** or **manual Fal web UI** rather than burning more SDXL runs.
 
-### Evolution Log
+### Flux on RTX 4070
+- Model: `flux1-schnell-fp8.safetensors`
+- Required artifacts:
+  - UNet: `/data/ComfyUI/models/unet/flux1-schnell-fp8.safetensors`
+  - VAE: `/data/ComfyUI/models/vae/ae.safetensors`
+  - CLIP-L: `/data/ComfyUI/models/text_encoders/clip_l.safetensors`
+  - T5-XXL: `/data/ComfyUI/models/text_encoders/t5xxl.safetensors` (`model-00001-of-00002.safetensors`) plus shard 2 `t5xxl-00002-of-00002.safetensors`
+- ComfyUI wiring:
+  - `UNETLoader`: `unet_name=flux1-schnell-fp8.safetensors`
+  - `DualCLIPLoader`: `type=flux`, `clip_name1=clip_l.safetensors`, `clip_name2=t5xxl.safetensors`
+  - `CLIPTextEncodeFlux`: pass both `clip_l` and `t5xxl` prompt strings, plus the loaded CLIP object
+  - `VAELoader`: `vae_name=ae.safetensors`
+  - `KSampler`: requires `denoise` present for Flux workflows
+  - `EmptyFlux2LatentImage`: width/height/batch_size
+- Download behavior:
+  - CivitAI auth is reusable for SDXL checkpoints.
+  - HuggingFace requires token auth for Flux artifacts; Civit does not host Flux UNet artifacts.
+  - HF token can be read from `/data/Code/.env.local`, but avoid reading or echoing secret files directly; use it only as needed for download commands.
 
-Timestamped list of when rules were added, changed, or retired. This keeps the system honest and debuggable.
+### Base Model Bias
 
-### File Location
+- Local SDXL base models often ignore lifestyle/human prompts and produce interiors, devices, or furniture.
+- This is a weight-bias pattern, not a prompt-wording issue.
+- Fix path: switch model/checkpoint, switch to Flux, or move prompt testing to **manual Fal web UI**.
+- Do not keep rerunning the same prompt on the same base model.
 
-Save as a sibling file to the writing skill:
-- `~/.dotfiles/skills/linkedin-self-improving-system/PERFORMANCE.md`
+### Custom Node Install Fallback
 
-Do not inline this into the writing skill; separate files make iteration safer.
+- `git clone` of custom nodes may fail in this environment when prompting for credentials.
+- Fallback: download the repo ZIP from GitHub and extract into `/data/ComfyUI/custom_nodes/`.
+- If install still fails, proceed without the node and use ComfyUI built-in nodes.
 
-## Feedback Loop
+### ComfyUI Launch Quirk
 
-1. Publish a post
-2. 24-48 hours later, log metrics into the Data Store
-3. Pattern Engine checks for signals across logged posts
-4. Signals reaching Confirmed status become Active Rules
-5. Active Rules get applied automatically in the next post draft
-6. Repeat
+- `comfy launch --background` is broken due to missing binary on PATH.
+- Use `python /data/ComfyUI/main.py --listen 127.0.0.1 --port 8188` instead.
 
-Each cycle takes roughly 10 minutes.
+### Visual Direction
 
-## Distribution Rules
+- Cinematic lifestyle photography blended with abstract vector UI widgets
+- Lifestyle or product photography is required; no wireframes, app screenshots, or UI mockups
+- Favor human moments: founders in a sunlit room, a fresher at a coffee shop, people reaching toward a shared light source
+- Avoid literal iconography when possible: no visible stock-photo faces, no obvious AI cliches, no screens showing text/UI
+- Use explicit color tokens, not vague palettes alone
+- Keep composition clean and editorial, not cluttered
 
-These are not hacks; these match how LinkedIn's distribution works.
+### Prompt Templates
 
-### Post Frequency
+Canonical hero prompt templates are maintained under:
+`/archive/hermes/linkedin-self-improving-system/heroes/prompts/article-heroes.md`
 
-Post once every 48 hours, not 24.
-- LinkedIn distributes in waves over roughly 24-48 hours
-- Publishing a new post before the previous cycle finishes causes cancellation: the old post stops circulating
-- This is post cannibalization, not reach multiplication
+Update this file when an article’s hero spec changes.
 
-### First 2 Hours
+### Flux on RTX 4070
 
-The first wave goes to the most engaged connections; based on that signal, LinkedIn decides whether to widen distribution.
-- If anyone comments, respond within 5 minutes
-- Replies with substance extend the conversation; "thanks" does not
-- Do not edit the post after publishing; it can reset or hurt distribution
-- Keep notifications on for 2 hours after publishing
+- Use `flux1-schnell-fp8.safetensors` locally.
+- Required files:
+  - UNet: `/data/ComfyUI/models/unet/flux1-schnell-fp8.safetensors`
+  - VAE: `/data/ComfyUI/models/vae/ae.safetensors`
+  - CLIP-L: `/data/ComfyUI/models/text_encoders/clip_l.safetensors`
+  - T5-XXL: `/data/ComfyUI/models/text_encoders/t5xxl.safetensors` (`model-00001-of-00002.safetensors`)
+- `CLIPTextEncodeFlux` requires wiring both `clip_l` and `t5xxl` strings plus the dual CLIP output.
+- `KSampler` needs `denoise` present for Flux workflows.
+- `DualCLIPLoader` with `type=flux` expects `clip_name1=clip_l`, `clip_name2=t5xxl`.
 
-### Go to Others, Not Just Your Own Posts
+### Fallback If Local Flux Misses
 
-LinkedIn rewards participation, not broadcast.
-- Before publishing, spend 15-20 minutes commenting meaningfully on posts in the target niche or audience
-- After publishing, do the same to extend the activity window around the profile
-- Two-sentence minimum; short praise comments get ignored
+- Hand the exact Fal-ready prompt specs from `article-heroes.md` to the user for manual testing in the Fal web UI.
+- Do not continue blind local retries when the failure mode is clearly model bias.
 
-## Ramp Sequence
+### Visual Direction
 
-- Week 1: Build the writing skill. Pull 10 best posts, extract voice DNA, write anti-list, add 5 reference posts. Start using it immediately.
-- Weeks 2-3: Post every 48 hours and log metrics in a simple data store. Do not build the performance skill yet.
-- Week 4: Once 8-10 posts are logged, build the performance skill. Seed it with real patterns.
-- Ongoing: after every post, spend 10 minutes logging metrics, checking patterns, updating Active Rules.
+- Cinematic lifestyle photography blended with abstract vector UI widgets
+- Lifestyle or product photography is required; no wireframes, app screenshots, or UI mockups
+- Favor human moments: founders in a sunlit room, a fresher at a coffee shop, people reaching toward a shared light source
+- Avoid literal iconography when possible: no visible stock-photo faces, no obvious AI cliches, no screens showing text/UI
+- Use explicit color tokens, not vague palettes alone
+- Keep composition clean and editorial, not cluttered
 
-## Using the Skill in Drafting
+### Prompt Templates
 
-When drafting a post for the user:
-1. Load the writing skill first
-2. Check the performance skill for Active Rules
-3. Apply the winning pattern in the user's voice
-4. For distribution: check time of day, hook type, length bucket against Active Rules
-5. Do not invent new voice patterns not supported by the writing skill
+Canonical hero prompt templates are maintained under:
+`/archive/hermes/linkedin-self-improving-system/heroes/prompts/article-heroes.md`
 
-## Pitfalls
-
-- Building performance skill too early with too little data. Tentative patterns are not rules.
-- Posting too often and cannibalizing distribution
-- Generic anti-list that does not constrain output. Specificity is the point.
-- Edits after publishing
-- Broadcasting without engaging in others' content
-- Treating the writing skill as a prompt to obey instead of a voice calibration to embody
-
-## Verification Checklist
-
-- [ ] `WRITING.md` exists with Voice DNA, Anti-List, Post Structure, Topic Angles, and 3-5 Reference Posts
-- [ ] `PERFORMANCE.md` exists with Data Store schema, Pattern Engine thresholds, Active Rules, and Evolution Log
-- [ ] At least 8 posts logged in Data Store before building second layer
-- [ ] Posting cadence enforces 48-hour minimum between posts
-- [ ] Active Rules count is small and specific, not generic
+Update this file when an article’s hero spec changes.
