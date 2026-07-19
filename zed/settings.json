@@ -1,4 +1,12 @@
 {
+  "context_servers": {
+    "codebase-memory-mcp": {
+      "enabled": true,
+      "remote": false,
+      "command": "/Users/niksmac/.local/bin/codebase-memory-mcp",
+      "args": [""]
+    }
+  },
   "search_wrap": true,
   "relative_line_numbers": "wrapped",
   "agent_servers": {
@@ -81,20 +89,18 @@
   },
   "language_models": {
     "openai_compatible": {
-      "opencode": {
-        "api_url": "https://opencode.ai/zen/v1/chat/completions",
+      "OpenCode": {
+        "api_url": "https://opencode.ai/zen/v1",
         "available_models": [
           {
             "name": "big-pickle",
             "max_tokens": 200000,
             "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
             "capabilities": {
               "tools": true,
               "images": false,
               "parallel_tool_calls": true,
-              "prompt_cache_key": true,
-              "chat_completions": true
+              "prompt_cache_key": true
             }
           }
         ]
@@ -126,10 +132,8 @@
   "soft_wrap": "bounded",
   "show_wrap_guides": true,
   "wrap_guides": [80, 100],
-  "buffer_font_size": null,
-
+  "buffer_font_size": 16,
   "buffer_font_family": "Monaco",
-  "ui_font_fallbacks": ["Inter", ".SystemUIFont"],
   "ui_font_size": 16,
   "format_on_save": "on",
   "vim_mode": false,
@@ -201,7 +205,7 @@
   "agent": {
     "dock": "right",
     "default_model": {
-      "provider": "opencode",
+      "provider": "OpenCode",
       "model": "big-pickle"
     }
   },
