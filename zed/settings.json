@@ -12,6 +12,7 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
+        "model": "opencode/big-pickle",
         "mode": "build"
       },
       "type": "registry"
@@ -121,9 +122,13 @@
     "provider": "none"
   },
   "base_keymap": "Atom",
-  "icon_theme": "Zed (Default)",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "One Light",
     "dark": "One Dark Pro"
   },

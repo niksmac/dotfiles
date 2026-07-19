@@ -27,4 +27,10 @@ fi
 
 # Canonical tool homes.
 export NVM_DIR="${HOME}/.nvm"
-export ZPLUG_HOME="${HOME}/.local/share/zplug"
+export ZPLUG_HOME="${HOME}/.zplug"
+
+# fnm — Fast Node Manager
+FNM_PATH="${HOME}/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+fi

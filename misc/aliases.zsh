@@ -53,6 +53,9 @@ alias codex='open . && zed . && opencode'
 alias oc='opencode'
 alias occ='opencode --continue'
 
+alias hs='hermes --tui'
+alias hsc='hermes --tui --continue'
+
 ## Remove metadata
 alias meta_clean='exiftool -all= -overwrite_original'
 alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'

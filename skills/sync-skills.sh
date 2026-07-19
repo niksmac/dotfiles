@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DOTFILES_SKILLS="$HOME/.dotfiles/opencode/skills"
+DOTFILES_SKILLS="$HOME/.dotfiles/skills"
 HERMES_SKILLS="$HOME/.hermes/skills"
 
 mkdir -p "$HERMES_SKILLS"
