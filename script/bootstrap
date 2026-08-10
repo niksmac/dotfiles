@@ -2,29 +2,34 @@
 #
 # bootstrap installs things.
 
+set -euo pipefail
+
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
-
-set -e
 
 echo ''
 
 info () {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+  printf '\r  [ \033[00;34m..\033[0m ] %s\n' "$1"
 }
 
 user () {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+  printf '\r  [ \033[0;33m??\033[0m ] %s\n' "$1"
 }
 
 success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+  printf '\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n' "$1"
 }
 
 fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  printf '\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n' "$1"
   echo ''
-  exit
+  exit 1
+}
+
+# Escape a string for use as a sed replacement (handles /, &, and \).
+sed_escape () {
+  printf '%s' "$1" | sed -e 's/[\/&\\]/\\&/g'
 }
 
 setup_gitconfig () {
@@ -39,11 +44,14 @@ setup_gitconfig () {
     fi
 
     user ' - What is your github author name?'
-    read -e git_authorname
+    read -r git_authorname
     user ' - What is your github author email?'
-    read -e git_authoremail
+    read -r git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
+    sed -e "s/AUTHORNAME/$(sed_escape "$git_authorname")/g" \
+        -e "s/AUTHOREMAIL/$(sed_escape "$git_authoremail")/g" \
+        -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" \
+        git/gitconfig.symlink.example > git/gitconfig.symlink
 
     success 'gitconfig'
   fi
@@ -54,49 +62,37 @@ setup_npmconfig () {
   then
     info 'setup npmconfig'
 
-    git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
-
     user ' - What is your npm author name?'
-    read -e npm_authorname
+    read -r npm_authorname
     user ' - What is your npm author email?'
-    read -e npm_authoremail
+    read -r npm_authoremail
     user ' - What is your npm author url?'
-    read -e npm_authorurl
+    read -r npm_authorurl
 
-    sed -e "s/NPMAUTHORNAME/$npm_authorname/g" -e "s/NPMAUTHOREMAIL/$npm_authoremail/g" -e "s/NPMAUTHORURL/$npm_authorurl/g" npm/npmrc.symlink.example > npm/npmrc.symlink
+    sed -e "s/NPMAUTHORNAME/$(sed_escape "$npm_authorname")/g" \
+        -e "s/NPMAUTHOREMAIL/$(sed_escape "$npm_authoremail")/g" \
+        -e "s/NPMAUTHORURL/$(sed_escape "$npm_authorurl")/g" \
+        npm/npmrc.symlink.example > npm/npmrc.symlink
 
     success 'npmconfig'
   fi
 }
 
-setup_git_hooks () {
-  mkdir -p ~/.git-templates/hooks
-
-  # give execute permissions 
-  chmod a+x ~/.git-templates/hooks/*
-}
-
 link_file () {
   local src=$1 dst=$2
 
-  local overwrite= backup= skip=
-  local action=
+  local overwrite='' backup='' skip=''
+  local action=''
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
+  if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]
   then
 
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
 
-      local currentSrc="$(readlink $dst)"
-
       user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
       [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-      read -n 1 action
+      read -r -n 1 action
 
       case "$action" in
         o )
@@ -150,11 +146,12 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
+  local src dst
+  while IFS= read -r src
   do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
-  done
+  done < <(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
 }
 
 setup_gitconfig

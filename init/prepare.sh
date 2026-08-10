@@ -1,20 +1,25 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Homebrew
 #
-# This installs some of the common dependencies needed (or at least desired)
-# using Homebrew.
+# This ensures Homebrew is installed and configures it with common defaults.
+#
+# Usage: ./init/prepare.sh
 
-export ARCHFLAGS='-arch arm64'
+set -euo pipefail
+
+# set native arch for compiled gems/binaries
+case "$(uname -m)" in
+  arm64) export ARCHFLAGS='-arch arm64' ;;
+esac
 
 # create necessary directories
-
-mkdir -p $HOME/.zsh/custom
-mkdir -p $HOME/Code
-mkdir -p $HOME/.nvm
+mkdir -p "$HOME/.zsh/custom"
+mkdir -p "$HOME/Code"
+mkdir -p "$HOME/.nvm"
 
 # Check for Homebrew
-if test ! $(which brew)
+if ! command -v brew >/dev/null 2>&1
 then
   echo "  Installing Homebrew for you."
 
@@ -25,4 +30,3 @@ fi
 
 # Disable analytics https://docs.brew.sh/Analytics
 brew analytics off
-exit 0
