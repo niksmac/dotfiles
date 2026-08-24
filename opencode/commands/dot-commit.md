@@ -6,7 +6,7 @@ subtask: true
 
 Here are the commit rules:
 
-!`cat ~/.dotfiles/git/README.md`
+!`cat ~/.dotfiles/git/RULES.md`
 
 **Enforce these rules strictly:**
 
