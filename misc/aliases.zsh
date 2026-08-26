@@ -69,6 +69,29 @@ alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
 # - Accepts optional format parameter (e.g., mp3, m4a, opus)
 
 ydla() {
+  # Show help
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo "Usage: ydla [FORMAT] [URL...] [yt-dlp OPTIONS]"
+    echo ""
+    echo "Download audio from YouTube with album art and metadata."
+    echo ""
+    echo "Formats:"
+    echo "  best   (default) Keep original codec, remux if needed"
+    echo "  mp3    Convert to MP3"
+    echo "  m4a    Convert to M4A (AAC)"
+    echo "  opus   Convert to Opus"
+    echo "  aac    Convert to AAC"
+    echo "  flac   Convert to FLAC (lossless)"
+    echo "  wav    Convert to WAV (lossless)"
+    echo ""
+    echo "Examples:"
+    echo "  ydla https://youtube.com/watch?v=..."
+    echo "  ydla mp3 https://youtube.com/watch?v=..."
+    echo "  ydla m4a -x --audio-quality 0 URL"
+    echo "  ydla opus URL1 URL2"
+    return 0
+  fi
+
   # Check if first argument is a format specification
   local format="best"
   if [ $# -gt 0 ] && [[ "$1" =~ ^(mp3|m4a|opus|aac|flac|wav)$ ]]; then
@@ -90,8 +113,9 @@ ydla() {
     --download-archive ".ydla-archive.txt" \
     -o "%(title)s-%(id)s.%(ext)s" "$@"
 
-  # Pick the newest audio file
-  file=$(ls -t -- *.mp3 *.m4a *.opus *.webm *.ogg *.aac *.flac *.wav 2>/dev/null | head -n1) || true
+  # Pick the newest audio file (use nomatch so zsh doesn't error on missing globs)
+  setopt localoptions nomatch
+  file=$(ls -t -- *.mp3 *.m4a *.opus *.webm *.ogg *.aac *.flac *.wav(N) 2>/dev/null | head -n1) || true
   [ -f "$file" ] || return 0
 
   # If it's Opus inside .webm/.ogg, remux to .opus with no re-encode (only if format is "best")
