@@ -1,1 +1,1 @@
-alias reload!='. ~/.zshrc'
+alias reload!='source $ZSH/zshrc.symlink'

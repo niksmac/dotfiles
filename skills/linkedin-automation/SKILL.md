@@ -321,6 +321,26 @@ If user wants multi-step engagement:
 
 ---
 
+## Verified Posting Workflow (LinkedIn Feed Post)
+
+Use this when the goal is to publish a post from the logged-in LinkedIn feed.
+
+1. **Connect to an existing logged-in Chrome/CDP session** using `/json/version` and `/json/list`; do NOT blindly launch Chrome.
+2. **Open the composer** by navigating the tab to `https://www.linkedin.com/preload/sharebox/`.
+3. **Inject the post text** into the active editor with `document.execCommand('insertText', false, text)` targeting `[role="textbox"][aria-label="Text editor for creating content"]` via `Runtime.evaluate`.
+4. **Submit** by locating the Post control. First try the known DOM path:
+
+```
+/html/body/div[4]/div/div/div/div[2]/div/div/div[2]/div[3]/div/div[2]/button/span
+```
+
+using `document.evaluate()` + `Input.dispatchMouseEvent` centered on the span.
+
+**Fallback:** if the exact XPath is not found, locate any element whose visible text is exactly `Post` via `document.evaluate("//button//span[normalize-space()='Post']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue`, then click its center.
+5. **Verify** success from body text containing `Post successful`.
+
+If automation submit fails twice, manual finish beats retrying the same click blindly.
+
 ## First-Time Setup (If Not Configured)
 
 1. **Install OpenCode Chrome extension** from Chrome Web Store

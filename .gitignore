@@ -7,3 +7,14 @@ atom.symlink/blob-store/
 node_modules
 yarn.*
 atom/atom-tailwindcss2
+
+# Editor swap / backups
+*.swp
+*.swo
+*~
+
+# Shell runtime + secrets (these live in $HOME, never tracked)
+.zshrc
+.zsh_history
+.localrc
+.zshrc.d/

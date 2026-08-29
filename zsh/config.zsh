@@ -1,4 +1,10 @@
-export LSCOLORS="exfxcxdxbxegedabagacad"
+if [ "$IS_MAC" = true ]; then
+  export LSCOLORS="exfxcxdxbxegedabagacad"
+else
+  if command -v dircolors >/dev/null 2>&1; then
+    eval "$(dircolors -b)"
+  fi
+fi
 export CLICOLOR=true
 
 fpath=($ZSH/functions $fpath)
@@ -35,8 +41,10 @@ zle -N newtab
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
-bindkey '^[[5D' beginning-of-line
-bindkey '^[[5C' end-of-line
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[5D' backward-word
+bindkey '^[[5C' forward-word
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char

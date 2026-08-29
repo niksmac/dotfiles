@@ -5,7 +5,10 @@
 # This installs some of the common dependencies needed (or at least desired)
 # using Homebrew.
 
-export ARCHFLAGS='-arch arm64'
+# macOS-specific flags (only valid on Darwin)
+if [ "$(uname -s)" = "Darwin" ]; then
+  export ARCHFLAGS='-arch arm64'
+fi
 
 # create necessary directories
 
@@ -24,5 +27,8 @@ then
 fi
 
 # Disable analytics https://docs.brew.sh/Analytics
-brew analytics off
+if command -v brew >/dev/null 2>&1
+then
+  brew analytics off
+fi
 exit 0

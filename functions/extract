@@ -11,7 +11,7 @@ extract () {
             *.tar.bz2)  tar -jxvf $1                        ;;
             *.tar.gz)   tar -zxvf $1                        ;;
             *.bz2)      bunzip2 $1                          ;;
-            *.dmg)      hdiutil mount $1                    ;;
+            *.dmg)      if command -v hdiutil >/dev/null 2>&1; then hdiutil mount $1; else echo "'$1' (.dmg) can only be mounted on macOS"; fi  ;;
             *.gz)       gunzip $1                           ;;
             *.tar)      tar -xvf $1                         ;;
             *.tbz2)     tar -jxvf $1                        ;;

@@ -19,6 +19,14 @@ then
   source ~/.localrc
 fi
 
+# Ad-hoc machine-local exports that installers append to (gitignored dir).
+if [[ -d ~/.zshrc.d ]]
+then
+  for file in ~/.zshrc.d/*.zsh(N); do
+    source "$file"
+  done
+fi
+
 # all of our zsh files
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
@@ -45,13 +53,6 @@ do
 done
 
 unset config_files
-export PATH=$PATH:$HOME/.npm-packages/bin
-
-export PATH="$HOME/.yarn/bin:$PATH"
-
-# Install Ruby Gems to ~/gems
-export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
 
 # -----------------------------
 # zplug
@@ -78,7 +79,9 @@ zplug "babarot/enhancd", use:"init.sh", defer:2
 
 # Load oh-my-zsh plugins only if you really use them
 zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/macos", from:oh-my-zsh
+if [ "$IS_MAC" = true ]; then
+  zplug "plugins/macos", from:oh-my-zsh
+fi
 zplug "plugins/fnm", from:oh-my-zsh
 zplug "plugins/yarn", from:oh-my-zsh
 
@@ -92,24 +95,12 @@ zplug check || zplug install
 
 zplug load
 
-# Homebrew
-export PATH="$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/sbin:$PATH"
-
-# Ruby gems
-export PATH="$HOME/.gem/ruby/$(ruby -e 'print RbConfig::CONFIG["ruby_version"]')/bin:$PATH"
-
 # Locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# fnm — Node.js version manager
-eval "$(fnm env --use-on-cd)"
-
-# Hermes Agent — ensure ~/.local/bin is on PATH
-export PATH="$HOME/.local/bin:$PATH"
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/niksmac/.lmstudio/bin"
-# End of LM Studio CLI section
-
+# fnm — Node.js version manager (PATH is set in init/env)
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd)"
+fi
