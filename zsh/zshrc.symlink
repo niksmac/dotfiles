@@ -57,12 +57,12 @@ export PATH=$HOME/gems/bin:$PATH
 # zplug
 # -----------------------------
 
-unsetopt notify
+# Suppress job control notifications before zplug runs
+setopt LOCAL_OPTIONS NO_NOTIFY NO_MONITOR
 
-# zplug
-if command -v brew >/dev/null 2>&1 && [ -f "$(brew --prefix zplug 2>/dev/null)/init.zsh" ]; then
-    export ZPLUG_HOME="$(brew --prefix zplug)"
-elif [ -f "$HOME/.zplug/init.zsh" ]; then
+# ZPLUG_HOME is already set by init/env via brew
+# Fallback: manual zplug install
+if [ -z "$ZPLUG_HOME" ] && [ -f "$HOME/.zplug/init.zsh" ]; then
     export ZPLUG_HOME="$HOME/.zplug"
 fi
 
@@ -88,7 +88,7 @@ zplug "babarot/enhancd", use:"init.sh", defer:2
 # Load oh-my-zsh plugins only if you really use them
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/macos", from:oh-my-zsh
-zplug "plugins/fnm", from:oh-my-zsh
+# fnm handled by eval "$(fnm env --use-on-cd)" below - don't use oh-my-zsh plugin
 zplug "plugins/yarn", from:oh-my-zsh
 
 # Optional: can slow shell startup
@@ -121,5 +121,5 @@ eval "$(fnm env --use-on-cd)"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/home/niksmac/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
