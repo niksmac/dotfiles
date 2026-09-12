@@ -1,0 +1,91 @@
+# Ghostty config — ported from iterm/ (Default profile + hybrid-reduced-contrast)
+# iTerm source: iterm/com.googlecode.iterm2.plist, iterm/hybrid-reduced-contrast.itermcolors
+# Docs: https://ghostty.org/docs/config — validate with: ghostty +show-config
+
+# --- Font (iTerm: Monaco 15, no custom Non-ASCII font) ---
+font-family = "Monaco"
+font-size = 15
+
+# --- Theme: hybrid-reduced-contrast (iTerm Background/Foreground) ---
+background = #1b2125
+foreground = #b9bcba
+
+# Cursor (iTerm: Cursor #21ffff, Cursor Text = background, blinking underline)
+cursor-color = #21ffff
+cursor-text = #1b2125
+cursor-style = block
+cursor-style-blink = true
+
+# Selection (iTerm: Selection = foreground bg, Selected Text = background fg)
+selection-background = #b9bcba
+selection-foreground = #1b2125
+
+# Palette (iTerm Ansi 0-15, hybrid-reduced-contrast)
+# black
+palette = 0=#222e36
+palette = 8=#333f47
+# red
+palette = 1=#922f33
+palette = 9=#bf5053
+# green
+palette = 2=#7a8431
+palette = 10=#a6b254
+# yellow
+palette = 3=#d4804d
+palette = 11=#ebbb61
+# blue
+palette = 4=#4d6d8b
+palette = 12=#6f90b0
+# magenta
+palette = 5=#71527c
+palette = 13=#a27fac
+# cyan
+palette = 6=#4d7b74
+palette = 14=#79b2a8
+# white
+palette = 7=#59676d
+palette = 15=#b9bcba
+
+# Bold uses bright palette (iTerm: Use Bright Bold = true, Bold Font = true)
+bold-color = bright
+
+# --- Terminal behavior (iTerm: xterm-256color, UTF-8, mouse reporting on) ---
+term = xterm-256color
+shell-integration = detect
+scrollback-limit = 1000
+mouse-hide-while-typing = true
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = false
+
+# Bell (iTerm: Silence Bell off, Visual Bell on → audible + visual)
+bell-features = audio,attention,title
+
+# --- Working directory (iTerm: Custom Directory → ~/Code) ---
+working-directory = "~/Code"
+window-inherit-working-directory = true
+split-inherit-working-directory = true
+tab-inherit-working-directory = true
+
+# --- Window chrome (iTerm: HideTab when single, opaque, no blur) ---
+window-theme = system
+window-show-tab-bar = auto
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+background-opacity = 1.0
+background-blur = false
+
+# Close without prompting (iTerm: Close Sessions On End, PromptOnQuit off)
+confirm-close-surface = false
+quit-after-last-window-closed = true
+
+# Option key: iTerm used Normal (both sides); sane dev setup is left=Alt
+# (word jumps in zsh/tmux), right stays for USInternational-PC accents.
+# Your plist locale: com.apple.keylayout.USInternational-PC
+macos-option-as-alt = left
+
+# Splits à la iTerm (Cmd+D vertical, Cmd+Shift+D horizontal)
+# (`super` is Cmd on macOS; `cmd` alias also works, canonical form used here)
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
