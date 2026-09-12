@@ -14,10 +14,14 @@
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
     },
-    "codebase-memory-mcp": {
-      "enabled": true,
+    "sequential-thinking": {
       "type": "local",
-      "command": ["/Users/niksmac/.local/bin/codebase-memory-mcp"]
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "enabled": true
     }
   },
   "formatter": true,
