@@ -7,6 +7,7 @@ font-family = "Monaco"
 font-size = 15
 
 # --- Theme: hybrid-reduced-contrast (iTerm Background/Foreground) ---
+theme = Atom One Dark
 background = #1b2125
 foreground = #b9bcba
 

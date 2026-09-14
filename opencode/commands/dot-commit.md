@@ -4,11 +4,7 @@ model: opencode/big-pickle
 subtask: true
 ---
 
-Here are the commit rules:
-
-!`cat ~/.dotfiles/git/RULES.md`
-
-**Enforce these rules strictly:**
+## Enforce these rules strictly
 
 1. **Capitalization**: The first word and the type prefix **must** be capitalized. `Feat: Add...` ✅ — `feat: add...` ❌
 2. **Valid types only**: Only use: Feat, Fix, Docs, Style, Ref, Perf, Test, Chore, Build, CI, Revert. Never "feature", "Feature", or any other variant.
@@ -23,17 +19,22 @@ Stage all changes:
 Current staged changes:
 !`git diff --cached`
 
-Check the staged diff for hardcoded secret values — actual credentials, not variable names. Look for patterns like:
+First run `git diff --cached --name-only` and flag any sensitive file types being committed: `.env`, `.env.*`, `*.pem`, `*.key`, `id_rsa*`, `id_ed25519*`, `*.p12`, `*.pfx`, `*.keystore`, `credentials*.json`, `*secrets*`.
 
-- `sk-[A-Za-z0-9\-_]{10,}` (OpenAI/LLM API keys)
-- `gh[pousr]_[A-Za-z0-9]{10,}` (GitHub tokens)
-- `AKIA[A-Z0-9]{16}` (AWS access keys)
-- `xox[bpras]-[A-Za-z0-9\-]{10,}` (Slack tokens)
-- `-----BEGIN (RSA |EC )?PRIVATE KEY-----`
-- Literal URLs containing passwords (`://[^:]+:[^@]+@`)
-- Strings like `"password": "plaintext"` or `PASSWORD=plaintext` where the value after `=` or `":"` looks like a plaintext credential (not a reference or env var)
+Check the staged diff for hardcoded secret values — actual credentials, not variable names. Use this generic rule instead of a provider list:
 
-Only flag if the value side of an assignment (after `=`, `:`, `=>`) looks like a real secret — ignore variable names like `API_KEY`, `SECRET`, `TOKEN` on their own.
+- **Structural match**: a key name containing `key`, `secret`, `token`, `password`, `credential`, `auth`, or `api` (case-insensitive, allowing `-`/`_`/space separators, e.g. `apiKey`, `AWS_SECRET_ACCESS_KEY`, `auth_token`) assigned via `=`, `:`, `=>`, or JSON `"key": "value"` — AND —
+- **High-entropy value**: the value is ≥ 16 chars of `[A-Za-z0-9\-_+/=.#]` with mixed character classes (letters + digits, or base64-like mix). Random-looking strings like `sk-9f8a7b6c...`, `hf_aB3xY9...`, `AKIAIOSFODNN7EXAMPLE`, `eyJhbGciOi...` all match this.
+
+Also flag, regardless of key name:
+
+- `-----BEGIN (RSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY( BLOCK)?-----`
+- Literal URLs containing passwords (`://[^:\s]+:[^@\s]+@`) and database connection strings with inline credentials
+- `Basic ` + base64 blobs in headers
+
+Ignore variable names like `API_KEY` alone, references (`${VAR}`, `process.env.X`, `os.environ[...]`), and placeholders (`changeme`, `xxx`, `<your-key>`, `REDACTED`, example/test values, and test fixtures under `test/`, `__fixtures__/`, `*.spec.*`). When unsure whether a value is real or a placeholder, treat it as a secret.
+
+If any secret is detected: **do not commit**. Run `git reset` to unstage and tell the user which file(s) and pattern(s) matched, then stop.
 
 Count the number of files changed. If **more than 3 files** are modified, a **body is required** (not optional).
 

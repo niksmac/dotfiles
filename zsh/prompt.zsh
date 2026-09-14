@@ -46,11 +46,17 @@ python_version() {
   }
 }
 
+ssh_host() {
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo "%{$fg_bold[red]%}%m%{$reset_color%} "
+  fi
+}
+
 directory_name() {
   echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
 }
 
-export PROMPT=$'\n$(directory_name) $(git_dirty)$(need_push)$(node_version)$(python_version)\n› '
+export PROMPT=$'\n$(ssh_host)$(directory_name) $(git_dirty)$(need_push)$(node_version)$(python_version)\n› '
 
 precmd() {
   title "zsh" "%m" "%55<...<%~"
