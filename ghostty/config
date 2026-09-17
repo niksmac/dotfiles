@@ -77,6 +77,13 @@ window-padding-balance = true
 background-opacity = 1.0
 background-blur = false
 
+# Default launch size: medium window (~120 cols x 32 rows), never maximized.
+# window-save-state = never stops Ghostty from reopening at the last
+# (possibly fullscreen/expanded) size.
+window-width = 120
+window-height = 32
+window-save-state = never
+
 # Close without prompting (iTerm: Close Sessions On End, PromptOnQuit off)
 confirm-close-surface = false
 quit-after-last-window-closed = true

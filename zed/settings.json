@@ -47,6 +47,9 @@
           "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
       }
+    },
+    "Dart": {
+      "enable_language_server": false
     }
   },
   "lsp": {
