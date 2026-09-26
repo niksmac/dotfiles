@@ -2,312 +2,43 @@
 #
 # Publish a new version tag and push
 #
-# $1 - version bump: major|minor|patch (default: patch)
-#
-# Updates every version file present in the repo so they stay in sync:
-#   - package.json (and package-lock.json if present)
-#   - pubspec.yaml (Dart/Flutter, preserves +build number)
-#   - Android: android/app/build.gradle and android/app/build.gradle.kts
-#     (versionName + versionCode)
-#   - iOS: **/Info.plist (CFBundleShortVersionString + CFBundleVersion)
-#     and *.xcodeproj/project.pbxproj (MARKETING_VERSION +
-#     CURRENT_PROJECT_VERSION)
+# $1 - version
 #
 # Examples
 #
 #   git-pub major|minor|patch
 
-set -eu
-
-bump="${1:-patch}"
-case "$bump" in
-  major|minor|patch) ;;
-  *) echo "Usage: git-pub major|minor|patch" >&2; exit 1 ;;
-esac
-
-# --- locate version files ------------------------------------------------
-pkg_file=""
-pubspec_file=""
-gradle_files=""
-plist_files=""
-pbxproj_files=""
-
-[ -f package.json ] && pkg_file="package.json"
-[ -f pubspec.yaml ] && pubspec_file="pubspec.yaml"
-
-if [ -d android ]; then
-  # shellcheck disable=SC2046
-  gradle_files="$(find android -name 'build.gradle' -o -name 'build.gradle.kts' 2>/dev/null | tr '\n' ' ')"
-  # keep only app-level files that actually carry versionName/versionCode
-  keep=""
-  for f in $gradle_files; do
-    if grep -q -E 'version(Name)? *(=)? *["'"'"']?[0-9]+\.[0-9]+|versionCode *=' "$f" 2>/dev/null; then
-      keep="$keep $f"
-    fi
-  done
-  gradle_files="$keep"
-fi
-
-if [ -d ios ]; then
-  plist_files="$(find ios -name 'Info.plist' 2>/dev/null | tr '\n' ' ')"
-  pbxproj_files="$(find ios -name 'project.pbxproj' 2>/dev/null | tr '\n' ' ')"
-fi
-
-if [ -z "$pkg_file$pubspec_file$gradle_files$plist_files$pbxproj_files" ]; then
-  echo "No version file found (package.json, pubspec.yaml, android/build.gradle[.kts], ios Info.plist / project.pbxproj)" >&2
-  exit 1
-fi
-
-# --- helpers ---------------------------------------------------------------
-get_pkg_version() {
-  # prints X.Y.Z core from package.json, empty on failure
-  if command -v node >/dev/null 2>&1; then
-    node -p "require('./package.json').version" 2>/dev/null || true
-  elif command -v python3 >/dev/null 2>&1; then
-    python3 -c "import json; print(json.load(open('package.json'))['version'])" 2>/dev/null || true
-  else
-    sed -n 's/^[[:space:]]*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' package.json | head -n 1
-  fi
-}
-
-get_pubspec_version() {
-  sed -n 's/^version:[[:space:]]*\(.*\)/\1/p' pubspec.yaml | head -n 1 | tr -d ' "\"'"'"''
-}
-
-get_gradle_version_name() {
-  grep -h -o -E 'versionName *(=)? *["'"'"'][^"'"'"']+["'"'"']' "$@" 2>/dev/null \
-    | head -n 1 | sed 's/.*["'"'"']\([^"'"'"']*\)["'"'"'].*/\1/'
-}
-
-get_plist_short_version() {
-  # $1 = plist file; prints value of CFBundleShortVersionString
-  awk '
-    /CFBundleShortVersionString/ { getline; gsub(/.*<string>|<\/string>.*/, ""); gsub(/^[ \t]+|[ \t]+$/, ""); print; exit }
-  ' "$1" 2>/dev/null
-}
-
-get_pbxproj_marketing_version() {
-  grep -h -o -E 'MARKETING_VERSION *= *[^;]+;' "$@" 2>/dev/null \
-    | head -n 1 | sed 's/.*=[[:space:]]*//; s/[;[:space:]]*$//'
-}
-
-core_of() {
-  # strip leading v, +build metadata, -prerelease suffix -> X.Y.Z
-  echo "$1" | sed 's/^v//; s/+.*$//; s/-.*$//'
-}
-
-# --- determine current version ---------------------------------------------
-current=""
-if [ -n "$pkg_file" ]; then
-  current="$(get_pkg_version || true)"
-fi
-if [ -z "$current" ] && [ -n "$pubspec_file" ]; then
-  current="$(core_of "$(get_pubspec_version)")"
-fi
-if [ -z "$current" ] && [ -n "$gradle_files" ]; then
-  # shellcheck disable=SC2086
-  current="$(core_of "$(get_gradle_version_name $gradle_files || true)")"
-fi
-if [ -z "$current" ] && [ -n "$plist_files" ]; then
-  for f in $plist_files; do
-    current="$(core_of "$(get_plist_short_version "$f" || true)")"
-    [ -n "$current" ] && break
-  done
-fi
-if [ -z "$current" ] && [ -n "$pbxproj_files" ]; then
-  # shellcheck disable=SC2086
-  current="$(core_of "$(get_pbxproj_marketing_version $pbxproj_files || true)")"
-fi
-
-case "$current" in
-  [0-9]*.[0-9]*.[0-9]*) current="$(core_of "$current")" ;;
-  *) echo "Could not determine current version (got: '$current')" >&2; exit 1 ;;
-esac
-case "$current" in
-  *.*.*) ;;
-  *) echo "Current version '$current' is not X.Y.Z" >&2; exit 1 ;;
-esac
-
-new_version=$(echo "$current" | awk -v bump="$bump" -F. '{
-  if (bump == "major") { $1++; $2 = 0; $3 = 0 }
-  else if (bump == "minor") { $2++; $3 = 0 }
-  else { $3++ }
-  print
-}' OFS=.)
-echo "Bumping $current -> $new_version ($bump)"
-
-# --- determine new build number --------------------------------------------
-# Collect numeric build candidates: pubspec +N, android versionCode,
-# Info.plist CFBundleVersion, pbxproj CURRENT_PROJECT_VERSION.
-max_build=0
-found_build=0
-
-if [ -n "$pubspec_file" ]; then
-  b=$(sed -n 's/^version:[[:space:]]*[0-9]*\.[0-9]*\.[0-9]*+\([0-9][0-9]*\).*/\1/p' pubspec.yaml | head -n 1 || true)
-  if [ -n "$b" ]; then found_build=1; [ "$b" -gt "$max_build" ] 2>/dev/null && max_build="$b"; fi
-fi
-
-if [ -n "$gradle_files" ]; then
-  for f in $gradle_files; do
-    b=$(sed -n 's/.*versionCode[[:space:]]*=[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$f" | head -n 1 || true)
-    if [ -n "$b" ]; then found_build=1; [ "$b" -gt "$max_build" ] 2>/dev/null && max_build="$b"; fi
-  done
-fi
-
-if [ -n "$plist_files" ]; then
-  for f in $plist_files; do
-    b=$(awk '
-      /CFBundleVersion/ { getline; gsub(/.*<string>|<\/string>.*/, ""); gsub(/^[ \t]+|[ \t]+$/, ""); print; exit }
-    ' "$f" 2>/dev/null || true)
-    case "$b" in ''|*[!0-9]*) ;; *) found_build=1; [ "$b" -gt "$max_build" ] 2>/dev/null && max_build="$b" ;; esac
-  done
-fi
-
-if [ -n "$pbxproj_files" ]; then
-  for f in $pbxproj_files; do
-    b=$(grep -h -o -E 'CURRENT_PROJECT_VERSION *= *[0-9]+' "$f" 2>/dev/null | head -n 1 | grep -o -E '[0-9]+$' || true)
-    if [ -n "$b" ]; then found_build=1; [ "$b" -gt "$max_build" ] 2>/dev/null && max_build="$b"; fi
-  done
-fi
-
-new_build=""
-needs_build=0
-if [ "$found_build" -eq 1 ] || [ -n "$gradle_files$plist_files$pbxproj_files" ]; then
-  # Native shells and pubspec +N track a build number; pure npm/js does not.
-  if [ -n "$pubspec_file" ] || [ -n "$gradle_files$plist_files$pbxproj_files" ]; then
-    needs_build=1
-  fi
-fi
-if [ "$needs_build" -eq 1 ]; then
-  new_build=$((max_build + 1))
-  echo "Build number -> $new_build"
-fi
-
-full_version="$new_version"
-[ -n "$new_build" ] && full_version="$new_version+$new_build"
-
-# --- update files -----------------------------------------------------------
-updated=""
-
-set_pkg_version() {
-  # $1 = file, $2 = version (plain X.Y.Z, no build metadata)
-  f="$1"
-  v="$2"
-  if command -v python3 >/dev/null 2>&1; then
-    python3 - "$f" "$v" <<'EOF'
-import json, sys
-path, ver = sys.argv[1], sys.argv[2]
-with open(path) as fh:
-    data = json.load(fh)
-data["version"] = ver
-try:
-    data["packages"][""]["version"] = ver
-except Exception:
-    pass
-with open(path, "w") as fh:
-    json.dump(data, fh, indent=2)
-    fh.write("\n")
-EOF
-  else
-    sed "s/\"version\": *\"[^\"]*\"/\"version\": \"$v\"/" "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-  fi
-}
-
-if [ -n "$pkg_file" ]; then
-  set_pkg_version package.json "$new_version"
-  updated="$updated package.json"
-  if [ -f package-lock.json ]; then
-    set_pkg_version package-lock.json "$new_version"
-    updated="$updated package-lock.json"
-  fi
-  if [ -f npm-shrinkwrap.json ]; then
-    set_pkg_version npm-shrinkwrap.json "$new_version"
-    updated="$updated npm-shrinkwrap.json"
-  fi
-fi
-
-if [ -n "$pubspec_file" ]; then
-  if [ -n "$new_build" ]; then
-    sed "s/^version: .*/version: $new_version+$new_build/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
-  else
-    sed "s/^version: .*/version: $new_version/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
-  fi
-  updated="$updated pubspec.yaml"
-fi
-
-if [ -n "$gradle_files" ]; then
-  for f in $gradle_files; do
-    tmp="$f.tmp"
-    if [ -n "$new_build" ]; then
-      sed -E \
-        -e "s/(versionName *(=)? *[\"'])[^\"']+([\"'])/\1$new_version\3/" \
-        -e "s/(versionCode *(=)? *)[0-9]+/\1$new_build/" \
-        "$f" > "$tmp" && mv "$tmp" "$f"
-    else
-      sed -E \
-        -e "s/(versionName *(=)? *[\"'])[^\"']+([\"'])/\1$new_version\3/" \
-        "$f" > "$tmp" && mv "$tmp" "$f"
-    fi
-    updated="$updated $f"
-  done
-fi
-
-if [ -n "$plist_files" ]; then
-  for f in $plist_files; do
-    # Bump CFBundleShortVersionString always; CFBundleVersion only when tracking a build.
-    if ! python3 - "$f" "$new_version" "$new_build" <<'EOF' 2>/dev/null
-import sys, re
-path, ver, bld = sys.argv[1], sys.argv[2], sys.argv[3]
-with open(path) as fh:
-    src = fh.read()
-src = re.sub(
-    r"(<key>CFBundleShortVersionString</key>\s*<string>)[^<]*(</string>)",
-    r"\g<1>" + ver + r"\g<2>", src)
-if bld:
-    src = re.sub(
-        r"(<key>CFBundleVersion</key>\s*<string>)[^<]*(</string>)",
-        r"\g<1>" + bld + r"\g<2>", src)
-with open(path, "w") as fh:
-    fh.write(src)
-EOF
-    then
-      # python3 unavailable/failed; portable awk rewrite
-      awk -v ver="$new_version" -v bld="$new_build" '
-        /CFBundleShortVersionString/ { print; getline; sub(/<string>[^<]*<\/string>/, "<string>" ver "<\/string>"); print; next }
-        /<key>CFBundleVersion<\/key>/ { print; getline; if (bld != "") sub(/<string>[^<]*<\/string>/, "<string>" bld "<\/string>"); print; next }
-        { print }
-      ' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-    fi
-    updated="$updated $f"
-  done
-fi
-
-if [ -n "$pbxproj_files" ]; then
-  for f in $pbxproj_files; do
-    tmp="$f.tmp"
-    if [ -n "$new_build" ]; then
-      sed -E -e "s/(MARKETING_VERSION *= *)[^;]+;/\1$new_version;/" \
-             -e "s/(CURRENT_PROJECT_VERSION *= *)[0-9]+;/\1$new_build;/" \
-        "$f" > "$tmp" && mv "$tmp" "$f"
-    else
-      sed -E -e "s/(MARKETING_VERSION *= *)[^;]+;/\1$new_version;/" \
-        "$f" > "$tmp" && mv "$tmp" "$f"
-    fi
-    updated="$updated $f"
-  done
-fi
-
-echo "Updated:$updated"
-
-# --- commit, tag, push -------------------------------------------------------
 git checkout develop
 git pull
 git checkout master
 git merge develop -m "Merge branch develop"
 
-# shellcheck disable=SC2086
-git add $updated
-git commit -m "Version $full_version"
-git tag "v$new_version"
+npm version "${1:-patch}" --force -m "Version %s" 2>/dev/null || {
+  [ -f pubspec.yaml ] || { echo "No package.json or pubspec.yaml found" >&2; exit 1; }
+
+  bump="${1:-patch}"
+  version=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)/\1/p' pubspec.yaml | head -n 1)
+  [ -n "$version" ] || { echo "No version found in pubspec.yaml" >&2; exit 1; }
+  build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' pubspec.yaml | head -n 1)
+
+  new_version=$(echo "$version" | awk -v bump="$bump" -F. '{
+    if (bump == "major") { $1++; $2 = 0; $3 = 0 }
+    else if (bump == "minor") { $2++; $3 = 0 }
+    else { $3++ }
+    print
+  }' OFS=.)
+
+  if [ -n "$build" ]; then
+    new_build=$((build + 1))
+    sed "s/^version: .*/version: $new_version+$new_build/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+    new_version="$new_version+$new_build"
+  else
+    sed "s/^version: .*/version: $new_version/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+  fi
+
+  git add pubspec.yaml
+  git commit -m "Version $new_version"
+  git tag "v${new_version%%+*}"
+}
 git push && git push --tags
 git checkout develop
