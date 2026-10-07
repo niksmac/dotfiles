@@ -1,0 +1,6 @@
+# Track only the config itself; everything else in this directory is runtime
+# state written by the agent/GUI (locks, sockets, backups, claims).
+*
+!.gitignore
+!config.toml
+!install.sh
