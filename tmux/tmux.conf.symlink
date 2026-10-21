@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
-# Create session if none exists
-new-session -n "#{host_short}"
+# Create session if none exists (guarded so `prefix r` reloads don't add one)
+if -F '#{==:#{server_sessions},0}' 'new-session -d -n "#{host_short}"'
 
 # improve colors
 set -g default-terminal "screen-256color"
@@ -26,9 +26,19 @@ set -g visual-activity off
 set -g bell-action none
 set -g history-limit 10000
 
+# Clipboard / copy
+# Mouse is on by default since tmux 3.8: drag selects in copy-mode (Shift+drag
+# for Ghostty's native selection). Be explicit so behaviour doesn't drift.
+set -g mouse on
+# Accept OSC 52 from apps inside tmux (nvim, Claude Code, ssh) and forward it
+# to Ghostty; "external" (the default) silently drops them.
+set -s set-clipboard on
+# Pipe every copy-mode copy straight to the macOS clipboard as well
+set -s copy-command 'pbcopy'
+
 # Status bar
 setw -g clock-mode-style 12
-set -g status-interval 5
+set -g status-interval 15
 set -g status-right "#{pomodoro_status} | %a %d %b %I:%M %p "
 set -g status-left "#S "
 set -g status-style "bg=#222222,fg=#cccccc"

@@ -53,7 +53,8 @@ bold-color = bright
 # --- Terminal behavior (iTerm: xterm-256color, UTF-8, mouse reporting on) ---
 term = xterm-256color
 shell-integration = detect
-scrollback-limit = 1000
+# Bytes, not lines (10 MB = Ghostty default)
+scrollback-limit = 10000000
 mouse-hide-while-typing = true
 clipboard-read = allow
 clipboard-write = allow
@@ -97,3 +98,7 @@ macos-option-as-alt = left
 # (`super` is Cmd on macOS; `cmd` alias also works, canonical form used here)
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
+
+
+# Disable background rendering loops when the app window is hidden
+focus-follows-mouse = false
