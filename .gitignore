@@ -18,3 +18,5 @@ atom/atom-tailwindcss2
 .zsh_history
 .localrc
 .zshrc.d/
+# Linux-only Ghostty include, created by ghostty/install.sh
+ghostty/linux.conf

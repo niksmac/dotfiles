@@ -35,6 +35,8 @@ COMMON_PACKAGES=(
   fd
   bat
   zsh
+  zplug
+  fnm
   biome
 )
 

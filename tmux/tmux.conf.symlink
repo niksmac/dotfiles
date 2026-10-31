@@ -91,7 +91,7 @@ set -g @continuum-restore 'on'
 # set-clipboard alone never reaches the system clipboard there. Keep OSC 52
 # enabled for terminals that DO support it (Ghostty, kitty, wezterm, foot) and
 # for SSH peers, but drive every copy through a real helper:
-# wl-copy (Wayland) -> xclip -> xsel.
+# pbcopy (macOS) -> wl-copy (Wayland) -> xclip -> xsel.
 set -g set-clipboard on
 
 # tmux 3.8 defaults the mouse to on -- keep it, and make it explicit.
@@ -100,12 +100,12 @@ set -g mouse on
 # Copy on drag release: letting go of the mouse after a drag pipes the
 # selection straight to the system clipboard and exits copy mode. y / Enter
 # do the same from the keyboard.
-bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
-bind -T copy-mode    MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
-bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
-bind -T copy-mode-vi y     send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
-bind -T copy-mode   Enter send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
-bind -T copy-mode   y     send-keys -X copy-pipe-and-cancel 'wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode    MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode-vi y     send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode   Enter send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
+bind -T copy-mode   y     send-keys -X copy-pipe-and-cancel 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selection clipboard 2>/dev/null || xsel -b'
 
 # tmux 3.8's new Ctrl+<mouse> defaults pop up surprise windows mid-gesture:
 # Ctrl+drag floats a new pane that follows the cursor, Ctrl+click breaks the

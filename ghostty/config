@@ -93,28 +93,18 @@ quit-after-last-window-closed = true
 # Your plist locale: com.apple.keylayout.USInternational-PC
 macos-option-as-alt = left
 
-# --- Keybinds: iTerm muscle memory on Linux -------------------------------
-# Ghostty's built-in clipboard/tab defaults are ctrl+shift+{c,v,t} on Linux.
-# Cmd (super) bindings are macOS-only defaults, so they must be declared
-# explicitly here or they fall through to the shell as literal bytes.
+# --- Keybinds (shared) -----------------------------------------------------
+# `super` is Cmd on macOS (`cmd` alias also works, canonical form used here).
+# On macOS these mostly restate defaults; on Linux they must be declared or
+# they fall through to the shell as literal bytes.
 keybind = super+c=copy_to_clipboard:mixed
 keybind = super+v=paste_from_clipboard
-# Logitech Mac-layout keyboard: the key labeled "Cmd" sends ctrl on Linux,
-# so alias the common shortcuts to ctrl+ as well.
-keybind = ctrl+c=copy_to_clipboard:mixed
-keybind = ctrl+v=paste_from_clipboard
 
 # Tabs & windows
 keybind = super+t=new_tab
 keybind = super+n=new_window
 keybind = super+w=close_tab
 keybind = super+q=quit
-keybind = ctrl+t=new_tab
-keybind = ctrl+n=new_window
-keybind = ctrl+w=close_tab
-keybind = ctrl+q=quit
-# NB: no super+shift+left/right — GNOME binds those to move-to-workspace
-# and consumes them. Ghostty's ctrl+shift+arrow_left/right defaults do tabs.
 keybind = super+1=goto_tab:1
 keybind = super+2=goto_tab:2
 keybind = super+3=goto_tab:3
@@ -126,15 +116,15 @@ keybind = super+8=goto_tab:8
 keybind = super+9=last_tab
 
 # Splits à la iTerm (Cmd+D vertical, Cmd+Shift+D horizontal)
-# (`super` is Cmd on macOS; `cmd` alias also works, canonical form used here)
-# NB: GNOME's wm binds <Super>d to show-desktop at the compositor level,
-# so super+d is swallowed before Ghostty sees it on Linux. Use ctrl+alt+d or
-# ctrl+shift+o/e (Ghostty defaults, left alone) for splits on GNOME.
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
-keybind = ctrl+alt+d=new_split:right
-keybind = ctrl+alt+shift+d=new_split:down
 keybind = super+alt+left=goto_split:left
 keybind = super+alt+right=goto_split:right
 keybind = super+ctrl+alt+left=resize_split:left,10
 keybind = super+ctrl+alt+right=resize_split:right,10
+
+# --- Linux-only overrides ---------------------------------------------------
+# ctrl+ aliases for a Mac-layout keyboard on Linux (ctrl+w/q/c/... would
+# clobber shell keys on macOS). ghostty/install.sh links linux.conf only on
+# Linux; the leading `?` makes it optional, so macOS silently skips it.
+config-file = ?linux.conf

@@ -119,8 +119,10 @@ fi
 # (Must be top-level: zsh/config.zsh sets LOCAL_OPTIONS, which would undo a
 # setopt done inside a function or hook.)
 wait
-setopt MONITOR
-jobs >/dev/null 2>&1
+if [[ -t 0 ]]; then  # MONITOR can't be set without a terminal
+  setopt MONITOR
+  jobs >/dev/null 2>&1
+fi
 
 # Locale
 export LANG=en_US.UTF-8
@@ -133,25 +135,34 @@ if command -v fnm >/dev/null 2>&1; then
 fi
 export PATH="$HOME/flutter/bin:$PATH"
 
-# Android SDK
-export ANDROID_HOME=/data/android/Sdk
+# Android SDK (Android Studio's default location on macOS)
+if [ "$IS_MAC" = true ]; then
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+else
+  export ANDROID_HOME=/data/android/Sdk
+fi
 export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
 
 # Node version comes from `fnm env --use-on-cd` above. Do not prepend a
 # pinned fnm node-versions path here: it shadows whatever version the
 # current directory's .node-version resolves to.
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
+# LM Studio (~/.lmstudio/bin) and opencode (~/.opencode/bin) are added to PATH
+# by init/env.
 
 if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
   source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
 fi
 
-# Added by codebase-memory-mcp install
-export PATH="/home/niksmac/.local/bin:$PATH"
+# ~/.local/bin (codebase-memory-mcp, Hermes) last so it wins over fnm's node
+# bin, which can carry an older npm-global copy of the same tools.
+export PATH="$HOME/.local/bin:$PATH"
 
-export BUN_OPTIONS="${BUN_OPTIONS:+$BUN_OPTIONS }--preload=$HOME/.local/share/no-agent-summary.js"
-
-export PATH=/Users/niksmac/.opencode/bin:$PATH
+# Machine-local bun preload (not tracked in this repo); bun fails to start if
+# --preload points at a missing file, so only add it where it exists (and only
+# once, since nested shells inherit BUN_OPTIONS).
+bun_preload="--preload=$HOME/.local/share/no-agent-summary.js"
+if [[ -f $HOME/.local/share/no-agent-summary.js && $BUN_OPTIONS != *"$bun_preload"* ]]; then
+  export BUN_OPTIONS="${BUN_OPTIONS:+$BUN_OPTIONS }$bun_preload"
+fi
+unset bun_preload

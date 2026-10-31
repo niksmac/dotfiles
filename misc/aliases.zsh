@@ -54,8 +54,10 @@ alias cp="cp -i"
 # Human-readable sizes
 alias df='df -h'
 
-# Show sizes in MB
-alias free='free -m'
+# Show sizes in MB (no `free` on macOS)
+if [ "$IS_LINUX" = true ]; then
+  alias free='free -m'
+fi
 
 # Flush DNS cache
 if [ "$IS_MAC" = true ]; then
