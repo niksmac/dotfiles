@@ -137,6 +137,11 @@ the script. Restart an agent that's already running to pick it up.
 OpenCode's own config (`opencode.json` and `commands/`) is linked into
 `~/.config/opencode` by `opencode/install.sh`.
 
+Claude Code's global rules, `claude/CLAUDE.md`, are linked to
+`~/.claude/CLAUDE.md` (or `$CLAUDE_CONFIG_DIR/CLAUDE.md`) by
+`claude/install.sh`. Edit the file in this repo; an existing local
+`CLAUDE.md` that differs is kept as `CLAUDE.md.backup`.
+
 ## Local overrides and secrets
 
 - `~/.localrc` is sourced by `zsh/zshrc.symlink` and is **gitignored**. It's created
