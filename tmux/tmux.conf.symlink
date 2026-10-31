@@ -59,7 +59,7 @@ setw -g window-status-style "fg=#888888"
 # set-option -g default-shell "$(which zsh)"
 # set-option -g default-shell "/opt/homebrew/bin/zsh"
 set-option -g default-shell ${SHELL}
-set -g default-command 'builtin cd "#{pane_current_path}" 2>/dev/null; exec $SHELL'
+set -g default-command 'exec $SHELL'
 
 # set color for status bar
 set-option -g renumber-windows on
@@ -96,6 +96,11 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set -g @resurrect-processes 'false'
 set -g @continuum-restore 'on'
+# Keep pane titles at their default (the hostname). Apps that set an empty
+# title via OSC 2 make resurrect's tab-separated save collapse a column
+# (bash `read` merges empty tab fields), so the pane's dir is saved as "1"
+# and it restores to $HOME. Nothing here displays pane titles anyway.
+set -g allow-set-title off
 
 
 # --- clipboard / mouse ---------------------------------------------------
