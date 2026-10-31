@@ -35,46 +35,60 @@ open /System/Library/CoreServices/PowerChime.app
 # # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
 # defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
+# Sandboxed apps (Safari, TextEdit, Safari Technology Preview) keep their
+# settings in ~/Library/Containers, which macOS only lets a terminal write
+# once it has Full Disk Access (System Settings → Privacy & Security). Each
+# block below tries its first setting and, if that's denied, skips the rest
+# with one note instead of an error per line.
+sandboxed_write () {
+  defaults write "$@" 2>/dev/null && return 0
+  echo "Skipping $1 settings: give your terminal Full Disk Access, then re-run macos/install.sh"
+  return 1
+}
+
 # Safari
 # ==============
 
-#Enable Develop Menu and Web Inspector
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true && \
-defaults write com.apple.Safari IncludeDevelopMenu -bool true && \
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true && \
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true && \
+# Web Inspector in every WebKit view (global domain, not sandboxed)
 defaults write -g WebKitDeveloperExtras -bool true
 
-# Disable hyperlink auditing beacon
+# Enable Develop Menu and Web Inspector
+if sandboxed_write com.apple.Safari IncludeDevelopMenu -bool true; then
+  defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+  defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 
-defaults write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2HyperlinkAuditingEnabled -bool false
+  # Disable hyperlink auditing beacon
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2HyperlinkAuditingEnabled -bool false
 
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2HyperlinkAuditingEnabled -bool false
+  # Privacy: don’t send search queries to Apple
+  defaults write com.apple.Safari UniversalSearchEnabled -bool false
+  defaults write com.apple.Safari SuppressSearchSuggestions -bool true
 
-# Privacy: don’t send search queries to Apple
-defaults write com.apple.Safari UniversalSearchEnabled -bool false
-defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+  # Hide Safari’s bookmarks bar by default
+  defaults write com.apple.Safari ShowFavoritesBar -bool false
 
-# Hide Safari’s bookmarks bar by default
-defaults write com.apple.Safari ShowFavoritesBar -bool false
+  # Hide Safari’s sidebar in Top Sites
+  defaults write com.apple.Safari ShowSidebarInTopSites -bool false
 
-# Hide Safari’s sidebar in Top Sites
-defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+  # Warn about fraudulent websites
+  defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
 
-# Warn about fraudulent websites
-defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+  # Enable “Do Not Track”
+  defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
-# Enable “Do Not Track”
-defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+  # Update extensions automatically
+  defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+fi
 
-# Update extensions automatically
-defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+# Disable hyperlink auditing beacon in Safari Technology Preview
+sandboxed_write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2HyperlinkAuditingEnabled -bool false || true
 
 # TextEdit
 # ==============
 
 # Use Plain Text Mode as Default
-defaults write com.apple.TextEdit RichText -int 0
+sandboxed_write com.apple.TextEdit RichText -int 0 || true
 
 
 # Finder
