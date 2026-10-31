@@ -28,12 +28,68 @@ fi
 # Canonical tool homes.
 export NVM_DIR="${HOME}/.nvm"
 
+# `brew --prefix <formula>` prints a path even when the formula isn't
+# installed, so only trust it if zplug is actually there.
 if command -v brew >/dev/null 2>&1; then
-  export ZPLUG_HOME="$(brew --prefix zplug)"
+  BREW_ZPLUG="$(brew --prefix zplug)"
+  if [ -f "$BREW_ZPLUG/init.zsh" ]; then
+    export ZPLUG_HOME="$BREW_ZPLUG"
+  fi
+  unset BREW_ZPLUG
 fi
 
 # fnm — Fast Node Manager
 FNM_PATH="${HOME}/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
   export PATH="$FNM_PATH:$PATH"
+fi
+
+# Ruby via Homebrew / Linuxbrew (only when brew is present).
+if command -v brew >/dev/null 2>&1; then
+  BREW_PREFIX="$(brew --prefix)"
+  export PATH="$BREW_PREFIX/opt/ruby/bin:$BREW_PREFIX/sbin:$PATH"
+  unset BREW_PREFIX
+fi
+
+# Ruby gems — install into ~/gems and add the per-version gem bin dir.
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+if command -v ruby >/dev/null 2>&1; then
+  RUBY_GEM_BIN="$HOME/.gem/ruby/$(ruby -e 'print RbConfig::CONFIG["ruby_version"]')/bin"
+  if [ -d "$RUBY_GEM_BIN" ]; then
+    export PATH="$RUBY_GEM_BIN:$PATH"
+  fi
+  unset RUBY_GEM_BIN
+fi
+
+# npm / yarn global prefixes
+if [ -d "$HOME/.npm-packages/bin" ]; then
+  export PATH="$HOME/.npm-packages/bin:$PATH"
+fi
+if [ -d "$HOME/.yarn/bin" ]; then
+  export PATH="$HOME/.yarn/bin:$PATH"
+fi
+
+# pnpm
+if [ -d "$HOME/.local/share/pnpm" ]; then
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME/bin:"*) ;;
+    *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+  esac
+fi
+
+# LM Studio CLI (lms)
+if [ -d "$HOME/.lmstudio/bin" ]; then
+  export PATH="$HOME/.lmstudio/bin:$PATH"
+fi
+
+# opencode
+if [ -d "$HOME/.opencode/bin" ]; then
+  export PATH="$HOME/.opencode/bin:$PATH"
+fi
+
+# User-level binaries (Hermes agent, codebase-memory-mcp, etc.)
+if [ -d "$HOME/.local/bin" ]; then
+  export PATH="$HOME/.local/bin:$PATH"
 fi

@@ -4,7 +4,7 @@
 
 # --- Font (iTerm: Monaco 15, no custom Non-ASCII font) ---
 font-family = "Monaco"
-font-size = 15
+font-size = 14
 
 # --- Theme: hybrid-reduced-contrast (iTerm Background/Foreground) ---
 theme = Atom One Dark
@@ -94,11 +94,41 @@ quit-after-last-window-closed = true
 # Your plist locale: com.apple.keylayout.USInternational-PC
 macos-option-as-alt = left
 
+# --- Keybinds (shared) -----------------------------------------------------
+# `super` is Cmd on macOS (`cmd` alias also works, canonical form used here).
+# On macOS these mostly restate defaults; on Linux they must be declared or
+# they fall through to the shell as literal bytes.
+keybind = super+c=copy_to_clipboard:mixed
+keybind = super+v=paste_from_clipboard
+
+# Tabs & windows
+keybind = super+t=new_tab
+keybind = super+n=new_window
+keybind = super+w=close_tab
+keybind = super+q=quit
+keybind = super+1=goto_tab:1
+keybind = super+2=goto_tab:2
+keybind = super+3=goto_tab:3
+keybind = super+4=goto_tab:4
+keybind = super+5=goto_tab:5
+keybind = super+6=goto_tab:6
+keybind = super+7=goto_tab:7
+keybind = super+8=goto_tab:8
+keybind = super+9=last_tab
+
 # Splits à la iTerm (Cmd+D vertical, Cmd+Shift+D horizontal)
-# (`super` is Cmd on macOS; `cmd` alias also works, canonical form used here)
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
-
+keybind = super+alt+left=goto_split:left
+keybind = super+alt+right=goto_split:right
+keybind = super+ctrl+alt+left=resize_split:left,10
+keybind = super+ctrl+alt+right=resize_split:right,10
 
 # Disable background rendering loops when the app window is hidden
 focus-follows-mouse = false
+
+# --- Linux-only overrides ---------------------------------------------------
+# ctrl+ aliases for a Mac-layout keyboard on Linux (ctrl+w/q/c/... would
+# clobber shell keys on macOS). ghostty/install.sh links linux.conf only on
+# Linux; the leading `?` makes it optional, so macOS silently skips it.
+config-file = ?linux.conf

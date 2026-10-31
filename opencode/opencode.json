@@ -1,27 +1,38 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@franlol/opencode-md-table-formatter@latest"],
+  "plugins": [
+    "niksmac/OpenAgentsControl",
+    "@franlol/opencode-md-table-formatter@latest"
+  ],
   "compaction": {
     "auto": true,
     "prune": true,
     "reserved": 10000
   },
   "mcp": {
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+    "servers": {
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        },
+        "enabled": true
+      },
+      "sequential-thinking": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@modelcontextprotocol/server-sequential-thinking"
+        ],
+        "enabled": true
+      },
+      "codebase-memory-mcp": {
+        "type": "local",
+        "command": ["codebase-memory-mcp"],
+        "enabled": true
       }
-    },
-    "sequential-thinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "enabled": true
     }
   },
   "formatter": true,

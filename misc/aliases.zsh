@@ -7,12 +7,32 @@ alias tree='tree -I node_modules'
 
 alias v='vim'
 alias z='zed .'
-alias speed='open https://fast.com'
+if [ "$IS_MAC" = true ]; then
+  alias speed='open https://fast.com'
+else
+  alias speed='xdg-open https://fast.com'
+fi
 alias ta='tmux a'
-alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+if [ "$IS_MAC" = true ]; then
+  alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+fi
+
+# Copy stdin to the platform clipboard (pbcopy/xclip/wl-clip).
+copy_pbcopy () {
+  if command -v pbcopy >/dev/null 2>&1; then
+    pbcopy
+  elif command -v wl-copy >/dev/null 2>&1; then
+    wl-copy
+  elif command -v xclip >/dev/null 2>&1; then
+    xclip -selection clipboard
+  else
+    cat
+  fi
+}
 
 # create password
-alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | pbcopy | echo "Password copied to clipboard"'
+alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | copy_pbcopy'
 
 # NVM
 alias brewit='brew update && brew upgrade && brew cleanup'
@@ -21,7 +41,9 @@ alias pushall='for i in `git remote`; do git push $i; done;'
 alias pullall='for i in `git remote`; do git pull $i; done;'
 alias gll='git fetch --all && git branch -r | grep -v "\->" | while read remote; do git branch --track "${remote#origin/}" "$remote" 2>/dev/null; done && git pull --all'
 
-alias spoofmac='sudo ifconfig en0 ether $(openssl rand -hex 6 | sed "s%\(..\)%\1:%g; s%.$%%")'
+if [ "$IS_MAC" = true ]; then
+  alias spoofmac='sudo ifconfig en0 ether $(openssl rand -hex 6 | sed "s%\(..\)%\1:%g; s%.$%%")'
+fi
 
 # Code beautify
 alias prettify="prettier --write '**/*.{ts,js,jsx,css,html}'"
@@ -32,11 +54,23 @@ alias cp="cp -i"
 # Human-readable sizes
 alias df='df -h'
 
-# Show sizes in MB
-alias free='free -m'
+# Show sizes in MB (no `free` on macOS)
+if [ "$IS_LINUX" = true ]; then
+  alias free='free -m'
+fi
 
 # Flush DNS cache
-alias flushdns="sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder"
+if [ "$IS_MAC" = true ]; then
+  flushdns () {
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
+  }
+else
+  flushdns () {
+    command -v resolvectl >/dev/null 2>&1 && sudo resolvectl flush-caches
+    command -v systemd-resolve >/dev/null 2>&1 && sudo systemd-resolve --flush-caches
+  }
+fi
 
 
 ## Generate secret key
@@ -45,11 +79,18 @@ alias genkey="node -e  \"console.log(require('crypto').randomBytes(256).toString
 
 alias thefuck='fuck'
 
-alias ff="open -n -a Firefox.app --args -no-remote -P"
+if [ "$IS_MAC" = true ]; then
+  alias ff="open -n -a Firefox.app --args -no-remote -P"
+else
+  alias ff="firefox --no-remote -P"
+fi
 
 ## Add code alias
-alias code='/Applications/Zed.app/Contents/MacOS/zed'
-alias codex='open . && zed . && opencode'
+if [ "$IS_MAC" = true ]; then
+  alias code='/Applications/Zed.app/Contents/MacOS/zed'
+else
+  alias code='zed'
+fi
 alias oc='opencode'
 alias occ='opencode --continue'
 
@@ -58,7 +99,9 @@ alias hsc='hermes --tui --continue'
 
 ## Remove metadata
 alias meta_clean='exiftool -all= -overwrite_original'
-alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
+if [ "$IS_MAC" = true ]; then
+  alias xattr_clean='xattr -d com.apple.metadata:kMDItemWhereFroms'
+fi
 
 
 # Best size/quality with album art:

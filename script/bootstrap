@@ -7,6 +7,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 DOTFILES_ROOT=$(pwd -P)
 
+# Load OS detection (POSIX-compatible) so the rest can use $IS_MAC/$IS_LINUX.
+if [ -f "$DOTFILES_ROOT/init/env" ]; then
+  source "$DOTFILES_ROOT/init/env"
+fi
+
 echo ''
 
 info () {
@@ -38,7 +43,7 @@ setup_gitconfig () {
     info 'setup gitconfig'
 
     git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
+    if [ "$IS_MAC" = true ]
     then
       git_credential='osxkeychain'
     fi
@@ -75,6 +80,18 @@ setup_npmconfig () {
         npm/npmrc.symlink.example > npm/npmrc.symlink
 
     success 'npmconfig'
+  fi
+}
+
+setup_localrc () {
+  # Scratch space for ad-hoc installer exports (gitignored).
+  mkdir -p "$HOME/.zshrc.d"
+
+  if ! [ -f "$HOME/.localrc" ]
+  then
+    info 'setup localrc'
+    cp "$DOTFILES_ROOT/zsh/localrc.example" "$HOME/.localrc"
+    success 'created ~/.localrc from template (fill in your secrets)'
   fi
 }
 
@@ -174,10 +191,12 @@ install_dotfiles () {
 
 setup_gitconfig
 setup_npmconfig
+setup_localrc
 install_dotfiles
 
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
+# If brew (Homebrew/Linuxbrew) exists, install and setup dependencies.
+# Works on both macOS and Linux now — no more Darwin-only assumption.
+if command -v brew >/dev/null 2>&1
 then
   info "installing dependencies"
   if source bin/dot > /tmp/dotfiles-dot 2>&1

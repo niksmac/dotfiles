@@ -21,10 +21,9 @@ fail () {
   exit
 }
 
-if test "$(uname)" != "Darwin"
-then
-  fail "Only MacOS is supported as of now."
-  exit 0
+# Load OS detection (POSIX-compatible so this can run standalone too).
+if [ -f "$(dirname "$0")/../init/env" ]; then
+  source "$(dirname "$0")/../init/env"
 fi
 
 # Ask for the administrator password upfront
@@ -49,6 +48,24 @@ else
 fi
 
 
+# Flush the OS DNS cache.
+flush_dns_cache () {
+  if [ "$OS_NAME" = "macos" ]; then
+    sudo dscacheutil -flushcache
+    sudo killall -HUP mDNSResponder
+    return
+  fi
+
+  # Linux: try the common cache managers, ignore anything that isn't present.
+  if command -v resolvectl >/dev/null 2>&1; then
+    sudo resolvectl flush-caches 2>/dev/null || true
+  elif command -v systemd-resolve >/dev/null 2>&1; then
+    sudo systemd-resolve --flush-caches 2>/dev/null || true
+  fi
+  sudo pkill -x dnsmasq 2>/dev/null || true
+  sudo pkill -x nscd   2>/dev/null || true
+}
+
 user "Overwrite current hosts file?"
 read -e -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -61,7 +78,7 @@ then
   info "Copying Host file to /etc/hosts"
   sudo cp tmp/hosts/hosts /etc/hosts
   info "Clearing DNS Cache"
-  sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder
+  flush_dns_cache
   success "All Good."
 else
   fail "Well, its on you."

@@ -32,7 +32,8 @@ function git-forget-blob()
   git filter-branch --index-filter "git rm --cached --ignore-unmatch '$FILE'" --force -- --branches --tags
   echo "Wipe out refs..."
   rm -rf .git/refs/original/ .git/refs/remotes/ .git/*_HEAD .git/logs/
-  (git for-each-ref --format="%(refname)" refs/original/ || echo :) | xargs --no-run-if-empty -n1 git update-ref -d
+  # while-read instead of `xargs -r`: GNU and BSD (macOS) xargs disagree on empty input
+  git for-each-ref --format="%(refname)" refs/original/ | while read -r ref; do git update-ref -d "$ref"; done
   echo "Wipe out reflog..."
   git reflog expire --expire-unreachable=now --all
   git repack -q -A -d

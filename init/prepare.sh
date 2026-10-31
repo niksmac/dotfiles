@@ -8,10 +8,13 @@
 
 set -euo pipefail
 
-# set native arch for compiled gems/binaries
-case "$(uname -m)" in
-  arm64) export ARCHFLAGS='-arch arm64' ;;
-esac
+# macOS-specific flags (only valid on Darwin): set native arch for compiled
+# gems/binaries on Apple Silicon.
+if [ "$(uname -s)" = "Darwin" ]; then
+  case "$(uname -m)" in
+    arm64) export ARCHFLAGS='-arch arm64' ;;
+  esac
+fi
 
 # create necessary directories
 mkdir -p "$HOME/.zsh/custom"
@@ -29,4 +32,8 @@ then
 fi
 
 # Disable analytics https://docs.brew.sh/Analytics
-brew analytics off
+if command -v brew >/dev/null 2>&1
+then
+  brew analytics off
+fi
+exit 0

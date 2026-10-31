@@ -3,8 +3,8 @@
     "codebase-memory-mcp": {
       "enabled": true,
       "remote": false,
-      "command": "/Users/niksmac/.local/bin/codebase-memory-mcp",
-      "args": [""]
+      "command": "codebase-memory-mcp",
+      "args": []
     }
   },
   "search_wrap": true,
@@ -12,7 +12,8 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
-        "model": "opencode/big-pickle",
+        "effort": "high",
+        "model": "opencode-go/space-bunny-free",
         "mode": "build"
       },
       "type": "registry"
@@ -93,6 +94,50 @@
   },
   "language_models": {
     "openai_compatible": {
+      "opencode-go": {
+        "api_url": "https://opencode.ai/zen/go/v1",
+        "custom_headers": {
+          "x-opencode-session": "zed"
+        },
+        "available_models": [
+          {
+            "name": "qwen3.8-max",
+            "display_name": "Qwen3.8 Max",
+            "max_tokens": 1000000,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "glm-5.3",
+            "display_name": "GLM 5.3",
+            "max_tokens": 1000000,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "kimi-k3",
+            "display_name": "Kimi K3",
+            "max_tokens": 1048576,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "gpt-6-luna",
+            "display_name": "GPT-6 Luna",
+            "max_tokens": 1050000,
+            "max_output_tokens": 128000
+          },
+          {
+            "name": "deepseek-v4-pro",
+            "display_name": "DeepSeek V4 Pro",
+            "max_tokens": 1000000,
+            "max_output_tokens": 384000
+          },
+          {
+            "name": "space-bunny-free",
+            "display_name": "Space Bunny (free)",
+            "max_tokens": 1048576,
+            "max_output_tokens": 524288
+          }
+        ]
+      },
       "OpenCode": {
         "api_url": "https://opencode.ai/zen/v1",
         "available_models": [
@@ -213,9 +258,19 @@
   "agent": {
     "dock": "right",
     "default_model": {
-      "provider": "OpenCode",
-      "model": "big-pickle"
-    }
+      "provider": "opencode-go",
+      "model": "qwen3.8-max"
+    },
+    "inline_alternatives": [
+      {
+        "provider": "opencode-go",
+        "model": "qwen3.8-max"
+      },
+      {
+        "provider": "OpenCode",
+        "model": "big-pickle"
+      }
+    ]
   },
   "jupyter": {
     "kernel_selections": {
