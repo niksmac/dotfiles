@@ -6,23 +6,53 @@ If you're interested in the philosophy behind why projects like these are awesom
 
 ## Install
 
+Works on macOS and Linux.
+
+**Before you start**
+
+- macOS: the Xcode Command Line Tools (`xcode-select --install`).
+- Linux: `git`, `curl`, `zsh` and Homebrew's build dependencies, e.g. on
+  Ubuntu/Debian: `sudo apt install build-essential procps curl file git zsh`.
+
+**Then**
+
 ```sh
 git clone https://github.com/niksmac/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-script/install && script/bootstrap
+script/bootstrap && script/install
 ```
 
-This works on macOS and Linux. Each installer only runs when the script detects the matching OS.
+Run `script/bootstrap` first: some installers (e.g. `git/install.sh`) write
+to `~/.gitconfig`, and on a fresh machine that would create a real file where
+bootstrap wants to put its symlink.
+
+- `script/bootstrap` asks for your git and npm author details, creates
+  `~/.localrc` and `~/.zshrc.d`, and symlinks every `*.symlink` file into
+  `$HOME` (asking before replacing anything that already exists).
+- `script/install` installs Homebrew if it's missing, installs the packages in
+  `homebrew/brew-install.sh`, then runs every `install.sh`: fonts (Geist Mono),
+  Ghostty, tmux, Vim, Zed, mpv, git settings, npm globals, OpenCode config and
+  the agent skills. Installers in `macos/` and `linux/` only run on that OS.
+  It asks for your password for the few steps that need `sudo`.
+
+**Afterwards**
+
+- Linux: make zsh your login shell with `chsh -s /usr/bin/zsh` (macOS already
+  uses zsh), then log out and back in.
+- Linux: run `gh auth login` once so git can use the gh credential helper.
+- Open a new terminal to load the shell config.
+- Optional: `script/hostsinit` replaces `/etc/hosts` with an ad-blocking one.
 
 ## Upgrade
-
-Update the dotfiles manually by going into your `~/.dotfiles` and pulling latest updates.
 
 ```sh
 cd ~/.dotfiles
 git pull
-script/install && script/bootstrap
+script/bootstrap && script/install
 ```
+
+Both scripts are safe to re-run. To only update Homebrew and the packages in
+`homebrew/brew-install.sh`, run `dot` (from `bin/`).
 
 ## Topical
 
