@@ -51,10 +51,12 @@ yt-dlp -f ba -S "acodec:opus,abr" \
   --download-archive ".ydla-archive.txt" \
   -o "%(title)s-%(id)s.%(ext)s" "$@"
 
-# Pick the newest audio file (use nomatch so zsh doesn't error on missing globs)
-setopt localoptions nomatch
+# Pick the newest audio file (N: no error when a pattern has no match,
+# om[1]: newest by modification time)
+local -a newest
 local file codec out album artist
-file=$(command ls -t --*.mp3 *.m4a *.opus *.webm *.ogg *.aac *.flac *.wav(N) 2>/dev/null | head -n1) || true
+newest=( *.(mp3|m4a|opus|webm|ogg|aac|flac|wav)(N.om[1]) )
+file=$newest[1]
 [ -f "$file" ] || return 0
 
 # If it's Opus inside .webm/.ogg, remux to .opus with no re-encode (only if format is "best")

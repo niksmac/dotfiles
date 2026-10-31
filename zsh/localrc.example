@@ -5,9 +5,6 @@
 #
 # It is sourced automatically by zshrc.symlink.
 
-# Project directory (override the default ~/Code)
-# export PROJECTS=~/Projects
-
 # API keys and tokens
 # export CONTEXT7_API_KEY="sk-..."
 # export OPENAI_API_KEY="sk-..."
