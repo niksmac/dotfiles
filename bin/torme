@@ -20,15 +20,37 @@ fi
 # 'wifi' or 'Ethernet' or 'Display Ethernet'
 INTERFACE=$ifacekey
 
-# Ask for the administrator password upfront
-sudo -v
+if [ "$(uname -s)" = "Darwin" ]; then
+  # Ask for the administrator password upfront
+  sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  # Keep-alive: update existing `sudo` time stamp until finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+  enable_proxy() {
+    sudo networksetup -setsocksfirewallproxy "$INTERFACE" 127.0.0.1 9050 off
+    sudo networksetup -setsocksfirewallproxystate "$INTERFACE" on
+  }
+  disable_proxy_setting() {
+    sudo networksetup -setsocksfirewallproxystate "$INTERFACE" off
+  }
+  open_url() { open "$1"; }
+else
+  # Linux (GNOME): the SOCKS proxy is system-wide, not per interface.
+  enable_proxy() {
+    gsettings set org.gnome.system.proxy.socks host 127.0.0.1
+    gsettings set org.gnome.system.proxy.socks port 9050
+    gsettings set org.gnome.system.proxy mode manual
+  }
+  disable_proxy_setting() {
+    gsettings set org.gnome.system.proxy mode none
+  }
+  open_url() { xdg-open "$1" >/dev/null 2>&1; }
+fi
 
 # trap ctrl-c and call disable_proxy()
 function disable_proxy() {
-    sudo networksetup -setsocksfirewallproxystate $INTERFACE off
+    disable_proxy_setting
     echo "$(tput setaf 64)" #green
     echo "SOCKS proxy disabled."
     echo "$(tput sgr0)" # color reset
@@ -36,8 +58,7 @@ function disable_proxy() {
 trap disable_proxy INT
 
 # Let's roll
-sudo networksetup -setsocksfirewallproxy $INTERFACE 127.0.0.1 9050 off
-sudo networksetup -setsocksfirewallproxystate $INTERFACE on
+enable_proxy
 
 echo "$(tput setaf 64)" # green
 echo "SOCKS proxy 127.0.0.1:9050 enabled."
@@ -46,6 +67,6 @@ echo "Starting Tor..."
 echo "Starting Tor for $ifacekey"
 echo "$(tput sgr0)" # color reset
 
-open https://check.torproject.org
+open_url https://check.torproject.org
 
 tor

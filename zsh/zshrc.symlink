@@ -135,11 +135,14 @@ if command -v fnm >/dev/null 2>&1; then
 fi
 export PATH="$HOME/flutter/bin:$PATH"
 
-# Android SDK (Android Studio's default location on macOS)
+# Android SDK (Android Studio's default location on each OS, unless this
+# Linux box keeps it under /data)
 if [ "$IS_MAC" = true ]; then
   export ANDROID_HOME=$HOME/Library/Android/sdk
-else
+elif [ -d /data/android/Sdk ]; then
   export ANDROID_HOME=/data/android/Sdk
+else
+  export ANDROID_HOME=$HOME/Android/Sdk
 fi
 export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
 

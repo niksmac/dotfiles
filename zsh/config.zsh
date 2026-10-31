@@ -45,6 +45,8 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[5D' backward-word
 bindkey '^[[5C' forward-word
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char

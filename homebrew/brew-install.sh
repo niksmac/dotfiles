@@ -38,6 +38,17 @@ COMMON_PACKAGES=(
   zplug
   fnm
   biome
+  ffmpeg
+  imagemagick
+  opencode
+  wrk
+  exiftool
+  pwgen
+  fzf
+  gh
+  cloudflared
+  the_silver_searcher
+  unzip
 )
 
 # macOS specific packages
@@ -45,10 +56,12 @@ MACOS_PACKAGES=(
   coreutils
   grc
   git-flow-avh
-  wrk
-  imagemagick
-  ffmpeg
-  opencode
+)
+
+# Linux specific packages (clipboard helpers; macOS has pbcopy built in)
+LINUX_PACKAGES=(
+  wl-clipboard
+  xclip
 )
 
 # macOS cask apps
@@ -73,7 +86,7 @@ if [ "$(uname)" = "Darwin" ]; then
 elif [ "$(uname)" = "Linux" ]; then
   echo "Installing Linux packages..."
 
-  for pkg in "${COMMON_PACKAGES[@]}"; do
+  for pkg in "${COMMON_PACKAGES[@]}" "${LINUX_PACKAGES[@]}"; do
     install_if_not_present "$pkg"
   done
 fi

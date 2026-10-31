@@ -42,7 +42,8 @@ setup_gitconfig () {
   then
     info 'setup gitconfig'
 
-    git_credential='cache'
+    # Both helpers persist credentials (`cache` would forget them after 15 min).
+    git_credential='!gh auth git-credential'
     if [ "$IS_MAC" = true ]
     then
       git_credential='osxkeychain'

@@ -2,6 +2,7 @@
 
 ZED_HOME_DIR="$HOME/.dotfiles/zed/"
 
+mkdir -p "$HOME/.config/zed"
 ln -sf "$ZED_HOME_DIR/settings.json" "$HOME/.config/zed/settings.json"
 
 # ----- symlink snippets

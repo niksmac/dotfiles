@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Copy stdin to the system clipboard: pbcopy on macOS, wl-copy on Wayland,
+# xclip or xsel on X11.
+#
+# Usage: echo hello | clip
+
+if command -v pbcopy >/dev/null 2>&1; then
+  exec pbcopy
+elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
+  exec wl-copy
+elif command -v xclip >/dev/null 2>&1; then
+  exec xclip -selection clipboard
+elif command -v xsel >/dev/null 2>&1; then
+  exec xsel -b
+fi
+
+echo "clip: no clipboard tool found (install wl-clipboard or xclip)" >&2
+exit 1

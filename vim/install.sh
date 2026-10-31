@@ -14,6 +14,6 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 mkdir -p ~/.vim/colors/
 cd ~/.vim/colors/
-wget -q https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim -O hybrid.vim
+curl -fsSLo hybrid.vim https://raw.githubusercontent.com/w0ng/vim-hybrid/master/colors/hybrid.vim
 
 exit 0

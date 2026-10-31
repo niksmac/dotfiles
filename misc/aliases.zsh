@@ -18,21 +18,8 @@ if [ "$IS_MAC" = true ]; then
   alias lockme='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
 fi
 
-# Copy stdin to the platform clipboard (pbcopy/xclip/wl-clip).
-copy_pbcopy () {
-  if command -v pbcopy >/dev/null 2>&1; then
-    pbcopy
-  elif command -v wl-copy >/dev/null 2>&1; then
-    wl-copy
-  elif command -v xclip >/dev/null 2>&1; then
-    xclip -selection clipboard
-  else
-    cat
-  fi
-}
-
-# create password
-alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | copy_pbcopy'
+# create password (copied to the clipboard via bin/clip)
+alias genpass='pwgen 36 1 --numerals 6 --symbols 5 | tr -d "<,>\`^%" | cut -c 1-18 | clip'
 
 # NVM
 alias brewit='brew update && brew upgrade && brew cleanup'

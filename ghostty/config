@@ -2,8 +2,9 @@
 # iTerm source: iterm/com.googlecode.iterm2.plist, iterm/hybrid-reduced-contrast.itermcolors
 # Docs: https://ghostty.org/docs/config — validate with: ghostty +show-config
 
-# --- Font (iTerm: Monaco 15, no custom Non-ASCII font) ---
-font-family = "Monaco"
+# --- Font (iTerm used Monaco, which is macOS-only; Geist Mono is installed
+# on both macOS and Linux by misc/install.sh) ---
+font-family = "Geist Mono"
 font-size = 14
 
 # --- Theme: hybrid-reduced-contrast (iTerm Background/Foreground) ---
@@ -124,7 +125,15 @@ keybind = super+alt+right=goto_split:right
 keybind = super+ctrl+alt+left=resize_split:left,10
 keybind = super+ctrl+alt+right=resize_split:right,10
 
-# Disable background rendering loops when the app window is hidden
+# Line/word editing. Ghostty ships these as macOS-only defaults; declaring
+# them makes Linux match (linux.conf adds the ctrl+ variants).
+keybind = alt+arrow_left=esc:b
+keybind = alt+arrow_right=esc:f
+keybind = super+arrow_left=text:\x01
+keybind = super+arrow_right=text:\x05
+keybind = super+backspace=text:\x15
+
+# Keep split focus on click only (do not follow the mouse pointer)
 focus-follows-mouse = false
 
 # --- Linux-only overrides ---------------------------------------------------

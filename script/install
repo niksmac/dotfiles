@@ -35,10 +35,10 @@ IS_LINUX="${IS_LINUX:-false}"
 while IFS= read -r installer; do
   case "$installer" in
     # Linux-only installers: run only on Linux hosts.
-    */linux/*) if [ "$IS_LINUX" = true ]; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    */linux/*) if [ "$IS_LINUX" = true ]; then echo "Running $installer"; bash "$installer"; else echo "Skipping $installer"; fi ;;
     # macOS-only installers: run only on macOS hosts.
-    */macos/*) if [ "$IS_MAC" = true ]; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    */macos/*) if [ "$IS_MAC" = true ]; then echo "Running $installer"; bash "$installer"; else echo "Skipping $installer"; fi ;;
     # Everything else (shared / neutral installers): always run.
-    *)         echo "Running $installer"; sh "$installer" ;;
+    *)         echo "Running $installer"; bash "$installer" ;;
   esac
 done < <(find "$(pwd)" -name install.sh -type f | sort)

@@ -46,7 +46,24 @@ set tabstop=2
 set shiftwidth=2
 set shiftround
 set expandtab
-set clipboard=unnamed
+
+" Yank to the system clipboard. On macOS that is the * register (unnamed);
+" on X11/Wayland * is the selection buffer and + is the clipboard.
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+else
+  set clipboard=unnamed
+endif
+" Vim built without clipboard support (e.g. Linuxbrew's): send yanks to the
+" system clipboard tool instead.
+if !has('clipboard') && exists('##TextYankPost')
+  for s:clip in ['pbcopy', 'wl-copy', 'xclip -selection clipboard', 'xsel -b']
+    if executable(split(s:clip)[0])
+      autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, join(v:event.regcontents, "\n")) | endif
+      break
+    endif
+  endfor
+endif
 
 set regexpengine=1
 set autoread
