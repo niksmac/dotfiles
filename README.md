@@ -95,11 +95,15 @@ to behave the same on both: same fonts, keys, clipboard, aliases and packages.
 `misc/fonts/Geist_Mono` if it's missing, then installs every font in
 `misc/fonts` that isn't already installed.
 
-**Keys.** Ghostty's config declares the macOS editing keys (alt+←/→ word jump,
-cmd+←/→ line start/end, cmd+backspace delete line) so they work on Linux too.
-On a Mac-layout keyboard under Linux the Cmd key sends ctrl, so
-`linux-keybinds.conf` maps the same shortcuts (copy, paste, tabs, line
-editing) to ctrl+.
+**Keys.** Ghostty and iTerm2 use the same keys: cmd+c/v copy and paste,
+alt+←/→ word jump (left Option is Alt; right Option still types accents),
+cmd+←/→ line start/end, cmd+backspace delete line, cmd+t/w/n tabs and
+windows, cmd+d / cmd+shift+d splits. Ghostty declares the editing keys so
+they work on Linux too; iTerm2 loads its profile and key mappings from
+`iterm/` (pointed there by `iterm/install.sh`). On a Mac-layout keyboard
+under Linux the Cmd key sends ctrl, so `linux-keybinds.conf` maps the same
+shortcuts to ctrl+; ctrl+c copies only when text is selected and otherwise
+interrupts, as Ctrl+C does on macOS.
 
 **Clipboard.** Use `clip` (in `bin/`) instead of `pbcopy` in scripts and
 aliases; tmux and Vim copy through the same tools.
