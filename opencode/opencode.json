@@ -2,8 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": ["@franlol/opencode-md-table-formatter@latest"],
   "compaction": {
-    "auto": false,
-    "prune": false,
+    "auto": true,
+    "prune": true,
     "reserved": 10000
   },
   "mcp": {

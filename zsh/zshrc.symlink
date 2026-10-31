@@ -126,3 +126,4 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # opencode
 export PATH=/Users/niksmac/.opencode/bin:$PATH
+alias python=python3

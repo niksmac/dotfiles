@@ -505,3 +505,5 @@ Cargo.lock
 *.pdb
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,node,react,nextjs,flutter,dart,rust,python
+
+**/.claude/settings.local.json
