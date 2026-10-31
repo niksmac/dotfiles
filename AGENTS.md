@@ -86,7 +86,7 @@ aliases and packages. The repo is **public**.
 | `zed/` | Zed settings, snippets, prompts | `~/.config/zed` |
 | `mpv/` | mpv | `~/.config/mpv`, plus Application Support on macOS |
 | `npm/`, `prettier/` | npm config and globals, Prettier | `~/.npmrc`, `~/.prettierrc` |
-| `misc/` | Fonts (Geist Mono etc.) | `~/Library/Fonts` / `~/.local/share/fonts` |
+| `misc/` | Fonts (Cabin, Noto Sans etc.) | `~/Library/Fonts` / `~/.local/share/fonts` |
 | `openlogi/` | OpenLogi (MX Mechanical Mini, MX Anywhere 3S) | `~/.config/openlogi` → `openlogi/` |
 | `toshy/` | Toshy: macOS shortcuts on Linux (Linux only) | slices in `~/.config/toshy/toshy_config.py` |
 | `claude/` | Claude Code global rules (`CLAUDE.md` for all projects) | `~/.claude/CLAUDE.md` |

@@ -30,7 +30,7 @@ bootstrap wants to put its symlink.
   `~/.localrc` and `~/.zshrc.d`, and symlinks every `*.symlink` file into
   `$HOME` (asking before replacing anything that already exists).
 - `script/install` installs Homebrew if it's missing, installs the packages in
-  `homebrew/brew-install.sh`, then runs every `install.sh`: fonts (Geist Mono),
+  `homebrew/brew-install.sh`, then runs every `install.sh`: fonts,
   Ghostty, tmux, Vim, Zed, mpv, git settings, npm globals, OpenCode config and
   the agent skills. Installers in `macos/` and `linux/` only run on that OS.
   It asks for your password for the few steps that need `sudo`.
@@ -91,9 +91,9 @@ to behave the same on both: same fonts, keys, clipboard, aliases and packages.
 | `linux/` | — | generates the `en_US.UTF-8` locale |
 | `macos/`, `iterm/` | system defaults, iTerm | — |
 
-**Fonts.** Ghostty and Zed use Geist Mono. `misc/install.sh` downloads it into
-`misc/fonts/Geist_Mono` if it's missing, then installs every font in
-`misc/fonts` that isn't already installed.
+**Fonts.** Ghostty, iTerm2 and Zed use Monaco, which ships with macOS. On
+Linux, Ghostty and Zed use DejaVu Sans Mono instead. `misc/install.sh`
+installs every font in `misc/fonts` that isn't already installed.
 
 **Keys.** Ghostty and iTerm2 use the same keys: cmd+c/v copy and paste,
 alt+←/→ word jump (left Option is Alt; right Option still types accents),

@@ -2,9 +2,11 @@
 # iTerm source: iterm/com.googlecode.iterm2.plist, iterm/hybrid-reduced-contrast.itermcolors
 # Docs: https://ghostty.org/docs/config — validate with: ghostty +show-config
 
-# --- Font (iTerm used Monaco, which is macOS-only; Geist Mono is installed
-# on both macOS and Linux by misc/install.sh) ---
-font-family = "Geist Mono"
+# --- Font (iTerm: Monaco 15) ---
+# Monaco ships only with macOS. On Linux Ghostty skips it and uses the next
+# family, DejaVu Sans Mono (the default Linux mono, which Menlo is based on).
+font-family = "Monaco"
+font-family = "DejaVu Sans Mono"
 font-size = 14
 
 # --- Theme: hybrid-reduced-contrast (iTerm Background/Foreground) ---
