@@ -1,7 +1,16 @@
 #!/usr/bin/zsh
 
-# Create session if none exists (guarded so `prefix r` reloads don't add one)
-if -F '#{==:#{server_sessions},0}' 'new-session -d -n "#{host_short}"'
+# Create session if none exists (guarded so `prefix r` reloads don't add one).
+# On the default socket, also flag a resurrect restore (run after tpm, at the
+# bottom) and hold off the first autosave so it can't save this placeholder
+# session over the last good save before the restore has read it.
+if -F '#{==:#{server_sessions},0}' {
+  new-session -d -n "#{host_short}"
+  if -F '#{m:*/default,#{socket_path}}' {
+    set -g @restore-on-start 1
+    set -gF @continuum-save-last-timestamp '#{start_time}'
+  }
+}
 
 # improve colors
 set -g default-terminal "screen-256color"
@@ -41,7 +50,10 @@ set -s copy-command 'pbcopy 2>/dev/null || wl-copy 2>/dev/null || xclip -selecti
 # Status bar
 setw -g clock-mode-style 12
 set -g status-interval 15
-set -g status-right "#{pomodoro_status} | %a %d %b %I:%M %p "
+# Continuum autosave, on the default socket only so servers on other sockets
+# never overwrite the save. Continuum adds this itself only when no other tmux
+# process is running at startup; with it already here, it adds nothing.
+set -g status-right "#{?#{m:*/default,#{socket_path}},#($HOME/.tmux/plugins/tmux-continuum/scripts/continuum_save.sh),}#{pomodoro_status} | %a %d %b %I:%M %p "
 set -g status-left "#S "
 set -g status-style "bg=#222222,fg=#cccccc"
 set -g status-left-style "bg=green,fg=black,bold"
@@ -95,7 +107,8 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set -g @resurrect-processes 'false'
-set -g @continuum-restore 'on'
+# Restore is done at the bottom of this file instead (see there).
+set -g @continuum-restore 'off'
 # Keep pane titles at their default (the hostname). Apps that set an empty
 # title via OSC 2 make resurrect's tab-separated save collapse a column
 # (bash `read` merges empty tab fields), so the pane's dir is saved as "1"
@@ -130,5 +143,14 @@ unbind -T root MouseDown1Control9
 unbind -T root C-MouseDrag1Pane
 unbind -T root C-MouseDrag1Empty
 
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+# Initialize TMUX plugin manager (keep this line below all plugin settings)
 run '~/.tmux/plugins/tpm/tpm'
+
+# Restore the last save on a fresh default-socket server (flagged at the top).
+# Replaces @continuum-restore, which silently skips the restore whenever any
+# other tmux process is running at startup. The sleep lets the client attach
+# first so resurrect can move it off the placeholder session and kill it.
+if -F '#{@restore-on-start}' {
+  set -gu @restore-on-start
+  run -b 'sleep 1; ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh'
+}
