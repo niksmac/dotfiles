@@ -28,8 +28,14 @@ fi
 # Canonical tool homes.
 export NVM_DIR="${HOME}/.nvm"
 
+# `brew --prefix <formula>` prints a path even when the formula isn't
+# installed, so only trust it if zplug is actually there.
 if command -v brew >/dev/null 2>&1; then
-  export ZPLUG_HOME="$(brew --prefix zplug)"
+  BREW_ZPLUG="$(brew --prefix zplug)"
+  if [ -f "$BREW_ZPLUG/init.zsh" ]; then
+    export ZPLUG_HOME="$BREW_ZPLUG"
+  fi
+  unset BREW_ZPLUG
 fi
 
 # fnm — Fast Node Manager

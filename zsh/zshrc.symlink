@@ -6,7 +6,8 @@ export ZSH_CUSTOM=$HOME/.zsh/custom
 source "$ZSH/init/env"
 
 # Disable XON/XOFF so Ctrl+S passes through (freezes terminal otherwise on Linux)
-stty -ixon
+# Only when stdin is a terminal; otherwise stty errors with "Inappropriate ioctl".
+[[ -t 0 ]] && stty -ixon
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
@@ -58,18 +59,21 @@ unset config_files
 # zplug
 # -----------------------------
 
-# Suppress job control notifications before zplug runs
-setopt LOCAL_OPTIONS NO_NOTIFY NO_MONITOR
+# Suppress job control notifications while zplug runs (MONITOR is restored
+# after `zplug load`; LOCAL_OPTIONS has no effect outside a function).
+setopt NO_NOTIFY NO_MONITOR
 
-# ZPLUG_HOME is already set by init/env via brew
-# Fallback: manual zplug install
-if [ -z "$ZPLUG_HOME" ] && [ -f "$HOME/.zplug/init.zsh" ]; then
+# ZPLUG_HOME is set by init/env when zplug is installed via brew.
+# Fallback: manual zplug install in ~/.zplug
+if [ ! -f "$ZPLUG_HOME/init.zsh" ] && [ -f "$HOME/.zplug/init.zsh" ]; then
     export ZPLUG_HOME="$HOME/.zplug"
 fi
 
 if [ -n "$ZPLUG_HOME" ] && [ -f "$ZPLUG_HOME/init.zsh" ]; then
     source "$ZPLUG_HOME/init.zsh"
 fi
+
+if (( $+functions[zplug] )); then
 
 zstyle ':zplug:*' verbose false
 
@@ -105,6 +109,18 @@ if ! zplug check; then
 fi
 
 zplug load
+
+else
+  print -u2 "zshrc: zplug not found (brew install zplug, or git clone https://github.com/zplug/zplug ~/.zplug); skipping plugins"
+fi
+
+# Re-enable job control. Wait for zplug's background jobs and list them once
+# into /dev/null so zsh doesn't report each one as "done" at the first prompt.
+# (Must be top-level: zsh/config.zsh sets LOCAL_OPTIONS, which would undo a
+# setopt done inside a function or hook.)
+wait
+setopt MONITOR
+jobs >/dev/null 2>&1
 
 # Locale
 export LANG=en_US.UTF-8
