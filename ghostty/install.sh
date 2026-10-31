@@ -1,10 +1,11 @@
 #!/bin/bash
 #
 # Ghostty — symlink config into place.
-# Ghostty loads (later overrides earlier):
-#   ~/.config/ghostty/config.ghostty (or legacy `config`)
-#   ~/Library/Application Support/com.mitchellh.ghostty/config.ghostty (or `config`)  [macOS]
-# We link both names at each location to the same source file.
+# Ghostty reads ~/.config/ghostty/config.ghostty on both OSes. We link only that
+# one file: Ghostty also loads a legacy `config` beside it and, on macOS, the
+# Application Support copies, so linking the same file under several names
+# loads it several times and `config-file = ?linux.conf` reports
+# "cycle detected". Links an older version of this script made there are removed.
 #
 # On Linux, linux-keybinds.conf is also linked as `linux.conf`, which the main
 # config pulls in via `config-file = ?linux.conf`. It is linked both beside the
@@ -20,19 +21,34 @@ LINUX_SRC="$GHOSTTY_SRC_DIR/linux-keybinds.conf"
 XDG_DIR="$HOME/.config/ghostty"
 MACOS_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
 
-config_dirs=("$XDG_DIR")
-if [ "$(uname -s)" = "Darwin" ]; then
-  config_dirs+=("$MACOS_DIR")
-fi
+link_config() {
+  local dest="$1"
+  if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$CONFIG_SRC" ]; then
+    echo "Already linked: $dest"
+    return
+  fi
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    mv "$dest" "$dest.backup"
+    echo "Backed up: $dest -> $dest.backup"
+  fi
+  ln -s "$CONFIG_SRC" "$dest"
+  echo "Linked: $dest -> $CONFIG_SRC"
+}
 
-for dir in "${config_dirs[@]}"; do
-  mkdir -p "$dir"
-  for name in config config.ghostty; do
-    rm -f "$dir/$name"
-    ln -s "$CONFIG_SRC" "$dir/$name"
-    echo "Linked: $dir/$name -> $CONFIG_SRC"
-  done
-done
+# Remove only our own old links; leave anything else for the owner.
+unlink_old() {
+  local dest="$1"
+  if [ -L "$dest" ] && [ "$(readlink "$dest")" = "$CONFIG_SRC" ]; then
+    rm "$dest"
+    echo "Removed old link: $dest"
+  fi
+}
+
+mkdir -p "$XDG_DIR"
+link_config "$XDG_DIR/config.ghostty"
+unlink_old "$XDG_DIR/config"
+unlink_old "$MACOS_DIR/config"
+unlink_old "$MACOS_DIR/config.ghostty"
 
 if [ "$(uname -s)" = "Linux" ]; then
   rm -f "$XDG_DIR/linux.conf"

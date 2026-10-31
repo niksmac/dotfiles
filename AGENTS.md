@@ -66,7 +66,7 @@ aliases and packages. The repo is **public**.
   add an OS-specific package only when the other OS has its own equivalent.
 - **A new program's config.** Give it its own topic folder holding the config
   plus an `install.sh` that links it into place on both OSes. Use the app's
-  real config path on each OS (see `mpv/` and `ghostty/`), and document it in
+  real config path on each OS (see `mpv/`), and document it in
   `README.md`.
 - **Apps that rewrite their own config** (atomic temp-file + rename). Link the
   **directory**, not the file, or the first save replaces the symlink
@@ -81,7 +81,7 @@ aliases and packages. The repo is **public**.
 | `git/` | git config, global ignore, aliases | `~/.gitconfig`, `~/.gitignore_global` |
 | `tmux/` | tmux (prefix is backtick), tpm plugins | `~/.tmux.conf` |
 | `vim/` | Vim, vim-plug, hybrid colours | `~/.vimrc` |
-| `ghostty/` | Ghostty (primary terminal); `linux-keybinds.conf` on Linux only | `~/.config/ghostty`, plus Application Support on macOS |
+| `ghostty/` | Ghostty (primary terminal); `linux-keybinds.conf` on Linux only | `~/.config/ghostty/config.ghostty` (one link only, or `config-file` reports a cycle) |
 | `iterm/` | iTerm2 profile, colours, key mappings (macOS) | iTerm loads prefs from `iterm/` |
 | `zed/` | Zed settings, snippets, prompts | `~/.config/zed` |
 | `mpv/` | mpv | `~/.config/mpv`, plus Application Support on macOS |
