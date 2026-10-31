@@ -18,5 +18,8 @@ atom/atom-tailwindcss2
 .zsh_history
 .localrc
 .zshrc.d/
+# Monaco is Apple's and can't be redistributed; misc/install.sh keeps a
+# local copy here
+misc/fonts/Monaco/
 # Linux-only Ghostty include, created by ghostty/install.sh
 ghostty/linux.conf

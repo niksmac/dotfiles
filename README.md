@@ -91,9 +91,18 @@ to behave the same on both: same fonts, keys, clipboard, aliases and packages.
 | `linux/` | — | generates the `en_US.UTF-8` locale |
 | `macos/`, `iterm/` | system defaults, iTerm | — |
 
-**Fonts.** Ghostty, iTerm2 and Zed use Monaco, which ships with macOS. On
-Linux, Ghostty and Zed use DejaVu Sans Mono instead. `misc/install.sh`
-installs every font in `misc/fonts` that isn't already installed.
+**Fonts.** Ghostty, iTerm2 and Zed use Monaco on both OSes. Monaco is Apple's
+and can't be committed, so `misc/install.sh` keeps a gitignored local copy in
+`misc/fonts/Monaco`: on macOS it copies the system font there; on Linux it
+installs from there. On a new Linux machine, copy it over from a Mac first:
+
+```sh
+mkdir -p ~/.dotfiles/misc/fonts/Monaco
+scp <mac>:.dotfiles/misc/fonts/Monaco/Monaco.ttf ~/.dotfiles/misc/fonts/Monaco/
+```
+
+The script also installs every other font in `misc/fonts` that isn't already
+installed.
 
 **Keys.** Ghostty and iTerm2 use the same keys: cmd+c/v copy and paste,
 alt+←/→ word jump (left Option is Alt; right Option still types accents),

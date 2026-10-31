@@ -278,13 +278,5 @@
       "typescript": "deno",
       "javascript": "deno"
     }
-  },
-  // Monaco ships only with macOS; Linux uses DejaVu Sans Mono instead.
-  "linux": {
-    "ui_font_family": "DejaVu Sans Mono",
-    "buffer_font_family": "DejaVu Sans Mono",
-    "terminal": {
-      "font_family": "DejaVu Sans Mono"
-    }
   }
 }
