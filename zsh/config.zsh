@@ -47,6 +47,14 @@ bindkey '^[[5D' backward-word
 bindkey '^[[5C' forward-word
 bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3C' forward-word
+# ctrl+←/→ (what Toshy sends on Linux for Option+←/→)
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+# Home/End as sent in application mode and by tmux (Toshy's Cmd+←/→)
+bindkey '^[OH' beginning-of-line
+bindkey '^[OF' end-of-line
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char

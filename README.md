@@ -100,10 +100,24 @@ alt+←/→ word jump (left Option is Alt; right Option still types accents),
 cmd+←/→ line start/end, cmd+backspace delete line, cmd+t/w/n tabs and
 windows, cmd+d / cmd+shift+d splits. Ghostty declares the editing keys so
 they work on Linux too; iTerm2 loads its profile and key mappings from
-`iterm/` (pointed there by `iterm/install.sh`). On a Mac-layout keyboard
-under Linux the Cmd key sends ctrl, so `linux-keybinds.conf` maps the same
-shortcuts to ctrl+; ctrl+c copies only when text is selected and otherwise
-interrupts, as Ctrl+C does on macOS.
+`iterm/` (pointed there by `iterm/install.sh`).
+
+On Linux, [Toshy](https://github.com/RedBearAK/toshy) makes the Mac-layout
+keyboard (Logitech MX Mechanical Mini for Mac) behave as on macOS in every
+app: Cmd+C/V/T/W/… work everywhere, in terminals they become the terminal's
+ctrl+shift+… shortcuts, and Ctrl stays Ctrl there, so Ctrl+C interrupts.
+`toshy/install.sh` installs Toshy if it's missing, removes GNOME modifier
+swaps (Toshy must be the only remapper), asks GNOME on Wayland to install
+the Focused Window D-Bus extension Toshy needs, and writes each
+`toshy/slices/<name>.py` into the matching `SLICE_MARK` section of
+`~/.config/toshy/toshy_config.py` (the sections Toshy keeps across
+upgrades). Edit the slices in this repo and re-run `toshy/install.sh`;
+`slices/kbtype_override.py` marks the keyboard as Apple layout. Check the
+keyboard's name with `toshy-devices` if Cmd and Option seem swapped.
+
+**Keyboard and mouse.** OpenLogi's settings (`openlogi/config.toml`, for the
+MX Mechanical Mini and MX Anywhere 3S) are shared by both machines:
+`openlogi/install.sh` links `~/.config/openlogi` to `openlogi/`.
 
 **Clipboard.** Use `clip` (in `bin/`) instead of `pbcopy` in scripts and
 aliases; tmux and Vim copy through the same tools.
