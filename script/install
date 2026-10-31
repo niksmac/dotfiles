@@ -2,30 +2,43 @@
 #
 # Run all dotfiles installers.
 #
-set -e
+set -euo pipefail
 
 cd "$(dirname "$0")"/..
 
 # Load OS detection for conditional installer dispatch.
 # init/env must be POSIX-sh compatible so it can be `source`d here.
-if [ -f "init/env" ]; then source "init/env"; fi
+load_env() {
+  if [ -f "init/env" ]; then
+    # shellcheck disable=SC1091
+    source "init/env"
+  fi
+}
+load_env
 
 "$(pwd)"/init/prepare.sh
+
+# prepare.sh may have just installed Homebrew; re-source env so PATH includes it.
+load_env
 
 # If brew CLI exists, run the installer. It handles uname internally.
 if command -v brew >/dev/null 2>&1; then
   "$(pwd)"/homebrew/brew-install.sh
 fi
 
+IS_MAC="${IS_MAC:-false}"
+IS_LINUX="${IS_LINUX:-false}"
+
 # find the installers and run them iteratively
 # Sort by path so /linux/* runs before /macos/* when restoring across machines.
-find "$(pwd)" -name install.sh -type f | sort | while IFS= read -r installer; do
+# Process substitution keeps the loop in the main shell so set -e is honored.
+while IFS= read -r installer; do
   case "$installer" in
     # Linux-only installers: run only on Linux hosts.
-    */linux/*|/linux/*)  if "$IS_LINUX"; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    */linux/*) if [ "$IS_LINUX" = true ]; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
     # macOS-only installers: run only on macOS hosts.
-    */macos/*|/macos/*)  if "$IS_MAC";   then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
+    */macos/*) if [ "$IS_MAC" = true ]; then echo "Running $installer"; sh "$installer"; else echo "Skipping $installer"; fi ;;
     # Everything else (shared / neutral installers): always run.
-    *)                   echo "Running $installer"; sh "$installer" ;;
+    *)         echo "Running $installer"; sh "$installer" ;;
   esac
-done
+done < <(find "$(pwd)" -name install.sh -type f | sort)

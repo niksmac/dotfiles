@@ -1,23 +1,28 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Homebrew
 #
-# This installs some of the common dependencies needed (or at least desired)
-# using Homebrew.
+# This ensures Homebrew is installed and configures it with common defaults.
+#
+# Usage: ./init/prepare.sh
 
-# macOS-specific flags (only valid on Darwin)
+set -euo pipefail
+
+# macOS-specific flags (only valid on Darwin): set native arch for compiled
+# gems/binaries on Apple Silicon.
 if [ "$(uname -s)" = "Darwin" ]; then
-  export ARCHFLAGS='-arch arm64'
+  case "$(uname -m)" in
+    arm64) export ARCHFLAGS='-arch arm64' ;;
+  esac
 fi
 
 # create necessary directories
-
-mkdir -p $HOME/.zsh/custom
-mkdir -p $HOME/Code
-mkdir -p $HOME/.nvm
+mkdir -p "$HOME/.zsh/custom"
+mkdir -p "$HOME/Code"
+mkdir -p "$HOME/.nvm"
 
 # Check for Homebrew
-if test ! $(which brew)
+if ! command -v brew >/dev/null 2>&1
 then
   echo "  Installing Homebrew for you."
 

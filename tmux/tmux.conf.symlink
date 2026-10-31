@@ -15,7 +15,16 @@ bind ` send-prefix
 setw -g pane-base-index 1
 set -g base-index 1
 
-set -s escape-time 0
+set -s escape-time 10
+# Increase repeat time for repeated commands
+set -g repeat-time 200
+# Turn off aggressive resizing which can cause heavy redraws on multi-client setups
+setw -g aggressive-resize off
+# Disable visual and audio bells that trigger unnecessary redraws/output
+set -g visual-bell off
+set -g visual-activity off
+set -g bell-action none
+set -g history-limit 10000
 
 # Status bar
 setw -g clock-mode-style 12

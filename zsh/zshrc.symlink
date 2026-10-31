@@ -58,14 +58,23 @@ unset config_files
 # zplug
 # -----------------------------
 
-unsetopt notify
+# Suppress job control notifications before zplug runs
+setopt LOCAL_OPTIONS NO_NOTIFY NO_MONITOR
 
-source "$ZPLUG_HOME/init.zsh"
+# ZPLUG_HOME is already set by init/env via brew
+# Fallback: manual zplug install
+if [ -z "$ZPLUG_HOME" ] && [ -f "$HOME/.zplug/init.zsh" ]; then
+    export ZPLUG_HOME="$HOME/.zplug"
+fi
+
+if [ -n "$ZPLUG_HOME" ] && [ -f "$ZPLUG_HOME/init.zsh" ]; then
+    source "$ZPLUG_HOME/init.zsh"
+fi
 
 zstyle ':zplug:*' verbose false
 
 # zplug itself
-zplug "zplug/zplug", hook-build:"zplug --self-manage"
+# zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 # Better shell UX
 zplug "zsh-users/zsh-autosuggestions", defer:2
@@ -82,7 +91,7 @@ zplug "plugins/git", from:oh-my-zsh
 if [ "$IS_MAC" = true ]; then
   zplug "plugins/macos", from:oh-my-zsh
 fi
-zplug "plugins/fnm", from:oh-my-zsh
+# fnm handled by eval "$(fnm env --use-on-cd)" below - don't use oh-my-zsh plugin
 zplug "plugins/yarn", from:oh-my-zsh
 
 # Optional: can slow shell startup
@@ -91,7 +100,9 @@ zplug "plugins/yarn", from:oh-my-zsh
 # zplug "plugins/rand-quote", from:oh-my-zsh
 # zplug "plugins/genpass", from:oh-my-zsh
 
-zplug check || zplug install
+if ! zplug check; then
+  zplug install
+fi
 
 zplug load
 
@@ -125,5 +136,6 @@ fi
 # Added by codebase-memory-mcp install
 export PATH="/home/niksmac/.local/bin:$PATH"
 
+export BUN_OPTIONS="${BUN_OPTIONS:+$BUN_OPTIONS }--preload=$HOME/.local/share/no-agent-summary.js"
 
-export BUN_OPTIONS="${BUN_OPTIONS:+$BUN_OPTIONS }--preload=/abs/path/no-agent-summary.js"
+export PATH=/Users/niksmac/.opencode/bin:$PATH

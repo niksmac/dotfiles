@@ -126,9 +126,11 @@ keybind = super+8=goto_tab:8
 keybind = super+9=last_tab
 
 # Splits à la iTerm (Cmd+D vertical, Cmd+Shift+D horizontal)
+# (`super` is Cmd on macOS; `cmd` alias also works, canonical form used here)
 # NB: GNOME's wm binds <Super>d to show-desktop at the compositor level,
-# so super+d is swallowed before Ghostty sees it. Use ctrl+shift+o/e
-# (Ghostty defaults, left alone) for splits on GNOME.
+# so super+d is swallowed before Ghostty sees it on Linux. Use ctrl+alt+d or
+# ctrl+shift+o/e (Ghostty defaults, left alone) for splits on GNOME.
+keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down
 keybind = ctrl+alt+d=new_split:right
 keybind = ctrl+alt+shift+d=new_split:down

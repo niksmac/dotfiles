@@ -232,11 +232,13 @@ grep -q 'pam_tid.so' /etc/pam.d/sudo || {
 }
 
 
-# Setup mpv configurations for supporitng applications
+# Setup mpv configurations for supporting applications
 
 mkdir -p ~/Library/Application\ Support/mpv
+mkdir -p ~/.config/mpv
 
 ln -sf ~/.dotfiles/macos/mpv.conf ~/Library/Application\ Support/mpv/mpv.conf
+ln -sf ~/.dotfiles/macos/mpv.conf ~/.config/mpv/mpv.conf
 
 
 # displays app switcher on all the displays
