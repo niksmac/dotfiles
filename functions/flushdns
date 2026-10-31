@@ -1,0 +1,11 @@
+#!/bin/zsh
+#
+# Flush the DNS cache.
+
+if [ "$IS_MAC" = true ]; then
+  sudo dscacheutil -flushcache
+  sudo killall -HUP mDNSResponder
+else
+  command -v resolvectl >/dev/null 2>&1 && sudo resolvectl flush-caches
+  command -v systemd-resolve >/dev/null 2>&1 && sudo systemd-resolve --flush-caches
+fi

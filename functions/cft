@@ -1,0 +1,8 @@
+#!/bin/zsh
+#
+# Cloudflare quick tunnel to a local port (default 3000); prints only the
+# public trycloudflare.com URL.
+#
+#   cft 8080
+
+cloudflared tunnel --url http://localhost:${1:-3000} 2>&1 | grep --line-buffered "trycloudflare.com"

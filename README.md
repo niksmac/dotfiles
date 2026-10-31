@@ -59,7 +59,7 @@ to behave the same on both: same fonts, keys, clipboard, aliases and packages.
 | `bin/clip` | `pbcopy` | `wl-copy`, `xclip` or `xsel` |
 | git credentials | `osxkeychain` | `gh auth git-credential` |
 | `linux/` | — | generates the `en_US.UTF-8` locale |
-| `macos/`, `iterm/`, `xcode/` | system defaults, iTerm, Xcode | — |
+| `macos/`, `iterm/` | system defaults, iTerm | — |
 
 **Fonts.** Ghostty and Zed use Geist Mono. `misc/install.sh` downloads it into
 `misc/fonts/Geist_Mono` if it's missing, then installs every font in

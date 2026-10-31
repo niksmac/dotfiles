@@ -1,0 +1,7 @@
+#!/bin/zsh
+#
+# Force-kill any process using a given port.
+#
+#   freeport 3000
+
+sudo lsof -t -i:$1 | xargs -r sudo kill -9

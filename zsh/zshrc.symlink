@@ -161,8 +161,6 @@ fi
 # bin, which can carry an older npm-global copy of the same tools.
 export PATH="$HOME/.local/bin:$PATH"
 
-alias python=python3
-
 # Machine-local bun preload (not tracked in this repo); bun fails to start if
 # --preload points at a missing file, so only add it where it exists (and only
 # once, since nested shells inherit BUN_OPTIONS).
