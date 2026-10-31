@@ -4,7 +4,8 @@
   "agent_servers": {
     "opencode": {
       "default_config_options": {
-        "model": "opencode/big-pickle",
+        "effort": "high",
+        "model": "opencode-go/space-bunny-free",
         "mode": "build"
       },
       "type": "registry"
@@ -82,21 +83,47 @@
   },
   "language_models": {
     "openai_compatible": {
-      "opencode": {
-        "api_url": "https://opencode.ai/zen/v1/chat/completions",
+      "opencode-go": {
+        "api_url": "https://opencode.ai/zen/go/v1",
+        "custom_headers": {
+          "x-opencode-session": "zed"
+        },
         "available_models": [
           {
-            "name": "big-pickle",
-            "max_tokens": 200000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": true,
-              "prompt_cache_key": true,
-              "chat_completions": true
-            }
+            "name": "qwen3.8-max",
+            "display_name": "Qwen3.8 Max",
+            "max_tokens": 1000000,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "glm-5.3",
+            "display_name": "GLM 5.3",
+            "max_tokens": 1000000,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "kimi-k3",
+            "display_name": "Kimi K3",
+            "max_tokens": 1048576,
+            "max_output_tokens": 131072
+          },
+          {
+            "name": "gpt-6-luna",
+            "display_name": "GPT-6 Luna",
+            "max_tokens": 1050000,
+            "max_output_tokens": 128000
+          },
+          {
+            "name": "deepseek-v4-pro",
+            "display_name": "DeepSeek V4 Pro",
+            "max_tokens": 1000000,
+            "max_output_tokens": 384000
+          },
+          {
+            "name": "space-bunny-free",
+            "display_name": "Space Bunny (free)",
+            "max_tokens": 1048576,
+            "max_output_tokens": 524288
           }
         ]
       }
@@ -205,9 +232,15 @@
   "agent": {
     "dock": "right",
     "default_model": {
-      "provider": "opencode",
-      "model": "big-pickle"
-    }
+      "provider": "opencode-go",
+      "model": "qwen3.8-max"
+    },
+    "inline_alternatives": [
+      {
+        "provider": "opencode-go",
+        "model": "qwen3.8-max"
+      }
+    ]
   },
   "jupyter": {
     "kernel_selections": {
@@ -217,9 +250,6 @@
     }
   },
   "context_servers": {
-    "codebase-memory-mcp": {
-      "command": "/home/niksmac/.local/bin/codebase-memory-mcp",
-      "args": [""]
-    }
-  }
+  "codebase-memory-mcp": {"command":"/home/niksmac/.local/bin/codebase-memory-mcp","args":[]}
+}
 }

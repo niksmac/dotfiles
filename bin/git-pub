@@ -13,6 +13,32 @@ git pull
 git checkout master
 git merge develop -m "Merge branch develop"
 
-npm version "${1:-patch}" --force -m "Version %s"
+npm version "${1:-patch}" --force -m "Version %s" 2>/dev/null || {
+  [ -f pubspec.yaml ] || { echo "No package.json or pubspec.yaml found" >&2; exit 1; }
+
+  bump="${1:-patch}"
+  version=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)/\1/p' pubspec.yaml | head -n 1)
+  [ -n "$version" ] || { echo "No version found in pubspec.yaml" >&2; exit 1; }
+  build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' pubspec.yaml | head -n 1)
+
+  new_version=$(echo "$version" | awk -v bump="$bump" -F. '{
+    if (bump == "major") { $1++; $2 = 0; $3 = 0 }
+    else if (bump == "minor") { $2++; $3 = 0 }
+    else { $3++ }
+    print
+  }' OFS=.)
+
+  if [ -n "$build" ]; then
+    new_build=$((build + 1))
+    sed "s/^version: .*/version: $new_version+$new_build/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+    new_version="$new_version+$new_build"
+  else
+    sed "s/^version: .*/version: $new_version/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+  fi
+
+  git add pubspec.yaml
+  git commit -m "Version $new_version"
+  git tag "v${new_version%%+*}"
+}
 git push && git push --tags
 git checkout develop

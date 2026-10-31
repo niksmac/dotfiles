@@ -156,3 +156,5 @@ typings/
 .vscode/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,linux,macos
+
+**/.claude/settings.local.json

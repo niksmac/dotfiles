@@ -104,3 +104,26 @@ export LC_CTYPE=en_US.UTF-8
 if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd)"
 fi
+export PATH="$HOME/flutter/bin:$PATH"
+
+# Android SDK
+export ANDROID_HOME=/data/android/Sdk
+export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+
+# Node version comes from `fnm env --use-on-cd` above. Do not prepend a
+# pinned fnm node-versions path here: it shadows whatever version the
+# current directory's .node-version resolves to.
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
+
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+fi
+
+# Added by codebase-memory-mcp install
+export PATH="/home/niksmac/.local/bin:$PATH"
+
+
+export BUN_OPTIONS="${BUN_OPTIONS:+$BUN_OPTIONS }--preload=/abs/path/no-agent-summary.js"

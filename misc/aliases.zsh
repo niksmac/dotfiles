@@ -86,10 +86,8 @@ fi
 ## Add code alias
 if [ "$IS_MAC" = true ]; then
   alias code='/Applications/Zed.app/Contents/MacOS/zed'
-  alias codex='open . && zed . && opencode'
 else
   alias code='zed'
-  alias codex='xdg-open . && zed . && opencode'
 fi
 alias oc='opencode'
 alias occ='opencode --continue'
