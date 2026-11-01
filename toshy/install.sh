@@ -101,8 +101,13 @@ EOF
 
 if [ -n "$changed" ]; then
   echo "Updated Toshy config slices"
-  if [ -x "$TOSHY_BIN/toshy-config-restart" ]; then
+  # Restart whichever is running: the systemd user service (normal after a
+  # login) or the manually started copy (right after the first install).
+  if systemctl --user is-active --quiet toshy-config 2>/dev/null; then
+    systemctl --user restart toshy-config && echo "Restarted Toshy"
+  elif [ -x "$TOSHY_BIN/toshy-config-restart" ]; then
     "$TOSHY_BIN/toshy-config-restart" >/dev/null 2>&1 || true
+    echo "Restarted Toshy"
   fi
 else
   echo "Toshy config slices already up to date"
