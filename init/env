@@ -18,7 +18,7 @@ IS_LINUX=false
 export IS_MAC IS_LINUX
 
 # Homebrew / Linuxbrew on PATH only if present.
-if [ -d /opt/homebrew ]; then
+if [ "$IS_MAC" = true ] && [ -d /opt/homebrew ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
 if [ "$IS_LINUX" = true ] && [ -d /home/linuxbrew/.linuxbrew ]; then

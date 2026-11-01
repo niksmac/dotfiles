@@ -5,8 +5,8 @@
 
 export ZSH=$HOME/.dotfiles
 
-# Linuxbrew path
-if [ -d /home/linuxbrew/.linuxbrew ]; then
+# Linuxbrew path (Linux only)
+if [ "$(uname -s)" = "Linux" ] && [ -d /home/linuxbrew/.linuxbrew ]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 fi
 
