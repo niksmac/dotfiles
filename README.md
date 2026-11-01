@@ -84,7 +84,7 @@ to behave the same on both: same fonts, keys, clipboard, aliases and packages.
 | Topic | macOS | Linux |
 | --- | --- | --- |
 | `misc/` fonts | `~/Library/Fonts` | `~/.local/share/fonts` + `fc-cache` |
-| `ghostty/` | `config` | `config` + `linux-keybinds.conf` (linked as `linux.conf`); installs Ghostty on Ubuntu/Debian from mkasberg/ghostty-ubuntu if missing |
+| `ghostty/` | `config` | `config` + `linux-keybinds.conf` (linked as `linux.conf`); installs Ghostty on Ubuntu/Debian from mkasberg/ghostty-ubuntu if missing and makes it the default terminal (`xdg-terminals.list`, `x-terminal-emulator`) |
 | `mpv/` | `~/.config/mpv` and `~/Library/Application Support/mpv` | `~/.config/mpv` |
 | `bin/clip` | `pbcopy` | `wl-copy`, `xclip` or `xsel` |
 | git credentials | `osxkeychain` | `gh auth git-credential` |

@@ -86,6 +86,28 @@ if [ "$(uname -s)" = "Linux" ] && ! command -v ghostty >/dev/null 2>&1 &&
   install_ghostty_deb
 fi
 
+# Linux: make Ghostty the default terminal. GNOME (Ctrl+Alt+T, Files' "Open
+# in Terminal", apps that need a terminal) asks xdg-terminal-exec, which
+# reads ~/.config/[<desktop>-]xdg-terminals.list; Debian-style scripts use
+# the x-terminal-emulator alternative.
+GHOSTTY_ENTRY="com.mitchellh.ghostty.desktop:new-window"
+if [ "$(uname -s)" = "Linux" ] && command -v ghostty >/dev/null 2>&1; then
+  for list in "$HOME/.config/xdg-terminals.list" "$HOME"/.config/*-xdg-terminals.list; do
+    [ -e "$list" ] || [ "$list" = "$HOME/.config/xdg-terminals.list" ] || continue
+    if [ "$(grep -v -e '^#' -e '^$' "$list" 2>/dev/null | head -1)" != "$GHOSTTY_ENTRY" ]; then
+      [ -e "$list" ] && cp "$list" "$list.backup"
+      echo "$GHOSTTY_ENTRY" > "$list"
+      echo "Default terminal: Ghostty in $list"
+    fi
+  done
+  ghostty_bin="$(command -v ghostty)"
+  if update-alternatives --list x-terminal-emulator 2>/dev/null | grep -qx "$ghostty_bin" &&
+     [ "$(readlink -f /etc/alternatives/x-terminal-emulator)" != "$ghostty_bin" ]; then
+    echo "Setting x-terminal-emulator to Ghostty (asks for your password)"
+    sudo update-alternatives --set x-terminal-emulator "$ghostty_bin"
+  fi
+fi
+
 mkdir -p "$XDG_DIR"
 link_config "$XDG_DIR/config.ghostty"
 unlink_old "$XDG_DIR/config"
