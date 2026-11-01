@@ -128,6 +128,9 @@ Left Option is Alt; right Option still types accents.
   settings all reach the system clipboard on both OSes. Ghostty and iTerm2
   allow OSC 52 writes. Ptyxis/VTE doesn't support them, which is why tmux
   also pipes every copy through `copy-command`.
+- **No copy-on-select.** Selecting never copies, anywhere: select, then
+  Cmd+C. In tmux, mouse selections stay selected and copy-mode `C-c` copies,
+  because a terminal with no selection of its own passes Cmd+C on as ^C.
 
 ## Known pitfalls
 

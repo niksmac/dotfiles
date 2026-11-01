@@ -33,8 +33,25 @@ print(repr(keep) if keep != opts else "")' "$opts")"
     echo "Removed modifier swaps from GNOME xkb-options (was $opts)"
   fi
 fi
-if systemctl is-active --quiet keyd 2>/dev/null; then
-  echo "Warning: keyd is running; Toshy should be the only remapper (sudo systemctl disable --now keyd)"
+# keyd (an older setup here mapped Cmd to Ctrl) would remap under Toshy.
+# Stop it; /etc/keyd is left alone, so `sudo systemctl enable --now keyd`
+# brings it back.
+if systemctl is-enabled --quiet keyd 2>/dev/null || systemctl is-active --quiet keyd 2>/dev/null; then
+  echo "Disabling keyd so Toshy is the only remapper (asks for your password)"
+  sudo systemctl disable --now keyd
+fi
+
+# Toshy sends terminals their default shortcuts (Cmd+C -> ctrl+shift+c, ...)
+# and keeps Ctrl+<letter> for the shell. Custom Ptyxis shortcuts (the keyd
+# setup bound copy/paste/new tab to Ctrl+C/V/T) break that, so reset them to
+# Ptyxis's defaults, keeping a copy of the old ones.
+PTYXIS_KEYS=/org/gnome/Ptyxis/Shortcuts/
+if command -v dconf >/dev/null 2>&1 && [ -n "$(dconf list "$PTYXIS_KEYS" 2>/dev/null)" ]; then
+  backup="$HOME/.config/ptyxis-shortcuts.backup.ini"
+  dconf dump "$PTYXIS_KEYS" > "$backup"
+  dconf reset -f "$PTYXIS_KEYS"
+  echo "Reset custom Ptyxis shortcuts to defaults (old ones in $backup;"
+  echo "  restore with: dconf load $PTYXIS_KEYS < $backup)"
 fi
 
 if [ ! -f "$CONFIG" ]; then

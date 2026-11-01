@@ -122,15 +122,30 @@ set -g allow-set-title off
 # on (above) for terminals that DO support it (Ghostty, kitty, wezterm, foot)
 # and for SSH peers, but every copy also goes through copy-command.
 
-# Copy on drag release: letting go of the mouse after a drag pipes the
-# selection straight to the system clipboard and exits copy mode. y / Enter
-# do the same from the keyboard.
-bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel
-bind -T copy-mode    MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel
+# Select with the mouse, copy with the keyboard (no copy-on-select), the same
+# as outside tmux. Drag, double-click (word) or triple-click (line) only
+# selects. Cmd+C copies to the system clipboard and leaves copy mode: the
+# terminal has no selection of its own, so it passes the key on as ^C, which
+# copy mode turns into a copy (y / Enter do the same). Clicking clears the
+# selection and, unless scrolled back, leaves copy mode so typing reaches the
+# shell again. q / Esc leave without copying. Shift+drag still makes a
+# terminal-native selection.
+bind -T root DoubleClick1Pane select-pane -t = \; if -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' { send-keys -M } { copy-mode -H ; send-keys -X select-word }
+bind -T root TripleClick1Pane select-pane -t = \; if -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' { send-keys -M } { copy-mode -H ; send-keys -X select-line }
+bind -T copy-mode    MouseDragEnd1Pane send-keys -X stop-selection
+bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X stop-selection
+bind -T copy-mode    DoubleClick1Pane select-pane \; send-keys -X select-word
+bind -T copy-mode-vi DoubleClick1Pane select-pane \; send-keys -X select-word
+bind -T copy-mode    TripleClick1Pane select-pane \; send-keys -X select-line
+bind -T copy-mode-vi TripleClick1Pane select-pane \; send-keys -X select-line
+bind -T copy-mode    MouseDown1Pane select-pane \; send-keys -X clear-selection \; if -F '#{==:#{scroll_position},0}' { send-keys -X cancel }
+bind -T copy-mode-vi MouseDown1Pane select-pane \; send-keys -X clear-selection \; if -F '#{==:#{scroll_position},0}' { send-keys -X cancel }
+bind -T copy-mode    C-c   send-keys -X copy-pipe-and-cancel
+bind -T copy-mode-vi C-c   send-keys -X copy-pipe-and-cancel
+bind -T copy-mode    Enter send-keys -X copy-pipe-and-cancel
 bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel
+bind -T copy-mode    y     send-keys -X copy-pipe-and-cancel
 bind -T copy-mode-vi y     send-keys -X copy-pipe-and-cancel
-bind -T copy-mode   Enter send-keys -X copy-pipe-and-cancel
-bind -T copy-mode   y     send-keys -X copy-pipe-and-cancel
 
 # tmux 3.8's new Ctrl+<mouse> defaults pop up surprise windows mid-gesture:
 # Ctrl+drag floats a new pane that follows the cursor, Ctrl+click breaks the

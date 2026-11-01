@@ -115,8 +115,10 @@ On Linux, [Toshy](https://github.com/RedBearAK/toshy) makes the Mac-layout
 keyboard (Logitech MX Mechanical Mini for Mac) behave as on macOS in every
 app: Cmd+C/V/T/W/… work everywhere, in terminals they become the terminal's
 ctrl+shift+… shortcuts, and Ctrl stays Ctrl there, so Ctrl+C interrupts.
-`toshy/install.sh` installs Toshy if it's missing, removes GNOME modifier
-swaps (Toshy must be the only remapper), asks GNOME on Wayland to install
+`toshy/install.sh` installs Toshy if it's missing, disables keyd and removes
+GNOME modifier swaps (Toshy must be the only remapper), resets custom Ptyxis
+shortcuts to its defaults (backed up to
+`~/.config/ptyxis-shortcuts.backup.ini`), asks GNOME on Wayland to install
 the Focused Window D-Bus extension Toshy needs, and writes each
 `toshy/slices/<name>.py` into the matching `SLICE_MARK` section of
 `~/.config/toshy/toshy_config.py` (the sections Toshy keeps across
@@ -129,7 +131,10 @@ MX Mechanical Mini and MX Anywhere 3S) are shared by both machines:
 `openlogi/install.sh` links `~/.config/openlogi` to `openlogi/`.
 
 **Clipboard.** Use `clip` (in `bin/`) instead of `pbcopy` in scripts and
-aliases; tmux and Vim copy through the same tools.
+aliases; tmux and Vim copy through the same tools. Selecting never copies:
+select with the mouse, then copy with Cmd+C and paste with Cmd+V. In tmux a
+drag, double-click or triple-click only selects; Cmd+C (or y / Enter)
+copies, a click elsewhere or q / Esc drops the selection.
 
 After installing on Linux, run `gh auth login` once so git can use the gh
 credential helper.
