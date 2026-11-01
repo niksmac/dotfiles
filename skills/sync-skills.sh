@@ -3,11 +3,12 @@
 # Link every skill in ~/.dotfiles/skills into each agent's personal skills
 # directory: Claude Code, OpenCode and Hermes.
 #
-# Each skill directory is mirrored file by file (real directories, symlinked
-# files), so skills that reference their own files (e.g. landing-page-architect
-# -> skills/lp-*/SKILL.md) resolve, and edits in the repo show up immediately.
-# Links left behind by skills removed from the repo are pruned. Files that
-# aren't symlinks into this repo are never touched.
+# Each skill directory is linked as a whole, so files added to a skill in the
+# repo show up without re-running this script, and skills that reference their
+# own files (e.g. landing-page-architect -> skills/lp-*/SKILL.md) resolve.
+# Old per-file mirrors (real directories of links into this repo) are replaced
+# with a directory link. Links left behind by skills removed from the repo are
+# pruned. Anything that isn't a link into this repo is never touched.
 
 set -euo pipefail
 
@@ -29,10 +30,27 @@ remove_and_prune_parents () {
   done
 }
 
+# True if directory $1 holds nothing but subdirectories, .DS_Store files and
+# links into $2, i.e. it's an old per-file mirror that is safe to replace.
+is_mirror_of () {
+  local dir=$1 src=$2 entry
+  while IFS= read -r entry; do
+    if [ -L "$entry" ]; then
+      case "$(readlink "$entry")" in
+        "$src"/*) ;;
+        *) return 1 ;;
+      esac
+    elif [ "$(basename "$entry")" != ".DS_Store" ]; then
+      return 1
+    fi
+  done < <(find "$dir" ! -type d)
+}
+
 for target_dir in "${TARGETS[@]}"; do
   mkdir -p "$target_dir"
 
-  # Prune links into this repo whose source no longer exists.
+  # Prune links into this repo whose source no longer exists. find doesn't
+  # descend into linked skill directories, so this only sees our own links.
   while IFS= read -r link; do
     case "$(readlink "$link")" in
       "$DOTFILES_SKILLS"/*)
@@ -48,18 +66,31 @@ for target_dir in "${TARGETS[@]}"; do
     [ -e "$skill_md" ] || continue
     skill_dir="$(dirname "$skill_md")"
     skill_name="$(basename "$skill_dir")"
+    dst="$target_dir/$skill_name"
 
-    while IFS= read -r src; do
-      dst="$target_dir/$skill_name/${src#"$skill_dir"/}"
-      if [ -e "$dst" ] && [ ! -L "$dst" ]; then
-        echo "skipped: $dst exists and is not a link" >&2
+    if [ -L "$dst" ]; then
+      if [ "$(readlink "$dst")" = "$skill_dir" ]; then
+        echo "ok: $dst"
         continue
       fi
-      mkdir -p "$(dirname "$dst")"
-      ln -sfn "$src" "$dst"
-    done < <(find "$skill_dir" -type f ! -name '.DS_Store')
+      case "$(readlink "$dst")" in
+        "$DOTFILES_SKILLS"/*) rm -f "$dst" ;;
+        *) echo "skipped: $dst links outside this repo" >&2; continue ;;
+      esac
+    elif [ -d "$dst" ]; then
+      if ! is_mirror_of "$dst" "$skill_dir"; then
+        echo "skipped: $dst has files that aren't links into this repo" >&2
+        continue
+      fi
+      rm -rf "$dst"
+      echo "replaced per-file links: $dst"
+    elif [ -e "$dst" ]; then
+      echo "skipped: $dst exists and is not a directory or link" >&2
+      continue
+    fi
 
-    echo "linked: $skill_name -> $target_dir/$skill_name"
+    ln -s "$skill_dir" "$dst"
+    echo "linked: $dst -> $skill_dir"
   done
 done
 

@@ -156,11 +156,15 @@ agent's personal skills directory:
 | OpenCode | `~/.config/opencode/skills` | `oc`, `occ` (continue) |
 | Hermes | `~/.hermes/skills` (or `$HERMES_HOME/skills`) | `hs`, `hsc` (continue) |
 
-- Every file in a skill is linked, not just `SKILL.md`, so skills can point
-  at their own files (e.g. `landing-page-architect` loads `skills/lp-*/SKILL.md`).
-- Links are symlinks back into this repo, so edits show up immediately; only
-  re-run the script after adding, renaming or removing a skill or a file in one.
-- Links left over from skills removed from the repo are pruned. Skills you
+- Each skill directory is linked as a whole (`~/.claude/skills/<name>` →
+  `skills/<name>`), so edits and new files show up immediately and skills can
+  point at their own files (e.g. `landing-page-architect` loads
+  `skills/lp-*/SKILL.md`). Only re-run the script after adding, renaming or
+  removing a whole skill.
+- Anything an agent writes into a linked skill directory lands in this repo;
+  check `git status` before committing.
+- Links left over from skills removed from the repo are pruned, and old
+  per-file link mirrors are replaced with a directory link. Skills you
   installed in those directories some other way are never touched.
 
 ```sh
