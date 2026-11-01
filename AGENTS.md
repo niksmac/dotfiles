@@ -129,8 +129,11 @@ Left Option is Alt; right Option still types accents.
   allow OSC 52 writes. Ptyxis/VTE doesn't support them, which is why tmux
   also pipes every copy through `copy-command`.
 - **No copy-on-select.** Selecting never copies, anywhere: select, then
-  Cmd+C. In tmux, mouse selections stay selected and copy-mode `C-c` copies,
-  because a terminal with no selection of its own passes Cmd+C on as ^C.
+  Cmd+C. In tmux, mouse selections stay selected and Cmd+C copies them: a
+  terminal with no selection of its own passes the key on. On Linux, Toshy
+  sends Cmd+C to Ptyxis and Ghostty as Ctrl+Insert (never ^C, which would
+  interrupt), so tmux copies on `C-IC` (and `C-c`), and zsh ignores
+  Ctrl+Insert at the prompt.
 
 ## Known pitfalls
 

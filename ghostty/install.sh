@@ -44,6 +44,48 @@ unlink_old() {
   fi
 }
 
+# Linux: install Ghostty if it's missing. Ghostty ships no official Linux
+# packages; on Ubuntu/Debian use the .deb builds from mkasberg/ghostty-ubuntu
+# (the ones Ghostty's docs point to), checked against the release's sha256.
+# On macOS, install Ghostty from ghostty.org; this script only links config.
+install_ghostty_deb() {
+  local id ver arch tmp url sum
+  # shellcheck disable=SC1091
+  id="$(. /etc/os-release && echo "$ID")"
+  case "$id" in
+    ubuntu) ver="$(. /etc/os-release && echo "$VERSION_ID")" ;;
+    debian) ver="$(. /etc/os-release && echo "$VERSION_CODENAME")" ;;
+    *) echo "Ghostty is not installed; see https://ghostty.org/docs/install/binary"; return 0 ;;
+  esac
+  arch="$(dpkg --print-architecture)"
+  read -r url sum < <(curl -fsSL https://api.github.com/repos/mkasberg/ghostty-ubuntu/releases/latest |
+    python3 -I -c '
+import json, sys
+suffix = "_%s_%s.deb" % (sys.argv[1], sys.argv[2])
+for a in json.load(sys.stdin)["assets"]:
+    if a["name"].endswith(suffix):
+        print(a["browser_download_url"], (a.get("digest") or "").removeprefix("sha256:") or "-")
+        break' "$arch" "$ver") || true
+  if [ -z "$url" ]; then
+    echo "No Ghostty .deb for $id $ver ($arch); see https://ghostty.org/docs/install/binary"
+    return 0
+  fi
+  tmp="$(mktemp -d)"
+  echo "Installing Ghostty from $url (asks for your password)"
+  curl -fsSL -o "$tmp/ghostty.deb" "$url"
+  if [ "$sum" != "-" ] && ! echo "$sum  $tmp/ghostty.deb" | sha256sum -c --quiet -; then
+    echo "Ghostty download failed its checksum; not installing"
+    rm -rf "$tmp"
+    return 1
+  fi
+  sudo apt-get install -y "$tmp/ghostty.deb"
+  rm -rf "$tmp"
+}
+if [ "$(uname -s)" = "Linux" ] && ! command -v ghostty >/dev/null 2>&1 &&
+   command -v apt-get >/dev/null 2>&1; then
+  install_ghostty_deb
+fi
+
 mkdir -p "$XDG_DIR"
 link_config "$XDG_DIR/config.ghostty"
 unlink_old "$XDG_DIR/config"

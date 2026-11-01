@@ -56,5 +56,9 @@ bindkey '^[OF' end-of-line
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 bindkey '^[[3~' delete-char
+# Ctrl+Insert: Toshy's Cmd+C in Ptyxis/Ghostty. The terminal copies when it
+# has a selection and passes the key on otherwise; ignore it then
+# (redisplay only redraws the line).
+bindkey '^[[2;5~' redisplay
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char

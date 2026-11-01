@@ -26,3 +26,15 @@ keymap("User terminals: Cmd+digit tabs", {
     hmp_is_term_vte_alt_tabs(ctx)
 )
 
+# Cmd+C in Ghostty → Ctrl+Insert, as Toshy already does for Ptyxis. Ghostty
+# copies its own selection on it (performable:ctrl+insert in
+# ghostty/linux-keybinds.conf); with none, it passes the key on, so tmux can
+# copy its selection, and it never becomes ^C at the prompt.
+hmp_is_term_ghostty_copy = matchProps(clas="^.*ghostty.*$")
+keymap("User terminals: Ghostty Cmd+C", {
+    C("RC-C"):                  C("Ctrl-Insert"),
+}, when = lambda ctx:
+    cnfg.screen_has_focus and
+    hmp_is_term_ghostty_copy(ctx)
+)
+
