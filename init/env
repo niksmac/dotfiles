@@ -21,7 +21,7 @@ export IS_MAC IS_LINUX
 if [ -d /opt/homebrew ]; then
   export PATH="/opt/homebrew/bin:$PATH"
 fi
-if [ -d /home/linuxbrew/.linuxbrew ]; then
+if [ "$IS_LINUX" = true ] && [ -d /home/linuxbrew/.linuxbrew ]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 fi
 
