@@ -122,14 +122,14 @@ set -g allow-set-title off
 # on (above) for terminals that DO support it (Ghostty, kitty, wezterm, foot)
 # and for SSH peers, but every copy also goes through copy-command.
 
-# Select with the mouse, copy with the keyboard (no copy-on-select), the same
-# as outside tmux. Drag, double-click (word) or triple-click (line) only
-# selects. Cmd+C copies to the system clipboard and leaves copy mode: the
-# terminal has no selection of its own, so it passes the key on as ^C, which
-# copy mode turns into a copy (y / Enter do the same). Clicking clears the
-# selection and, unless scrolled back, leaves copy mode so typing reaches the
-# shell again. q / Esc leave without copying. Shift+drag still makes a
-# terminal-native selection.
+# Select with the mouse, copy with the keyboard (no copy-on-select), the
+# same as outside tmux. Drag, double-click (word) or triple-click (line)
+# only selects. Cmd+C copies to the system clipboard and leaves copy mode:
+# the terminal has no selection of its own, so it passes the key on (as ^C,
+# or Ctrl+Insert in Ptyxis), which copy mode turns into a copy (y / Enter
+# too). Clicking clears the selection and, unless scrolled back, leaves copy
+# mode so typing reaches the shell again. q / Esc leave without copying.
+# Shift+drag still makes a terminal-native selection.
 bind -T root DoubleClick1Pane select-pane -t = \; if -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' { send-keys -M } { copy-mode -H ; send-keys -X select-word }
 bind -T root TripleClick1Pane select-pane -t = \; if -F '#{||:#{pane_in_mode},#{mouse_any_flag}}' { send-keys -M } { copy-mode -H ; send-keys -X select-line }
 bind -T copy-mode    MouseDragEnd1Pane send-keys -X stop-selection
@@ -142,6 +142,10 @@ bind -T copy-mode    MouseDown1Pane select-pane \; send-keys -X clear-selection 
 bind -T copy-mode-vi MouseDown1Pane select-pane \; send-keys -X clear-selection \; if -F '#{==:#{scroll_position},0}' { send-keys -X cancel }
 bind -T copy-mode    C-c   send-keys -X copy-pipe-and-cancel
 bind -T copy-mode-vi C-c   send-keys -X copy-pipe-and-cancel
+# In Ptyxis, Toshy sends Cmd+C as Ctrl+Insert instead (so Ptyxis can't turn
+# it into ^C). Copy on it in copy mode; elsewhere swallow it, or the shell
+# would print the escape sequence.
+bind -n C-IC if -F '#{pane_in_mode}' { send-keys -X copy-pipe-and-cancel }
 bind -T copy-mode    Enter send-keys -X copy-pipe-and-cancel
 bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel
 bind -T copy-mode    y     send-keys -X copy-pipe-and-cancel
