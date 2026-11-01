@@ -30,6 +30,23 @@ skip_dir="/nonexistent"
 [ -f "$MONACO_SYS" ] && skip_dir="$MONACO_DIR"
 
 mkdir -p "$FONTS_DST"
+
+# An old 1991 Monaco (a FontMonger conversion, Latin-1 only, no bold) floats
+# around Linux setups; apps then fill in symbols from other fonts. Move it,
+# or any Monaco that differs from the local copy, out of the fonts dir
+# (fontconfig reads every file in it, whatever the name) so the copy from
+# the Mac gets installed below.
+moved=0
+monaco_dst="$FONTS_DST/Monaco.ttf"
+if [ ! -f "$MONACO_SYS" ] && [ -f "$monaco_dst" ] &&
+   { grep -aq FontMonger "$monaco_dst" ||
+     { [ -f "$MONACO_DIR/Monaco.ttf" ] && ! cmp -s "$MONACO_DIR/Monaco.ttf" "$monaco_dst"; }; }; then
+  mkdir -p "$FONTS_DST.backup"
+  mv "$monaco_dst" "$FONTS_DST.backup/Monaco.ttf"
+  echo "Moved old Monaco aside: $FONTS_DST.backup/Monaco.ttf"
+  moved=1
+fi
+
 installed=0
 while IFS= read -r font; do
   if [ ! -f "$FONTS_DST/$(basename "$font")" ]; then
@@ -41,12 +58,13 @@ done < <(find "$FONTS_SRC" -path "$skip_dir" -prune -o \
 echo "Installed $installed new font(s) into $FONTS_DST"
 
 # Linux apps only see new fonts once the fontconfig cache is rebuilt.
-if [ "$installed" -gt 0 ] && command -v fc-cache >/dev/null 2>&1; then
+if [ $((installed + moved)) -gt 0 ] && command -v fc-cache >/dev/null 2>&1; then
   fc-cache -f "$FONTS_DST"
 fi
 
 if [ ! -f "$MONACO_SYS" ] && [ ! -f "$FONTS_DST/Monaco.ttf" ]; then
-  echo "Monaco not installed: copy it from a Mac, then re-run this script:"
+  echo "Monaco not installed (apps use their fallback font): copy it from a"
+  echo "Mac, then re-run this script:"
   echo "  mkdir -p $MONACO_DIR"
   echo "  scp <mac>:.dotfiles/misc/fonts/Monaco/Monaco.ttf $MONACO_DIR/"
 fi

@@ -101,8 +101,11 @@ mkdir -p ~/.dotfiles/misc/fonts/Monaco
 scp <mac>:.dotfiles/misc/fonts/Monaco/Monaco.ttf ~/.dotfiles/misc/fonts/Monaco/
 ```
 
-The script also installs every other font in `misc/fonts` that isn't already
-installed.
+Until then, apps fall back to another monospace font. If an old Monaco is
+installed (the 1991 FontMonger conversion that floats around, with no bold
+or symbols) or one that differs from the local copy, the script moves it to
+`~/.local/share/fonts.backup/` first. The script also installs every other
+font in `misc/fonts` that isn't already installed.
 
 **Keys.** Ghostty and iTerm2 use the same keys: cmd+c/v copy and paste,
 alt+←/→ word jump (left Option is Alt; right Option still types accents),
