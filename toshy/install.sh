@@ -18,18 +18,23 @@ CONFIG="$HOME/.config/toshy/toshy_config.py"
 SRC_DIR="$HOME/.cache/toshy-src"
 TOSHY_BIN="$HOME/.local/bin"
 
+# Use the system gsettings: Linuxbrew's copy (first on PATH) has no dconf
+# backend, so it reads built-in defaults and its writes go nowhere.
+GSETTINGS=gsettings
+[ -x /usr/bin/gsettings ] && GSETTINGS=/usr/bin/gsettings
+has_schema() { "$GSETTINGS" list-schemas 2>/dev/null | grep -qx "$1"; }
+
 # Toshy has to be the only remapper. GNOME's "swap Ctrl/Super/Alt" options
 # would make it misread the Cmd key, so drop them.
-if command -v gsettings >/dev/null 2>&1 &&
-   gsettings list-schemas 2>/dev/null | grep -qx org.gnome.desktop.input-sources; then
-  opts="$(gsettings get org.gnome.desktop.input-sources xkb-options)"
+if command -v "$GSETTINGS" >/dev/null 2>&1 && has_schema org.gnome.desktop.input-sources; then
+  opts="$("$GSETTINGS" get org.gnome.desktop.input-sources xkb-options)"
   kept="$(python3 -c '
 import ast, sys
 opts = ast.literal_eval(sys.argv[1].removeprefix("@as ").strip())
 keep = [o for o in opts if not o.startswith(("altwin:", "ctrl:swap_"))]
 print(repr(keep) if keep != opts else "")' "$opts")"
   if [ -n "$kept" ]; then
-    gsettings set org.gnome.desktop.input-sources xkb-options "$kept"
+    "$GSETTINGS" set org.gnome.desktop.input-sources xkb-options "$kept"
     echo "Removed modifier swaps from GNOME xkb-options (was $opts)"
   fi
 fi
@@ -52,6 +57,32 @@ if command -v dconf >/dev/null 2>&1 && [ -n "$(dconf list "$PTYXIS_KEYS" 2>/dev/
   dconf reset -f "$PTYXIS_KEYS"
   echo "Reset custom Ptyxis shortcuts to defaults (old ones in $backup;"
   echo "  restore with: dconf load $PTYXIS_KEYS < $backup)"
+fi
+
+# GNOME window shortcuts for what Toshy sends: Cmd+Tab -> Alt+Tab (switch
+# apps), Cmd+` -> Alt+` (windows of the same app), Cmd+Q -> Alt+F4 (close).
+# Ubuntu gives Alt+Tab to the window switcher, and the keyd setup had moved
+# these to Ctrl+Tab / Ctrl+` / Alt+W and search to Ctrl+Space, which also
+# took Ctrl+Tab and Ctrl+Space away from apps.
+set_gnome_key() {
+  local schema="$1" key="$2" want="$3" have
+  have="$("$GSETTINGS" get "$schema" "$key")"
+  [ "${have#@as }" = "${want#@as }" ] && return
+  "$GSETTINGS" set "$schema" "$key" "$want"
+  echo "GNOME $key: $want (was $have)"
+}
+if has_schema org.gnome.desktop.wm.keybindings; then
+  WM=org.gnome.desktop.wm.keybindings
+  set_gnome_key $WM switch-applications "['<Super>Tab', '<Alt>Tab']"
+  set_gnome_key $WM switch-applications-backward "['<Shift><Super>Tab', '<Shift><Alt>Tab']"
+  set_gnome_key $WM switch-windows "@as []"
+  set_gnome_key $WM switch-windows-backward "@as []"
+  set_gnome_key $WM switch-group "['<Super>Above_Tab', '<Alt>Above_Tab']"
+  set_gnome_key $WM switch-group-backward "['<Shift><Super>Above_Tab', '<Shift><Alt>Above_Tab']"
+  set_gnome_key $WM close "['<Alt>F4']"
+fi
+if has_schema org.gnome.settings-daemon.plugins.media-keys; then
+  set_gnome_key org.gnome.settings-daemon.plugins.media-keys search "['']"
 fi
 
 if [ ! -f "$CONFIG" ]; then

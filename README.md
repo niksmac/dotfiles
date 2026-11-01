@@ -118,10 +118,12 @@ ctrl+shift+… shortcuts, and Ctrl stays Ctrl there, so Ctrl+C interrupts.
 `toshy/install.sh` installs Toshy if it's missing, disables keyd and removes
 GNOME modifier swaps (Toshy must be the only remapper), resets custom Ptyxis
 shortcuts to its defaults (backed up to
-`~/.config/ptyxis-shortcuts.backup.ini`), asks GNOME on Wayland to install
-the Focused Window D-Bus extension Toshy needs, and writes each
-`toshy/slices/<name>.py` into the matching `SLICE_MARK` section of
-`~/.config/toshy/toshy_config.py` (the sections Toshy keeps across
+`~/.config/ptyxis-shortcuts.backup.ini`), points GNOME's app switcher
+(Cmd+Tab), same-app window switcher (Cmd+\`) and close (Cmd+Q) at the keys
+Toshy sends and frees Ctrl+Space and Ctrl+Tab for apps, asks GNOME on
+Wayland to install the Focused Window D-Bus extension Toshy needs, and
+writes each `toshy/slices/<name>.py` into the matching `SLICE_MARK` section
+of `~/.config/toshy/toshy_config.py` (the sections Toshy keeps across
 upgrades). Edit the slices in this repo and re-run `toshy/install.sh`;
 `slices/kbtype_override.py` marks the keyboard as Apple layout. Check the
 keyboard's name with `toshy-devices` if Cmd and Option seem swapped.
