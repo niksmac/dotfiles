@@ -49,8 +49,6 @@ Run all three in one pass when you have enough context. Split them when the clie
 
 Scan the content for these categories. Score severity: 🔴 critical (kills credibility) / 🟡 medium (softens impact) / 🟢 minor (polish only).
 
-See [references/ai-tells-checklist.md](references/ai-tells-checklist.md) for the comprehensive detection list.
-
 ### The Core AI Tell Categories
 
 **1. Overused Filler Words** 🔴
@@ -185,8 +183,6 @@ If `marketing-context.md` is available: read the brand voice section and writing
 - Relationship stance (peer-to-peer? expert-to-student? provocateur?)
 - Signature phrases or patterns
 
-See [references/voice-techniques.md](references/voice-techniques.md) for specific techniques for each voice type.
-
 ### Voice Injection Techniques
 
 **1. Personal Anecdotes**
@@ -246,7 +242,6 @@ Flag these without being asked:
 | Humanized draft         | Full rewrite with AI patterns removed, rhythm varied, specificity improved                          |
 | Voice injection         | Annotated draft with brand voice applied — specific changes called out so you can learn the pattern |
 | Before/after comparison | Side-by-side view of key paragraphs showing what changed and why                                    |
-| Humanity score          | Run `scripts/humanizer_scorer.py` — 0-100 score with breakdown by signal type                       |
 
 ---
 

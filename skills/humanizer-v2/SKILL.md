@@ -1,6 +1,6 @@
 ---
 name: humanizer-v2
-version: 2.6.0
+version: 2.7.0
 description:
   'Remove signs of AI-generated writing from text. Use when editing or reviewing
   text to make it sound more natural and human-written.'
@@ -27,8 +27,19 @@ When given text to humanize:
 2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives
 3. **Preserve meaning** - Keep the core message intact
 4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)
-5. **Add soul** - Don't just remove bad patterns; inject actual personality
+5. **Restore the author's voice where the text calls for it** - See PERSONALITY AND SOUL; reference and technical text stays neutral
 6. **Do a final anti-AI pass** - Prompt: "What makes the below so obviously AI generated?" Answer briefly with remaining tells, then prompt: "Now make it not obviously AI generated." and revise
+
+## Never Invent Facts
+
+Many patterns below are fixed by replacing a vague claim with a specific one. The specifics must come from the source text or the user. Don't fill them in from guesswork or general knowledge: no invented names, dates, numbers, quotes, studies, sources, anecdotes or first-person experiences.
+
+When the text needs a specific you don't have:
+
+- cut the vague claim if the text works without it, or
+- keep the plain version of the claim and mark the gap with a bracketed note, e.g. `[source?]` or `[how much faster?]`, so the author can fill it.
+
+A humanized text with a made-up statistic is worse than the original. Style tells are cosmetic; a fabricated fact is a credibility failure.
 
 ## Voice Calibration (Optional)
 
@@ -44,7 +55,7 @@ If the user provides a writing sample (their own previous writing), analyze it b
 
 2. **Match their voice in the rewrite.** Don't just remove AI patterns - replace them with patterns from the sample. If they write short sentences, don't produce long ones. If they use "stuff" and "things," don't upgrade to "elements" and "components."
 
-3. **When no sample is provided,** fall back to the default behavior (natural, varied, opinionated voice from the PERSONALITY AND SOUL section below).
+3. **When no sample is provided,** match the register of the original and follow the PERSONALITY AND SOUL section below. Don't invent a voice the author never had.
 
 ### How to provide a sample
 
@@ -53,38 +64,44 @@ If the user provides a writing sample (their own previous writing), analyze it b
 
 ## PERSONALITY AND SOUL
 
-Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.
+Removing AI patterns can leave personal writing sterile. Whether to fix that depends on what kind of text it is.
 
-### Signs of soulless writing (even if technically "clean"):
+### First, decide the register
+
+- **Reference and technical writing** (docs, READMEs, API references, commit messages, encyclopedic text, reports, legal or policy text): keep it neutral. Don't add opinions, first person, humor or asides. Here "human" means plain, specific and direct, not chatty.
+- **Personal or editorial writing** (blog posts, essays, newsletters, social posts, speeches): voice belongs here, but it has to be the author's. Use the voice sample if there is one. Without one, keep the opinions and feelings already in the text and make them plainer; don't add new ones.
+
+Never put opinions, feelings or experiences in the author's mouth that the original doesn't contain. That changes the meaning.
+
+### Signs of soulless personal writing (even if technically "clean"):
 
 - Every sentence is the same length and structure
-- No opinions, just neutral reporting
-- No acknowledgment of uncertainty or mixed feelings
-- No first-person perspective when appropriate
-- No humor, no edge, no personality
-- Reads like a Wikipedia article or press release
+- Opinions the author clearly holds are flattened into neutral reporting
+- Uncertainty or mixed feelings in the original are smoothed over
+- First person is removed where the author is plainly speaking for themselves
+- It reads like a press release
 
-### How to add voice:
+### How to bring the voice back:
 
-**Have opinions.** Don't just report facts - react to them. "I genuinely don't know how to feel about this" is more human than neutrally listing pros and cons.
+**Keep the author's opinions sharp.** If the draft hedges a view the author clearly holds, state it plainly.
 
-**Vary your rhythm.** Short punchy sentences. Then longer ones that take their time getting where they're going. Mix it up.
+**Vary your rhythm.** Short sentences. Then longer ones that take their time getting where they're going.
 
-**Acknowledge complexity.** Real humans have mixed feelings. "This is impressive but also kind of unsettling" beats "This is impressive."
+**Keep the complexity.** If the original has mixed feelings, keep both sides instead of resolving them into one neat verdict.
 
-**Use "I" when it fits.** First person isn't unprofessional - it's honest. "I keep coming back to..." or "Here's what gets me..." signals a real person thinking.
+**Keep "I" when the author is speaking.** First person isn't unprofessional in a personal piece.
 
-**Let some mess in.** Perfect structure feels algorithmic. Tangents, asides, and half-formed thoughts are human.
+**Let some mess in.** A real aside or an unfinished thought is fine. Don't manufacture one with stock phrases: "Here's the thing", "I keep coming back to", "Honestly?" and "genuinely" are tells themselves (see #36).
 
-**Be specific about feelings.** Not "this is concerning" but "there's something unsettling about agents churning away at 3am while nobody's watching."
+**Be concrete.** Replace an abstract feeling with the thing that causes it, as long as that thing is in the source.
 
-### Before (clean but soulless):
+### Before (from a personal blog post; the author's notes say they haven't made up their mind):
 
 > The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were skeptical. The implications remain unclear.
 
-### After (has a pulse):
+### After:
 
-> I genuinely don't know how to feel about this one. 3 million lines of code, generated while the humans presumably slept. Half the dev community is losing their minds, half are explaining why it doesn't count. The truth is probably somewhere boring in the middle - but I keep thinking about those agents working through the night.
+> The agents generated 3 million lines of code. Some developers were impressed; others spent a lot of words explaining why it doesn't count. I haven't decided what I think yet.
 
 ## CONTENT PATTERNS
 
@@ -100,7 +117,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The Statistical Institute of Catalonia was established in 1989 to collect and publish regional statistics independently from Spain's national statistics office.
+> The Statistical Institute of Catalonia was established in 1989.
 
 ### 2. Undue Emphasis on Notability and Media Coverage
 
@@ -114,7 +131,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> In a 2024 New York Times interview, she argued that AI regulation should focus on outcomes rather than methods.
+> In a [year] New York Times interview, she argued that [her actual position, from the source].
+
+Name one source and say what it reported. If the text doesn't say what any outlet reported, cut the list rather than guessing.
 
 ### 3. Superficial Analyses with -ing Endings
 
@@ -128,7 +147,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The temple uses blue, green, and gold colors. The architect said these were chosen to reference local bluebonnets and the Gulf coast.
+> The temple is painted blue, green, and gold, colors meant to evoke Texas bluebonnets and the Gulf of Mexico [according to whom?].
 
 ### 4. Promotional and Advertisement-like Language
 
@@ -142,7 +161,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Alamata Raya Kobo is a town in the Gonder region of Ethiopia, known for its weekly market and 18th-century church.
+> Alamata Raya Kobo is a town in the Gonder region of Ethiopia.
 
 ### 5. Vague Attributions and Weasel Words
 
@@ -156,7 +175,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The Haolai River supports several endemic fish species, according to a 2019 survey by the Chinese Academy of Sciences.
+> Researchers and conservationists study the Haolai River.
+
+The "crucial role" claim goes unless the source names who made it and on what evidence.
 
 ### 6. Fabricated Quotes and Unverifiable Claims
 
@@ -170,7 +191,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> In a 2017 interview, Musk compared AI's impact to that of electricity. Storytelling makes messages stick — anyone who has retold a customer story instead of reciting churn numbers knows this firsthand.
+> Andrew Ng has called AI "the new electricity." Stories are easier to remember than lists of numbers.
+
+Checking the quote showed it was Ng's, not Musk's. The "22 times" figure had no traceable source, so it was cut along with the unsupported claim about brands.
 
 ### 7. Outline-like "Challenges and Future Prospects" Sections
 
@@ -184,7 +207,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Traffic congestion increased after 2015 when three new IT parks opened. The municipal corporation began a stormwater drainage project in 2022 to address recurring floods.
+> Korattur, an industrial area of Chennai, has problems with traffic congestion and water scarcity.
 
 ### 8. Clichéd Openings
 
@@ -198,7 +221,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Support tickets doubled in the week after the March pricing change. Most complaints weren't about the money — they were about the surprise.
+Delete both sentences. Open with the first concrete fact in the piece; if the draft has none, ask the author for one.
 
 ### 9. The Inspirational Pivot
 
@@ -212,7 +235,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The new processor charges 0.2% less per transaction, saving us roughly $40,000 a year at current volume.
+> The new processor charges lower fees per transaction [how much lower?].
 
 ## LANGUAGE AND GRAMMAR PATTERNS
 
@@ -228,7 +251,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.
+> Somali cuisine also includes camel meat. Pasta, introduced during Italian colonial rule, is now common.
 
 ### 11. Avoidance of "is"/"are" (Copula Avoidance)
 
@@ -242,7 +265,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Gallery 825 is LAAA's exhibition space for contemporary art. The gallery has four rooms totaling 3,000 square feet.
+> Gallery 825 is LAAA's exhibition space for contemporary art. It has four separate spaces and more than 3,000 square feet.
 
 ### 12. Negative Parallelisms and Tailing Negations
 
@@ -290,7 +313,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The math changed: margins compressed by 40%, leaving no room for error. Teams that automate now will absorb the squeeze. Teams that wait will eat it.
+> Margins compressed by 40%, which leaves no room for error, so teams should automate now.
 
 ### 15. Rule of Three Overuse
 
@@ -340,7 +363,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The platform is easy to use, survives traffic spikes without tuning, and exports reports your finance team can actually read.
+> The platform is easy to use and its infrastructure scales [to what load?]. Its reports point to concrete next steps.
 
 ### 19. Passive Voice and Subjectless Fragments
 
@@ -420,9 +443,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> # The analytics tools our team actually uses
+> # A 30-day plan for learning business analytics
 >
-> ## How we moved reporting off spreadsheets in six weeks
+> ## Moving reporting from spreadsheets to a BI tool
 
 ### 25. Emojis
 
@@ -478,7 +501,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The company was founded in 1994, according to its registration documents.
+> The company was founded in the 1990s; the exact year isn't documented.
+
+Keep honest uncertainty in one short clause; cut the disclaimer wrapped around it.
 
 ### 29. Sycophantic/Servile Tone
 
@@ -527,7 +552,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> The company plans to open two more locations next year.
+Cut it. End on the last concrete point in the piece.
 
 ### 33. Forced Morals and Aphorism Paragraph Closers
 
@@ -543,21 +568,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 > The team shipped the migration over a weekend with zero downtime.
 
-### 34. Hyphenated Word Pair Overuse
-
-**Words to watch:** third-party, cross-functional, client-facing, data-driven, decision-making, well-known, high-quality, real-time, long-term, end-to-end
-
-**Problem:** AI hyphenates common word pairs with perfect consistency. Humans rarely hyphenate these uniformly, and when they do, it's inconsistent. Less common or technical compound modifiers are fine to hyphenate.
-
-**Before:**
-
-> The cross-functional team delivered a high-quality, data-driven report on our client-facing tools. Their decision-making process was well-known for being thorough and detail-oriented.
-
-**After:**
-
-> The cross functional team delivered a high quality, data driven report on our client facing tools. Their decision making process was known for being thorough and detail oriented.
-
-### 35. Persuasive Authority Tropes
+### 34. Persuasive Authority Tropes
 
 **Phrases to watch:** The real question is, at its core, in reality, what really matters, fundamentally, the deeper issue, the heart of the matter
 
@@ -571,7 +582,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 > The question is whether teams can adapt. That mostly depends on whether the organization is ready to change its habits.
 
-### 36. Signposting and Announcements
+### 35. Signposting and Announcements
 
 **Phrases to watch:** Let's dive in, let's explore, let's break this down, here's what you need to know, now let's look at, without further ado
 
@@ -583,9 +594,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 
-> Next.js caches data at multiple layers, including request memoization, the data cache, and the router cache.
+Delete both sentences. The paragraph that follows them, which explains the caching, becomes the opening.
 
-### 37. Forced Sass and Hot-Take Interjections
+### 36. Forced Sass and Hot-Take Interjections
 
 **Phrases to watch:** But here's the thing:, Here's the deal:, Then I realized:, Hot take:, And honestly?, The result?, That's the real unlock/challenge/trick
 
@@ -599,7 +610,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 > Everyone recommended daily standups, but ours had become theater and nobody wanted to admit it. We killed the meeting. Nothing broke.
 
-### 38. Fragmented Headers
+### 37. Fragmented Headers
 
 **Signs to watch:** A heading followed by a one-line paragraph that simply restates the heading before the real content begins.
 
@@ -629,12 +640,12 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 4. Ensure the revised text:
    - Sounds natural when read aloud
    - Varies sentence structure naturally
-   - Uses specific details over vague claims
+   - Uses specific details over vague claims, but only details the source or user supplied (see Never Invent Facts)
    - Maintains appropriate tone for context
    - Uses simple constructions (is/are/has) where appropriate
 5. Present a draft humanized version
 6. Prompt: "What makes the below so obviously AI generated?"
-7. Answer briefly with the remaining tells (if any)
+7. Answer briefly with the remaining tells (if any). Also check every name, number, date, quote and source against the original; anything not in it gets cut or marked
 8. Prompt: "Now make it not obviously AI generated."
 9. Present the final version (revised after the audit)
 
@@ -669,31 +680,22 @@ Provide:
 
 **Draft rewrite:**
 
-> AI coding assistants speed up some tasks. In a 2024 study by Google, developers using Codex completed simple functions 55% faster than a control group, but showed no improvement on debugging or architectural decisions.
+> AI coding assistants can generate documentation, tests, and refactors, and they generate code significantly faster. Adoption has grown from individual developers to company-wide rollouts, and the tools have been covered by The New York Times, Wired, and The Verge.
 >
-> The tools are good at boilerplate: config files, test scaffolding, repetitive refactors. They are bad at knowing when they are wrong. I have mass-accepted suggestions that compiled, passed lint, and still did the wrong thing because I stopped paying attention.
->
-> Mira, an engineer at a fintech startup I interviewed, said she uses Copilot "like autocomplete for boring code" but reviews every line before committing. Jake, a senior dev at a larger company, disabled it after it kept suggesting patterns from a deprecated internal library.
->
-> The productivity claims are hard to verify. GitHub says Copilot users "accept 30% of suggestions," but acceptance is not correctness, and correctness is not value. The 2024 Uplevel study found no statistically significant difference in pull-request throughput between teams with and without AI assistants.
->
-> None of this means the tools are useless. It means they are tools. They do not replace judgment, and they do not eliminate the need for tests. If you do not have tests, you cannot tell whether the suggestion is right.
+> They also have well-known problems: hallucinations, bias, and unclear accountability. Teams that adopt them should follow best practices to get the most out of them.
 
 **What makes the below so obviously AI generated?**
 
-- The rhythm is still a bit too tidy (clean contrasts, evenly paced paragraphs).
-- The named people and study citations can read like plausible-but-made-up placeholders unless they're real and sourced.
-- The closer leans a touch slogan-y ("If you do not have tests...") rather than sounding like a person talking.
+- "Significantly faster" is still a vague claim with no figure behind it, and the original gives none.
+- The list of outlets is notability padding (#2): it names them without saying what any of them reported.
+- The last sentence is a generic closer that could end any article, and "best practices" says nothing.
+- Every claim is in the original; nothing was added. Keep it that way.
 
 **Now make it not obviously AI generated.**
 
-> AI coding assistants can make you faster at the boring parts. Not everything. Definitely not architecture.
+> AI coding assistants write documentation, tests, and refactors, and they produce code faster than a person typing [how much faster? source?]. Individual developers picked them up first; whole companies use them now.
 >
-> They're great at boilerplate: config files, test scaffolding, repetitive refactors. They're also great at sounding right while being wrong. I've accepted suggestions that compiled, passed lint, and still missed the point because I stopped paying attention.
->
-> People I talk to tend to land in two camps. Some use it like autocomplete for chores and review every line. Others disable it after it keeps suggesting patterns they don't want. Both feel reasonable.
->
-> The productivity metrics are slippery. GitHub can say Copilot users "accept 30% of suggestions," but acceptance isn't correctness, and correctness isn't value. If you don't have tests, you're basically guessing.
+> They also hallucinate, they can reproduce bias from their training data, and when generated code is wrong it isn't always clear who is accountable.
 
 **Changes made:**
 
@@ -712,7 +714,9 @@ Provide:
 - Removed excessive hedging ("could potentially be argued that... might have some")
 - Removed filler phrases and persuasive framing ("In order to", "At its core")
 - Removed generic positive conclusion ("the future looks bright", "exciting times lie ahead")
-- Made the voice more personal and less "assembled" (varied rhythm, fewer placeholders)
+- Removed the outlet list (notability padding) and the "best practices" closer
+- Kept every claim from the original and invented none; marked the unsourced speed claim for the author instead of making up a number
+- Kept a neutral register: the original is an expository essay with no author opinions to restore
 
 ## Reference
 
