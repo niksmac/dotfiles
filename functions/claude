@@ -1,12 +1,17 @@
 #!/bin/zsh
 #
-# Claude Code, but `claude agents` lists only background sessions started
-# under the current directory (the CLI default is every folder). Pass --cwd
-# to pick another path, or run `command claude agents` to see them all.
+# Claude Code, but its agent view lists only background sessions started
+# under the current directory (the CLI default is every folder). Bare
+# `claude` opens that view; start a session by typing a prompt there, or
+# pass one (`claude "fix the tests"`). Pass --cwd to pick another path, or
+# run `command claude` / `command claude agents` to skip this wrapper.
 #
+#   claude
 #   claude agents
 
-if [[ $1 == agents ]] && (( ! ${@[(I)--cwd*]} )); then
+if (( $# == 0 )) && [[ -t 0 && -t 1 ]]; then
+  command claude agents --cwd "$PWD"
+elif [[ $1 == agents ]] && (( ! ${@[(I)--cwd*]} )); then
   command claude agents --cwd "$PWD" "${@:2}"
 else
   command claude "$@"

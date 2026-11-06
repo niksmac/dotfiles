@@ -183,6 +183,14 @@ Claude Code's global rules, `claude/CLAUDE.md`, are linked to
 `claude/install.sh`. Edit the file in this repo; an existing local
 `CLAUDE.md` that differs is kept as `CLAUDE.md.backup`.
 
+In zsh, `claude` is wrapped by `functions/claude`: bare `claude` and
+`claude agents` open the agent view listing only the sessions started under
+the current directory (Claude Code's default is every folder). Type a prompt
+there to start a session, or pass one (`claude "…"`); every other argument
+goes to Claude Code unchanged. `command claude` skips the wrapper. Pressing ←
+in a session started with arguments (`claude "…"`, `claude -c`) still lists
+every folder, since Claude Code can't filter the view it opens there.
+
 ## Local overrides and secrets
 
 - `~/.localrc` is sourced by `zsh/zshrc.symlink` and is **gitignored**. It's created
