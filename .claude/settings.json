@@ -1,4 +1,5 @@
 {
+  "enableArtifact": true,
   "worktree": {
     "bgIsolation": "none"
   }
