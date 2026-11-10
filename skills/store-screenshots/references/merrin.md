@@ -2,10 +2,11 @@
 
 ## Live canvas and repo copy
 
-- Canvas: https://claude.ai/artifact/YAkCQkaGhpbP5guxeounN8 ("Merrin store screenshots", Design type). Revise this one; never create a second canvas. Version 24 = the repo copy.
+- Canvas: https://claude.ai/artifact/YAkCQkaGhpbP5guxeounN8 ("Merrin store screenshots", Design type). Revise this one; never create a second canvas. Version 26 = the repo copy (adds the Mac row).
 - Repo copy: `_coder/plans/067_plan_store-screenshots-growth/` (`project/` + `assets/`); plan `_coder/plans/067_plan_store-screenshots-growth.md` (section 0 = current design, asset URL table). After a canvas change, refresh the copy and the plan's version line.
 - Uploaded assets: mascot idle `/_blob/e9c782274fccf9854d7192f1d8131179`, happy `/_blob/1095cf6555b27a6fe47309b0afd52948`, listening `/_blob/4d4d947e3565c8fec5e29cbbecc7b0e0` (from `assets/merrin/*.svg`); photos mom and baby `/_blob/c6b4d7566dd43246b149274fcd72579c`, piggy-back `/_blob/812b7dc6a8549d0d48397db2d715de0d`.
 - Older reference designs and graphics: `_coder/logs/graphics/` (gitignored).
+- **Before the next upload (found on StoryBee, 2026-11-10):** this canvas predates the export fixes. Add the required iPhone 6.3" row (1206 x 2622, imports the 6.9" frames; canvas-recipes.md), convert phone, iPad and Mac frames to the bezel-on-top recipe, and check for images inside rounded `overflow: hidden` boxes; then export through `scripts/normalize-exports.sh`.
 
 ## Positioning (follow https://merrin.xyz/, not old repo copy)
 
@@ -54,6 +55,10 @@ Maya: new job, training for a 10K, considering a new role. Leah: her sister, int
 | 7 | Get to know yourself / A weekly reflection and the threads that keep coming back. | Weekly reflection card, topic threads, open to-dos; Pro note. |
 
 Frames 1 to 3 are the App Store search billboard; the two killer features (Life right now, image reading) sit at 2 and 4. Play uses 7 of 8 slots. Feature graphic: mascot, "Merrin", "Your personal intelligence", "Runs on your phone. No account."
+
+## Mac App Store set (separate listing, `merrin-origin`)
+
+2880 x 1800 (16:10), 7 frames in the canvas's Mac row (y 10200), plan 067 section 10. Shared `MacChat` artboard (screens row) draws the real desktop window at 1440 x 900: title bar with window buttons, sidebar (Merrin, Journal, You, Insights, Devices, Models, Activity, Settings), today's chats, chat, "In this chat" pane; tweaks `offline`, `syncing`. Order: 1 Never explain twice (window), 2 Life at a glance, 3 Private (dark, window offline), 4 Photos, 5 Pick up where you left off (iPhone + Mac, syncing), 6 More room to think (Solace models; 16 GB fine print), 7 Another angle. Mac claims: "on your Mac", Solace 12 needs 16 GB, longer chats (8K context), sync end-to-end encrypted and optional, away-from-home sync Pro. Never Windows, Linux, Android or license keys.
 
 ## How the user steered it (keep doing this)
 

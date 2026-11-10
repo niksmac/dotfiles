@@ -1,16 +1,19 @@
 ---
 name: store-screenshots
-description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Play phone, Play feature graphic) as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, or to revise the existing Merrin store canvas.
+description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Play phone, Play feature graphic) as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, to fix store upload rejections (wrong size, alpha, images missing from exports), or to revise the existing Merrin or StoryBee store canvas.
 ---
 
 # Store screenshots
 
-Builds store listing graphics as a live claude.ai **Design canvas**: one editable artboard per frame, a person can tweak and export at 1x. Covers the growth plan, the copy, the frames, photos and the repo copy.
+Builds store listing graphics as a live claude.ai **Design canvas**: one editable artboard per frame, a person can tweak and export. Covers the growth plan, the copy, the frames, photos, export-safe markup, upload-ready exports and the repo copy.
 
 Read before starting:
 - `references/specs.md`: sizes, slot counts, Apple and Play policy rules.
-- `references/canvas-recipes.md`: canvas layout, frame templates, device math, publish calls.
-- `references/merrin.md`: for Merrin (`lightrains/phoneLLM`), the brand, claims, positioning, demo cast and the live canvas. Another app: write the same profile for it first (section 1), as `references/<app>.md`.
+- `references/canvas-recipes.md`: canvas layout, frame templates, device math (bezel on top), the 6.3" row, export-safe markup, exporting, publish calls.
+- `scripts/normalize-exports.sh`: turns canvas exports into exact-size, alpha-free JPEGs per store slot.
+- `references/merrin.md`: for Merrin (`lightrains/phoneLLM`), the brand, claims, positioning, demo cast and the live canvas.
+- `references/storybee.md`: the same for StoryBee (`storybee-flutter`).
+- Another app: write the same profile for it first (section 1), as `references/<app>.md`.
 
 ## 0. Preconditions
 
@@ -40,10 +43,11 @@ Write or update a plan in the repo's planning folder (Merrin: a `_coder` plan, n
 - **Headline type:** big serif display, one key word on an accent highlighter fill. Short sub-line. Fine print for qualifiers and Pro notes.
 - **Paid features carry a small Pro note** ("Devil's Advocate and Future You are part of Merrin Pro"). No prices in screenshots.
 - Follow the brand's own anti-slop rules (Merrin: `DESIGN.md` → No AI slop): no gradient washes, no left-border accent cards, no emoji or glyphs, icons as inline stroke SVG, text contrast 4.5:1.
+- **Export-safe markup:** never put an image inside a rounded `overflow: hidden` box (the exporter drops it silently). Draw images at their box size with `object-fit` and their own radius, pre-crop zoomed portraits as files, draw devices with the bezel as a border layer on top. Details: `references/canvas-recipes.md` → Export-safe markup.
 
 ## 4. Sets to produce together
 
-iPhone 6.9" set → Play phone set (imports the iPhone frames, scaled) → Play feature graphic → iPad 13" set (bespoke, the app as it really renders on iPad) → shared app-screen artboards (edit once, used by every set). Same frame order and headlines across sets. Details: `references/canvas-recipes.md`.
+iPhone 6.9" set (1320 x 2868, the design source) → **iPhone 6.3" set (1206 x 2622, required by App Store Connect; imports the 6.9" frames scaled 0.914226)** → Play phone set (imports the 6.9" frames, scaled) → Play feature graphic → iPad 13" set (bespoke, the app as it really renders on iPad) → shared parts (app screens and device-free art boards, edit once, used by every set). Same frame order and headlines across sets. Details: `references/canvas-recipes.md`.
 
 ## 5. Canvas workflow
 
@@ -65,12 +69,19 @@ iPhone 6.9" set → Play phone set (imports the iPhone frames, scaled) → Play 
 - Tell the user: CC0 has no model release for recognizable people. Offer licensed photos (Adobe Stock, iStock) or their own before shipping.
 - Make captions match the photo ("What Merrin sees" describes the actual image).
 
-## 7. Save to the repo and commit
+## 7. Export and upload
+
+- The canvas exporter defaults to **2x** and **PNG keeps alpha**; both stores reject that. Tell the user to export at 1x where offered, then run `scripts/normalize-exports.sh <export-dir>` (copy it beside the plan in the app's repo). It writes exact-size sRGB JPEGs to `<export-dir>/upload/<slot>/` and fails on files that match no store size.
+- Upload map: `ios-6.3` → 6.3" slot (required), `ios-6.9` → 6.9" slot, `ipad-13` → 13" iPad slot, `play` → Play phone screenshots, `play-fg` → feature graphic.
+- An image missing from an export: ask which frame, then check that frame's markup against the export-safe rules before anything else. The exporter's own notice "N images could not be embedded" means a failed image download instead.
+- Upload rejected: read the store's spec page again (specs.md sources) and compare the slot's required sizes with the files; App Store Connect's required iPhone slot changes over time.
+
+## 8. Save to the repo and commit
 
 - Copy the canvas source into the repo beside the plan (Merrin: `_coder/plans/NNN_plan_<slug>/`, `project/` + used `assets/`; leave out unused ones; `index.mjs` only indexes `.md`, so the folder is valid).
 - In the plan, add the canvas URL, the version, and a table mapping each `/_blob/<id>` to its asset file (needed to republish elsewhere).
 - Merrin: run `node _coder/index.mjs`. Stage by explicit paths, commit only when asked, following the repo's commit style (Merrin: `Chore: …`, body when >3 files). Peer sessions may share the tree: never stash, never `git commit -- <paths>`; run `git add` and `git commit` as separate commands so commit hooks check only staged files.
 
-## 8. Report
+## 9. Report
 
-What changed, the canvas link, what is unrendered and needs a visual check, any claim or licence caveat, then the `result:` line.
+What changed, the canvas link, what is unrendered and needs a visual check, the export steps (1x, run the normalize script, the upload map), any claim or licence caveat, then the `result:` line.

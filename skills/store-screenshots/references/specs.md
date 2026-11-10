@@ -1,14 +1,15 @@
-# Store specs and policy (verified 2026-11-08)
+# Store specs and policy (verified 2026-11-10)
 
-Sources: Apple screenshot and app-preview specifications, product page, custom product pages and product page optimization help pages; Play Console help 9866151 (preview assets), 9898842 (metadata policy), 9867158 (custom store listings), 6227309 (listing experiments). Neither store dates its pages: re-check sizes in the upload UI on upload day, and re-verify this file if it is more than about 6 months old.
+Sources: Apple screenshot specifications (https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/) and app-preview specifications, product page, custom product pages and product page optimization help pages; Play Console help 9866151 (preview assets), 9898842 (metadata policy), 9867158 (custom store listings), 6227309 (listing experiments). Neither store dates its pages: re-check sizes in the upload UI on upload day, and re-verify this file if it is more than about 6 months old.
 
 ## Apple App Store
 
 | Item | Requirement |
 |---|---|
-| iPhone set | One large set: **1320 x 2868** portrait (6.9"; 1290 x 2796 and 1260 x 2736 also accepted). Smaller iPhones scale down from it. |
+| iPhone sets | **Required: 6.3" Dynamic Island (medium), 1206 x 2622** (or 1179 x 2556): "At least one screenshot for iPhone with Dynamic Island (medium display)." App Store Connect rejects a 1320 x 2868 file in that slot. Optional: 6.9" Dynamic Island (large) 1320 x 2868 (1290 x 2796, 1260 x 2736 also accepted). Make both: the 6.3" frames import the 6.9" frames scaled 0.914226 (2622 / 2868). |
 | iPad set | **Required when the app runs on iPad** (`TARGETED_DEVICE_FAMILY` includes 2). **2064 x 2752** (13") or 2048 x 2732. Never an iPhone frame in an iPad slot. |
-| Count / format | 1 to 10 per device size and locale. PNG or JPEG, **no alpha**. |
+| Mac set | Required for Mac apps (separate listing). **16:10**: 1280 x 800, 1440 x 900, 2560 x 1600 or **2880 x 1800** (verified 2026-11-09). 1 to 10, no alpha. Mac app preview: 1920 x 1080 landscape, 15 to 30 s, shown before screenshots. |
+| Count / format | 1 to 10 per device size and locale. PNG or JPEG, **no alpha** ("Images can't include alpha channels or transparencies"). Exact pixel sizes only: a 2x export (2640 x 5736) is rejected. |
 | Search result | First 1 to 3 screenshots show in search when there is no app preview. Portrait shows three side by side. |
 | App preview | Up to 3, 15 to 30 s, iPhone 886 x 1920, iPad 1200 x 1600. Autoplays muted and takes the first search slot. |
 | Review 2.3.3 | More than half the screenshots must show the app in use. Login and splash screens don't count. |
@@ -34,7 +35,8 @@ Sources: Apple screenshot and app-preview specifications, product page, custom p
 
 ## Design consequences
 
-- Render three sizes: iPhone 1320 x 2868, Play 1080 x 1920, iPad 2064 x 2752, plus the 1024 x 500 feature graphic. Export at 1x, JPEG.
+- Render four sizes: iPhone 1206 x 2622 (required) and 1320 x 2868, Play 1080 x 1920, iPad 2064 x 2752, plus the 1024 x 500 feature graphic. Export at 1x, then flatten alpha and check exact pixel sizes before upload (a 2x export or a PNG with an alpha channel is rejected by both stores).
+- Run every export through `scripts/normalize-exports.sh` before upload (canvas-recipes.md, Exporting for upload): the canvas exporter defaults to 2x and keeps PNG alpha.
 - Apple set: no Android imagery (the Play frames' camera hole is Play-only).
 - Strictest store wins for copy: no best / #1 / top / new / sale / prices anywhere; "free" never on the feature graphic.
 - Growth levers after launch, in order: localized captions (rewrite per market, not word for word), intent-matched custom pages (lead frame per search intent), one A/B test at a time (frame 1 angle first).
