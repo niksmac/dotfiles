@@ -3,5 +3,6 @@
   "worktree": {
     "bgIsolation": "none"
   },
-  "cleanupPeriodDays": 36500
+  "cleanupPeriodDays": 36500,
+  "idleCompaction": false
 }
