@@ -2,7 +2,7 @@
 
 ## Live canvas and repo copy
 
-- Canvas: https://claude.ai/artifact/YAkCQkaGhpbP5guxeounN8 ("Merrin store screenshots", Design type). Revise this one; never create a second canvas. Version 28 = the repo copy (real app renders in every phone and iPad frame, adds the 6.3" row).
+- Canvas: https://claude.ai/artifact/YAkCQkaGhpbP5guxeounN8 ("Merrin store screenshots", Design type). Revise this one; never create a second canvas. Version 29 = the repo copy (real app renders as flat JPEG screens in every phone and iPad frame, 6.3" row; PNG export checked by the user 2026-11-11).
 - Repo copy: `_coder/plans/067_plan_store-screenshots-growth/` (`project/` + `assets/`); plan `_coder/plans/067_plan_store-screenshots-growth.md` (section 0 = current design, asset URL table). After a canvas change, refresh the copy and the plan's version line.
 - Uploaded assets: mascot idle `/_blob/e9c782274fccf9854d7192f1d8131179`, happy `/_blob/1095cf6555b27a6fe47309b0afd52948`, listening `/_blob/4d4d947e3565c8fec5e29cbbecc7b0e0` (from `assets/merrin/*.svg`); photos mom and baby `/_blob/c6b4d7566dd43246b149274fcd72579c`, piggy-back `/_blob/812b7dc6a8549d0d48397db2d715de0d`. Real renders (iPhone / iPad, from `tool/screens/store_screens_test.dart`, files `assets/render-*.png`): the table in plan 067 section 0.
 - Older reference designs and graphics: `_coder/logs/graphics/` (gitignored).
