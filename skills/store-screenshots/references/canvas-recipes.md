@@ -148,8 +148,8 @@ The canvas exporter copies the artboard into an SVG `foreignObject` and draws th
 
 ## Exporting for upload
 
-- The exporter's default scale is **2x** (a 1320 x 2868 frame exports as 2640 x 5736) and **PNG keeps alpha**. App Store Connect and Play reject both. Tell the user to export at 1x where the dialog offers it, then always run `scripts/normalize-exports.sh <export-dir> [out-dir]` from this skill (copy it beside the plan in the app's repo). It detects each file's slot from its aspect ratio (6.3" and 6.9" iPhone, iPad 13", Play phone, feature graphic), scales 2x or 3x exports to the exact size, flattens alpha, writes sRGB JPEGs to `<out-dir>/<slot>/` and exits non-zero for a file that matches no store size.
-- Upload map: `ios-6.3` to the 6.3" slot (required), `ios-6.9` to the 6.9" slot, `ipad-13` to the 13" iPad slot, `play` and `play-fg` to Play Console.
+- The exporter's default scale is **2x** (a 1320 x 2868 frame exports as 2640 x 5736) and **PNG keeps alpha**. App Store Connect and Play reject both. Tell the user to export at 1x where the dialog offers it, then always run `scripts/normalize-exports.sh <export-dir> [out-dir]` from this skill (copy it beside the plan in the app's repo). It detects each file's slot from its aspect ratio (6.3" and 6.9" iPhone, iPad 13", Mac 16:10, Play phone, feature graphic; accepted alternate sizes pass through unchanged), scales 2x or 3x exports to the exact size, flattens alpha, writes sRGB JPEGs to `<out-dir>/<slot>/` and exits non-zero for a file that matches no store size.
+- Upload map: `ios-6.3` to the 6.3" slot (required), `ios-6.9` to the 6.9" slot, `ipad-13` to the 13" iPad slot, `mac` to the Mac listing, `play` and `play-fg` to Play Console.
 - Ask which frame is wrong if an image is missing; check its markup against the rules above before anything else.
 
 ## Publish calls

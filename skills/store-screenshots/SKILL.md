@@ -72,7 +72,7 @@ iPhone 6.9" set (1320 x 2868, the design source) → **iPhone 6.3" set (1206 x 2
 ## 7. Export and upload
 
 - The canvas exporter defaults to **2x** and **PNG keeps alpha**; both stores reject that. Tell the user to export at 1x where offered, then run `scripts/normalize-exports.sh <export-dir>` (copy it beside the plan in the app's repo). It writes exact-size sRGB JPEGs to `<export-dir>/upload/<slot>/` and fails on files that match no store size.
-- Upload map: `ios-6.3` → 6.3" slot (required), `ios-6.9` → 6.9" slot, `ipad-13` → 13" iPad slot, `play` → Play phone screenshots, `play-fg` → feature graphic.
+- Upload map: `ios-6.3` → 6.3" slot (required), `ios-6.9` → 6.9" slot, `ipad-13` → 13" iPad slot, `mac` → Mac App Store listing, `play` → Play phone screenshots, `play-fg` → feature graphic. Files already at an accepted alternate size (1179 x 2556, 1290 x 2796, 2048 x 2732, smaller Mac sizes) keep it.
 - An image missing from an export: ask which frame, then check that frame's markup against the export-safe rules before anything else. The exporter's own notice "N images could not be embedded" means a failed image download instead.
 - Upload rejected: read the store's spec page again (specs.md sources) and compare the slot's required sizes with the files; App Store Connect's required iPhone slot changes over time.
 
