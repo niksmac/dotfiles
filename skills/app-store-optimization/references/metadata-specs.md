@@ -13,7 +13,7 @@ Tags as in `policy-legal.md`: **[C]** official page read, **[S]** official via s
 | Promotional text | 170 chars [C] | **Not indexed** [C] | Editable any time without a build. |
 | Description | 4,000 chars, plain text [C] | Not indexed [consensus] | Conversion and AI summaries/tags. |
 | What's New | 4,000 chars [C] | No | Must describe significant changes (2.3.12). |
-| In-app purchase display name / description | 35 / 55 chars [C] | Indexed per vendors [U] | Up to 20 promoted IAPs show on the page. |
+| In-app purchase display name / description | 2–30 / 45 chars [C, IAP page 2026-11-11]; subscription pages state no limit, so keep to 30 / 45 | Indexed per vendors [U] | Up to 20 promoted IAPs show on the page. Other submission fields: `submission-fields.md`. |
 | In-app event name / short / long description | 30 / 50 / 120 chars [C] | Events are searchable [C]; ranking effect [U] | Up to 10 published, 15 approved; each up to 31 days, promotable 14 days before start. |
 | Developer name | — | Matches developer searches [U] | From the account / legal entity. |
 | App Store tags (iOS 26) | Apple-generated | Shown in search and browse [C]; ranking effect not stated | US English first; deselect wrong tags in App Store Connect. |

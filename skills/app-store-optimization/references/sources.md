@@ -27,6 +27,14 @@ Research done 2026-11-10. When a source here and an official page disagree, the 
 - EU Omnibus Directive 2019/2161: https://eur-lex.europa.eu/legal-content/en/ALL/?uri=CELEX%3A32019L2161
 - UK DMCC Act unfair practices guidance: https://www.gov.uk/government/publications/what-businesses-need-to-know-about-unfair-commercial-practices
 
+### Submission fields (verified 2026-11-11, see `submission-fields.md`)
+
+- App information: https://developer.apple.com/help/app-store-connect/reference/app-information/app-information · required, localizable and editable properties: .../reference/app-information/required-localizable-and-editable-properties
+- Age ratings values: .../reference/app-information/age-ratings-values-and-definitions · age requirements news: https://developer.apple.com/news/?id=age-requirements · https://developer.apple.com/news/?id=yxkh08us · age assurance: https://developer.apple.com/support/age-assurance/
+- Export compliance: .../manage-app-information/overview-of-export-compliance · Accessibility labels: .../manage-app-accessibility/overview-of-accessibility-nutrition-labels
+- IAP and subscriptions: .../reference/in-app-purchases-and-subscriptions/in-app-purchase-information · .../auto-renewable-subscription-information · https://developer.apple.com/app-store/subscriptions/
+- Play: App content G 9859455 · content rating 9859655 · target audience 9867159 · account deletion 13327111 · financial features 13849271 · health 14738291 · foreground services 13392821 · photo and video permissions 14115180 · advertising ID 6048248 · AI-generated content 14094294, 13985936 · UGC 9876937 · release 9859348 · managed publishing 9859654 · subscriptions 140504 · developer account 13628312 · testing requirement 14151465 · AI-generated assets 17262077 (G = https://support.google.com/googleplay/android-developer/answer/)
+
 ## Practitioner guides (the brief's sources)
 
 | Source | Date | Read | Notes |

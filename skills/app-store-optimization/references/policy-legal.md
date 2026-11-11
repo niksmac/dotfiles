@@ -148,4 +148,10 @@ Graphic-asset guidance [C, Play Console help 9866151]:
 - [ ] Privacy label / Data safety match what the app and its SDKs actually do.
 - [ ] Age rating answers current; kids wording only in the Kids/Families programme.
 - [ ] Trader status set for the EU.
-- [ ] What's New describes the real change.
+- [ ] What's New describes the real change (none on a first version).
+- [ ] The listing you audited or updated is this app: bundle ID / package name match the code.
+- [ ] Android: no `READ_MEDIA_*` when the photo picker is enough; every foreground service type declared with a video; `AD_ID` only if used.
+- [ ] Generative-AI output can be reported in the app, including the user's own (Play AI-Generated Content policy).
+- [ ] UGC: report, block, filter, contact (Apple 1.2).
+- [ ] No similar app from the same developer left live without a reason (Apple 4.3, Play repetitive content).
+- [ ] Full console answers in `submission-fields.md` filled and linted (`submission` block).
