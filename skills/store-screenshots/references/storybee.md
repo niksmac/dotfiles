@@ -3,7 +3,7 @@
 ## Live canvas and repo copy
 
 - Canvas: https://claude.ai/artifact/3p7Gzbm25c65dnycx57doe ("StoryBee store screenshots", Design type). Revise this one; never create a second canvas. Version 32 = the export-safe build (no rounded clipping, iPhone 6.3" row).
-- Repo: `storybee-flutter` (Flutter, branch `develop`). Canvas source lives in `_coder/plans/store-screenshots/project/` and is published with that folder as `root`, so the repo copy is the working copy. Plan, claims table and `/_blob` asset map: `_coder/plans/store-screenshots.md`. Export fixer: `_coder/plans/store-screenshots/normalize-exports.sh` (same as this skill's script). Pre-cropped portraits: `_coder/plans/store-screenshots/assets/`.
+- Repo: `storybee-flutter` (Flutter, branch `develop`). Canvas source lives in `_coder/plans/002_plan_store-screenshots/project/` and is published with that folder as `root`, so the repo copy is the working copy. Plan, claims table and `/_blob` asset map: `_coder/plans/002_plan_store-screenshots.md`. Export fixer: `_coder/plans/002_plan_store-screenshots/normalize-exports.sh` (a copy of this skill's script; recopy after the skill's script changes). Pre-cropped portraits: `_coder/plans/002_plan_store-screenshots/assets/`.
 - AGENTS.md there: no worktrees, no new branches unless asked; commit only when asked, imperative sentence-case subject, body, `Co-Authored-By` trailer.
 
 ## Product and positioning
@@ -57,3 +57,7 @@ Plus the Play feature graphic: bee logo, "StoryBee", "Bedtime stories starring y
 2. App Store Connect rejected the sizes: add the required 6.3" set; exports come out 2x with alpha, so run the normalize script.
 3. The frame 1 cover image was missing from the export: no images inside rounded clipping, pre-crop portraits, bezel on top.
 4. Commit when asked; keep the skill updated with what was learned.
+
+## Before the next upload
+
+- **2.3.3 gap (checked 2026-11-11):** only frames 2 (`ScreenCreate`) and 6 (`ScreenPlayer`) mount a full app screen in the iPhone, 6.3" and iPad sets, so 2 of 7 are "app in use" under the skill's count (needs 4). Frames 1, 3, 4, 5 and 7 use lifted real UI (`Art*` boards). Convert at least two to a dominant real screen with the art beside it: 4 Put your kid in the story → the character form screen in a phone; 3 Ten ways → the Pick a look sheet in a phone (prints beside it); or 5 Your voice → the recording screen.

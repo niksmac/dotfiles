@@ -1,6 +1,6 @@
 ---
 name: store-screenshots
-description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Play phone, Play feature graphic) as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, to fix store upload rejections (wrong size, alpha, images missing from exports), or to revise the existing Merrin or StoryBee store canvas.
+description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Mac, Play phone, Play feature graphic), App Store creative assets (product page header, search result, iOS 27+) and app preview videos as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, a product page header or search result asset, an app preview, to fix store upload rejections (wrong size, alpha, images missing from exports), or to revise the existing Merrin or StoryBee store canvas.
 ---
 
 # Store screenshots
@@ -10,7 +10,8 @@ Builds store listing graphics as a live claude.ai **Design canvas**: one editabl
 Read before starting:
 - `references/specs.md`: sizes, slot counts, Apple and Play policy rules.
 - `references/canvas-recipes.md`: canvas layout, frame templates, device math (bezel on top), the 6.3" row, export-safe markup, exporting, publish calls.
-- `scripts/normalize-exports.sh`: turns canvas exports into exact-size, alpha-free JPEGs per store slot.
+- `scripts/normalize-exports.sh`: turns canvas exports into exact-size, alpha-free JPEGs per store slot (the universal creative asset as PNG).
+- `scripts/normalize-video.sh`: turns an app preview or creative-asset video into Apple's exact size, codec, frame rate and audio.
 - `references/merrin.md`: for Merrin (`lightrains/phoneLLM`), the brand, claims, positioning, demo cast and the live canvas.
 - `references/storybee.md`: the same for StoryBee (`storybee-flutter`).
 - Another app: write the same profile for it first (section 1), as `references/<app>.md`.
@@ -34,9 +35,10 @@ Write or update a plan in the repo's planning folder (Merrin: a `_coder` plan, n
 ## 3. Design rules (what the user approved)
 
 - **Benefit first.** Each headline says what changes in the person's life ("Never explain yourself twice."), not the feature name. The UI is proof, not the subject.
-- **Don't show a full phone screen in every frame.** Lift key cards out of the app, enlarge them, tilt them ±1–3°, overlap them; crop or drop the phone. Use the mascot as a character. One dark frame breaks the rhythm.
-- **Still honest:** more than half the frames must show real app UI (Apple 2.3.3); lifted cards count when they are real UI with real strings.
-- **Search billboard:** App Store search shows frames 1–3 (no preview video). Put the pitch and the strongest features there or right after.
+- **App in use first (Apple 2.3.3, checked 2026-11-11).** In every device set and every localization, **more than half** the frames must show the app in use: 4 of 7, 3 of 5, 2 of 3. Count conservatively: a frame counts only when a real app screen (in a device, or full-bleed) is the dominant element and the headline and overlays don't crowd it. Lifted-card-only frames, mascot or photo frames and small mockups behind big text count as **marketing**. Apple's rejected example is "the app only as a small mockup behind large promotional text". Checklist: `references/specs.md` → Apple 2.3.3.
+- **Marketing frames are the minority:** in those (at most 3 of 7), lift key cards out of the app, enlarge them, tilt them ±1–3°, overlap them, use the mascot as a character. In app-in-use frames, lifted cards sit beside the visible screen as overlays, never over its main content. One dark frame breaks the rhythm; Apple also suggests showing a configuration such as Dark Mode.
+- **Real, current UI only:** screens must match the shipping build (no misrepresented interface); refresh them with each version whose UI changed. Prefer real renders of the app's widgets (Merrin: `tool/screens`) over hand-built recreations. No login, splash or title-art-only frames.
+- **Search billboard:** on iOS 27+ a search results creative asset, when set, shows in search instead of previews and screenshots; without one (and on older iOS) search shows the previews, else frames 1–3. So frames 1–3 still carry the pitch and the strongest features; decide per listing whether a search asset leads (specs.md).
 - **Lead with the killer features**, shown working (for Merrin: Life right now, image and document reading).
 - **Make features feel possible:** use real-looking content, e.g. real family photos for image understanding, not drawn placeholders.
 - **One demo person and cast** across all frames, so the set reads as one story.
@@ -47,7 +49,7 @@ Write or update a plan in the repo's planning folder (Merrin: a `_coder` plan, n
 
 ## 4. Sets to produce together
 
-iPhone 6.9" set (1320 x 2868, the design source) → **iPhone 6.3" set (1206 x 2622, required by App Store Connect; imports the 6.9" frames scaled 0.914226)** → Play phone set (imports the 6.9" frames, scaled) → Play feature graphic → iPad 13" set (bespoke, the app as it really renders on iPad) → shared parts (app screens and device-free art boards, edit once, used by every set). Same frame order and headlines across sets. Details: `references/canvas-recipes.md`.
+iPhone 6.9" set (1320 x 2868, the design source) → **iPhone 6.3" set (1206 x 2622, required by App Store Connect; imports the 6.9" frames scaled 0.914226)** → Play phone set (imports the 6.9" frames, scaled) → Play feature graphic → iPad 13" set (bespoke, the app as it really renders on iPad) → shared parts (app screens and device-free art boards, edit once, used by every set) → optional App Store creative assets (universal 16:9 board first, or dedicated header 21:9 and search 3:2) → optional app previews (video). Same frame order and headlines across sets. Details: `references/canvas-recipes.md`.
 
 ## 5. Canvas workflow
 
@@ -72,7 +74,8 @@ iPhone 6.9" set (1320 x 2868, the design source) → **iPhone 6.3" set (1206 x 2
 ## 7. Export and upload
 
 - The canvas exporter defaults to **2x** and **PNG keeps alpha**; both stores reject that. Tell the user to export at 1x where offered, then run `scripts/normalize-exports.sh <export-dir>` (copy it beside the plan in the app's repo). It writes exact-size sRGB JPEGs to `<export-dir>/upload/<slot>/` and fails on files that match no store size.
-- Upload map: `ios-6.3` → 6.3" slot (required), `ios-6.9` → 6.9" slot, `ipad-13` → 13" iPad slot, `mac` → Mac App Store listing, `play` → Play phone screenshots, `play-fg` → feature graphic. Files already at an accepted alternate size (1179 x 2556, 1290 x 2796, 2048 x 2732, smaller Mac sizes) keep it.
+- Upload map: `ios-6.3` → 6.3" slot (required), `ios-6.9` → 6.9" slot, `ipad-13` → 13" iPad slot, `mac` → Mac App Store listing, `asc-header` / `asc-search` / `asc-universal` → Asset Library creative assets (header, search; universal can serve both), `play` → Play phone screenshots, `play-fg` → feature graphic. Files already at an accepted alternate size (1179 x 2556, 1290 x 2796, 2048 x 2732, smaller Mac sizes) keep it.
+- Videos (app previews, header or search video): `scripts/normalize-video.sh <kind> <file>` with `preview-iphone`, `preview-ipad`, `preview-mac`, `asc-header` or `asc-search`. It refuses a wrong aspect ratio or length rather than cropping; re-export then.
 - An image missing from an export: ask which frame, then check that frame's markup against the export-safe rules before anything else. The exporter's own notice "N images could not be embedded" means a failed image download instead.
 - Upload rejected: read the store's spec page again (specs.md sources) and compare the slot's required sizes with the files; App Store Connect's required iPhone slot changes over time.
 

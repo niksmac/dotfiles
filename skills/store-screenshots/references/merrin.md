@@ -7,6 +7,7 @@
 - Uploaded assets: mascot idle `/_blob/e9c782274fccf9854d7192f1d8131179`, happy `/_blob/1095cf6555b27a6fe47309b0afd52948`, listening `/_blob/4d4d947e3565c8fec5e29cbbecc7b0e0` (from `assets/merrin/*.svg`); photos mom and baby `/_blob/c6b4d7566dd43246b149274fcd72579c`, piggy-back `/_blob/812b7dc6a8549d0d48397db2d715de0d`.
 - Older reference designs and graphics: `_coder/logs/graphics/` (gitignored).
 - **Before the next upload (found on StoryBee, 2026-11-10):** this canvas predates the export fixes. Add the required iPhone 6.3" row (1206 x 2622, imports the 6.9" frames; canvas-recipes.md), convert phone, iPad and Mac frames to the bezel-on-top recipe, and check for images inside rounded `overflow: hidden` boxes; then export through `scripts/normalize-exports.sh`.
+- **2.3.3 gap (checked 2026-11-11):** only frames 3 (offline chat) and 5 (chat) mount a full app screen, in the iPhone, 6.3" and iPad sets alike, so 2 of 7 are "app in use" under the skill's count (needs 4). Convert at least two more to a dominant real screen with the cards as side overlays: 7 Get to know yourself → `ScreenInsights` in the phone; 2 Life at a glance → the screen that shows the Life right now card; then 6 Another angle → a chat in a persona. Mac row: 1, 3, 5 show the window (3 of 7), so add the window to one more (2 Life or 7 Another angle). Re-check every recreated screen against the current build first (UI changed since 2026-11-08), ideally from `tool/screens` renders.
 
 ## Positioning (follow https://merrin.xyz/, not old repo copy)
 

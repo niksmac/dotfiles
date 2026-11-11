@@ -4,7 +4,7 @@ The Design type's own instructions (returned when the canvas is created or read)
 
 ## Canvas layout (`project/canvas.json`)
 
-- Rows: iPhone 6.9" at `y: 0`; Play at `y: 3288`; iPad at `y: 5628`; shared parts (screens, art boards) at `y: 8800`; iPhone 6.3" at `y: 11400` (or below the last row). Rows need 120 px clear plus room for the row title.
+- Rows: iPhone 6.9" at `y: 0`; Play at `y: 3288`; iPad at `y: 5628`; shared parts (screens, art boards) at `y: 8800`; iPhone 6.3" at `y: 11400`; creative assets below the last row (universal 5244 x 2950, header 3840 x 1646, search 3840 x 2560, x step = width + 80). Rows need 120 px clear plus room for the row title.
 - Columns: frame width + 80 px gap (iPhone 6.9" x step 1400, iPhone 6.3" 1286, Play 1160, iPad 2144, screens 470, art boards 1400).
 - Board entry: `{"x","y","w","h","title"}`, title like `"Store 2 · Your life at a glance"`, `"Play 2 · …"`, `"iPad 2 · …"`. Every artboard is listed in `boards` and `order`, imported ones too.
 - Row titles: a note with `"kind":"title1"`, `y` = row y − 300, `maxW` = the row's width. Never a title1 for one artboard.
@@ -135,6 +135,23 @@ Scale = 1920 / 2868 = 0.6695; left = (1080 − 1320 × 0.6695) / 2 = 98. Play's 
 
 Mascot or logo, name, one tagline, one support line; brand background (not pure white, black or dark gray); nothing near the edges; no device, badges or "free".
 
+## App Store creative assets (iOS and iPadOS 27+, optional)
+
+Brand or value-proposition art for the product page header and the search result (specs.md, Apple creative assets). Not screenshots: no app-in-use rule, but no pricing, discounts, URLs, copyright symbols, other platforms' logos, Apple recognitions or unverifiable claims, and any text is one short localized phrase.
+
+- **Universal board first** (`AscUniversal.dc.html`, 5244 x 2950, PNG on upload): one file for both placements. The header keeps the full width at 21:9 (5244 x 2247), the search result keeps the full height at 3:2 (4425 x 2950), so everything that matters goes in the centre **4425 x 2247** (inferred; confirm in the App Store Connect Preview tool). Draw that on the canvas with guides on its `boards` entry, never in the markup: `"guides":[{"kind":"columns","count":1,"gutter":0,"margin":410,"color":"rgba(226,0,0,0.25)"},{"kind":"rows","count":1,"gutter":0,"margin":352,"color":"rgba(226,0,0,0.25)"}]`. Fill the bleed with background art only, and keep the focal point in the centre.
+- **Dedicated boards** when the two placements need different art: `AscHeader.dc.html` 3840 x 1646 (21:9; wide, cinematic, the brand moment) and `AscSearch.dc.html` 3840 x 2560 (3:2; read at thumbnail size next to the app name and Get button, so one subject, few words, high contrast). Keep the key art in the centre of each.
+- Put them in their own row ("App Store creative assets · iOS 27+") with a sticky: optional, universal asset is PNG only, search assets replace previews and screenshots in search on iOS 27+, check the Preview tool (iPhone, iPad, orientations, languages, Dark Mode).
+- Same brand tokens, fonts and cast as the screenshots; light and dark grounds both read in the Preview tool. Localize the phrase per app language (one board per language, or a `text` tweak).
+- Motion (header or search video, 5 to 30 s, muted, looping): make it as a **Motion** artifact (`quickstart` names its `type_url` for a video), loop-clean (last frame meets the first), silent-first, then run `scripts/normalize-video.sh asc-header|asc-search`. Video has no universal size.
+
+## App previews (video, optional)
+
+- 15 to 30 s screen-recorded app use, shown before the screenshots and in search (up to 3). Match the screenshots' orientation (portrait 886 x 1920 for iPhone, 1200 x 1600 for iPad) or the preview moves to "A Closer Look".
+- Plays muted: captions on screen carry the story; the first 3 seconds and the poster frame (default 5 s, set in App Store Connect) must work as a still.
+- Record on a real device or simulator (iPhone screen recordings are 1179 x 2556 or 1206 x 2622, the right 19.5:9 ratio), edit, then always run `scripts/normalize-video.sh preview-iphone|preview-ipad|preview-mac <file>`: exact accepted size, H.264 High 4.0, constant 30 fps, ~11 Mbps, AAC 256 kbps stereo (adds a silent track when there is none). It refuses a wrong aspect ratio or a length outside 15 to 30 s instead of cropping or trimming.
+- Captions and claims follow the same rules as screenshots (no prices, no other platforms, real UI only).
+
 ## Export-safe markup (rules that fail silently in the export)
 
 The canvas exporter copies the artboard into an SVG `foreignObject` and draws that to a PNG. Images inside rounded clipping come out blank with no warning on the frame (seen 2026-11-10: a picture positioned past its box inside a `border-radius` + `overflow: hidden` cover vanished, while an unclipped, rotated image on the same frame exported fine). So:
@@ -148,8 +165,8 @@ The canvas exporter copies the artboard into an SVG `foreignObject` and draws th
 
 ## Exporting for upload
 
-- The exporter's default scale is **2x** (a 1320 x 2868 frame exports as 2640 x 5736) and **PNG keeps alpha**. App Store Connect and Play reject both. Tell the user to export at 1x where the dialog offers it, then always run `scripts/normalize-exports.sh <export-dir> [out-dir]` from this skill (copy it beside the plan in the app's repo). It detects each file's slot from its aspect ratio (6.3" and 6.9" iPhone, iPad 13", Mac 16:10, Play phone, feature graphic; accepted alternate sizes pass through unchanged), scales 2x or 3x exports to the exact size, flattens alpha, writes sRGB JPEGs to `<out-dir>/<slot>/` and exits non-zero for a file that matches no store size.
-- Upload map: `ios-6.3` to the 6.3" slot (required), `ios-6.9` to the 6.9" slot, `ipad-13` to the 13" iPad slot, `mac` to the Mac listing, `play` and `play-fg` to Play Console.
+- The exporter's default scale is **2x** (a 1320 x 2868 frame exports as 2640 x 5736) and **PNG keeps alpha**. App Store Connect and Play reject both. Tell the user to export at 1x where the dialog offers it, then always run `scripts/normalize-exports.sh <export-dir> [out-dir]` from this skill (copy it beside the plan in the app's repo). It detects each file's slot from its aspect ratio (6.3" and 6.9" iPhone, iPad 13", Mac 16:10, the three creative assets, Play phone, feature graphic; accepted alternate sizes pass through unchanged), scales 2x or 3x exports to the exact size, flattens alpha, writes sRGB JPEGs to `<out-dir>/<slot>/` (the universal creative asset as an opaque PNG, which Apple requires) and exits non-zero for a file that matches no store size.
+- Upload map: `ios-6.3` to the 6.3" slot (required), `ios-6.9` to the 6.9" slot, `ipad-13` to the 13" iPad slot, `mac` to the Mac listing, `asc-header` / `asc-search` / `asc-universal` to the creative asset placements in Asset Library, `play` and `play-fg` to Play Console. Videos: `scripts/normalize-video.sh` (above).
 - Ask which frame is wrong if an image is missing; check its markup against the rules above before anything else.
 
 ## Publish calls
