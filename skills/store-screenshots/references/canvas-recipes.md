@@ -92,6 +92,16 @@ App's own fonts (when the user asks for the repo's fonts): upload the font file 
 - Notch in screen coordinates: island (left 132, top 11, 126 x 36, radius 18) on Apple frames, camera hole (left 189, top 16, 12 x 12) on Play frames only.
 - `device` off: `frameBorder` `0px solid transparent`, `frameRadius` 0, a plain square screen.
 
+## App in use: real renders in a device (App Review 2.3.3)
+
+The default frame, used for most of every set. Render the real screens with the app's own widget harness (Merrin and StoryBee: `tool/screens/store_screens_test.dart`, fakes for services, real fonts loaded): iPhone 390 x 844 at 3x (1170 x 2532) with 47/34 view padding and no fake status bar, iPad 1032 x 1376 at 2x (2064 x 2752). Upload the PNGs (one call, `file_paths`) and draw them with the bezel-on-top recipe:
+
+- iPhone 6.9" frame: headline block at `top: 150-200` (h1 128/136-138, sub 50/62-64, fine print 30-34). Device `left: 142; top: T` (T = headline bottom + about 60, usually 760-830), 1035 x 2170; screen `<img>` at (30, 30), 975 x 2110, `object-fit: cover; object-position: top`, its own `border-radius: {{screenRadius}}` (138 with device, 0 without); island/hole `sc-if`s; border layer on top. The device runs off the bottom edge: the screen's top two thirds is what shows. Keep `platform` and `device` props so Play and 6.3" imports work.
+- iPad: headline at `top: 140-150` (h1 150/160, sub 60/76, fine 36-40); device `left: 306; top: 760-860`, 1452 x 1912, `border: 36px`, radius 110; screen at (36, 36), 1380 x 1840, radius 74; camera dot 12 px at (720, 12).
+- Overlays (lifted cards, bubbles, pills, mascot) only in the side margins, over empty screen areas (a chat's empty middle, the space under a short form) or over the bottom nav bar; never over the screen's main content. Read a contact sheet of the renders (`magick montage`) to find the empty areas: canvas y = T + 30 + render_y x (2110 / 2532) on iPhone, T + 36 + render_y x (1840 / 2752) on iPad.
+- Keep every headline, sub and Pro or Premium fine print; drop lifted cards that only repeat what the render already shows.
+- Re-run the harness and upload new PNGs (new `/_blob` ids) whenever the UI changes; record the id-to-file map in the plan.
+
 ## Shared art boards (one visual, every set)
 
 - A frame's visual without a device (lifted cards, illustrations, photos) is its own artboard, 1320 x 2060, with a `bg` tweak that importers set to `transparent`. The iPhone frame holds only background, headline and sub-line and imports it at `left: 0; top: 808px`; the iPad frame imports the same board at `left: 372px; top: 720px` to `800px` and adds extra illustrations in the side space. Edit the visual once and both sets follow.
@@ -179,7 +189,9 @@ remove:   files:{"project/Old.dc.html": null} plus drop it from boards and order
 re-read:  {action:"read", url, path:"project/canvas.json"} (or paths:[...]) before a layout publish
 ```
 
-`file_path` must be one of the files sent; when `canvas.json` is not changing, use one changed artboard as `file_path`.
+`file_path` must be one of the files sent; when `canvas.json` is not changing, use one changed artboard as `file_path`. Never list `file_path` again in `files` ("appears more than once").
+
+After an asset upload, a files publish can be refused with "You haven't viewed the latest version" although no file changed. Re-read the files you will send (`paths`) and the artifact (`{action:"read", url}`), confirm the version id and hashes are unchanged, then publish the same files again; it went through on the next try (StoryBee, 2026-11-11). If the version or a hash did change, someone edited: merge first.
 
 ## Stock photos (Wikimedia Commons)
 
