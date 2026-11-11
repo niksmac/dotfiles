@@ -2,8 +2,15 @@
 """Lint App Store and Google Play listing metadata before submission.
 
 Usage:
-  aso-lint.py metadata.json          check a metadata file
-  aso-lint.py --template             print an example metadata file
+  aso-lint.py aso/listing.md         check the listing (the file people edit)
+  aso-lint.py --write aso/listing.md check it and refresh the character counts
+  aso-lint.py metadata.json          check a JSON file (script-generated drafts)
+  aso-lint.py --template             print an example metadata JSON
+
+The listing Markdown is the format aso-render.py writes: "## App Store" /
+"## Google Play" sections, a "### <locale> · <language>" heading per locale,
+and each field as a bold title line followed by a ```text block. People edit
+the text blocks; --write updates the "N/limit chars" counts after edits.
 
 Checks character/byte limits, iOS keyword-field hygiene (spaces, repeats,
 words already in name/subtitle, plural pairs, stop words, auto-indexed
@@ -303,8 +310,8 @@ def _walk(prefix, node):
             yield from _walk(f"{prefix}[{i}]", v) if isinstance(v, (dict, list)) else [(f"{prefix}[{i}]", "", v)]
 
 
-def check_submission(sub):
-    for store, sections in SUBMISSION_REQUIRED.items():
+def check_submission(sub, required=True):
+    for store, sections in (SUBMISSION_REQUIRED.items() if required else []):
         block = sub.get(store)
         if block is None:
             report("WARN", f"submission/{store}", "missing (no console answers for this store)")
@@ -386,15 +393,170 @@ def check_submission(sub):
                    f"{len(txt)} chars, limit {LIMITS['android']['release_notes']}")
 
 
+# ---------------------------------------------------------------------------
+# Listing Markdown (the human-edited source; see aso-render.py)
+
+LOCALE_RE = re.compile(r"^([a-z]{2,3}(?:-[A-Za-z0-9]{2,4})?)(?:\s|$)")
+BOLD_RE = re.compile(r"^\*\*(.+?)\*\*(.*)$")
+COUNT_RE = re.compile(r"· (\d+)(?:/(\d+))? (chars|bytes)(?:  \*\*OVER LIMIT\*\*)?")
+IOS_TITLES = {"app name": "name", "subtitle": "subtitle", "promotional text": "promotional_text",
+              "description": "description", "keywords": "keywords", "what's new": "whats_new"}
+PLAY_TITLES = {"app name": "title", "short description": "short_description",
+               "full description": "full_description", "release notes": "release_notes"}
+
+
+def _key(title):
+    return re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")
+
+
+def parse_listing_md(text):
+    """Turn listing Markdown into the metadata dict the checks use.
+
+    Returns (data, blocks, kv): blocks are (bold_line_index, text) pairs for
+    count refresh; kv are (where, field, value) rows of the key/value tables.
+    """
+    lines = text.split("\n")
+    data = {"competitors": [], "ios": {}, "android": {},
+            "submission": {"ios": {}, "android": {}}}
+    blocks, kv = [], []
+    store = section = loc = None
+    product = None
+    title, title_idx = None, None
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("## "):
+            h = line[3:].lower()
+            store = ("ios" if "app store" in h else "android" if "google play" in h
+                     else "settings" if "lint" in h else None)
+            section = loc = product = None
+        elif line.startswith("### "):
+            h = line[4:].strip()
+            m = LOCALE_RE.match(h)
+            section, loc = ("locale", m.group(1)) if m else (h.lower(), None)
+            product = None
+        elif line.startswith("#### "):
+            h = line[5:].strip()
+            pid = h.split("·")[0].strip().strip("`")
+            if store == "ios":
+                product = {"product_id": pid, "reference_name": h.split("·", 1)[1].strip() if "·" in h else ""}
+                data["submission"]["ios"].setdefault("iap", []).append(product)
+            elif store == "android":
+                bp = re.search(r"base plan `([^`]*)`", h)
+                product = {"product_id": pid, "base_plan_id": bp.group(1) if bp else ""}
+                data["submission"]["android"].setdefault("subscriptions", []).append(product)
+        elif BOLD_RE.match(line):
+            title, title_idx = BOLD_RE.match(line).group(1).strip(), i
+        elif line.strip() == "```text" and title is not None:
+            j = i + 1
+            while j < len(lines) and lines[j].strip() != "```":
+                j += 1
+            body = "\n".join(lines[i + 1:j])
+            blocks.append((title_idx, body))
+            _assign(data, store, section, loc, product, title, body)
+            title, i = None, j
+        elif line.startswith("|") and section and section != "locale":
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            if len(cells) >= 2 and cells[0] not in ("Field", "") and not set(cells[0]) <= set("-: "):
+                kv.append((f"{store}/{section}", cells[0], cells[1]))
+        i += 1
+    return data, blocks, kv
+
+
+def _assign(data, store, section, loc, product, title, body):
+    t = title.lower().replace("\u2019", "'")
+    if store == "settings":
+        if "competitor" in t or "trademark" in t:
+            data["competitors"] = [c.strip() for c in re.split(r"[,\n]", body) if c.strip()]
+        return
+    if store not in ("ios", "android"):
+        return
+    if section == "locale" and loc:
+        names = IOS_TITLES if store == "ios" else PLAY_TITLES
+        data[store].setdefault(loc, {})[names.get(t, _key(title))] = body
+        return
+    sub = data["submission"][store]
+    m = re.match(r"(.+?),\s*([A-Za-z0-9-]+)$", title)
+    field, floc = (m.group(1).lower(), m.group(2)) if m else (t, None)
+    if store == "ios":
+        if field == "group display name" and floc:
+            sub.setdefault("subscription_group", {}).setdefault("display_name", {})[floc] = body
+        elif product is not None and floc and field in ("display name", "description"):
+            product.setdefault(field.replace(" ", "_"), {})[floc] = body
+        elif "review" in (section or "") and field == "notes":
+            sub.setdefault("review", {})["notes"] = body
+    else:
+        if product is not None and floc:
+            if field == "name":
+                product.setdefault("name", {})[floc] = body
+            elif field.startswith("benefit"):
+                product.setdefault("benefits", {}).setdefault(floc, []).append(body)
+            elif field == "description":
+                product.setdefault("description", {})[floc] = body
+
+
+def refresh_counts(lines, blocks, write):
+    """Check (and with write=True fix) the 'N/limit chars' counts in titles."""
+    changed = 0
+    for idx, body in blocks:
+        m = COUNT_RE.search(lines[idx])
+        if not m:
+            continue
+        unit = m.group(3)
+        n = len(body.encode("utf-8")) if unit == "bytes" else len(body)
+        limit = int(m.group(2)) if m.group(2) else None
+        new = f"· {n}" + (f"/{limit}" if limit else "") + f" {unit}" + (
+            "  **OVER LIMIT**" if limit and n > limit else "")
+        if m.group(0) != new:
+            if write:
+                lines[idx] = lines[idx][:m.start()] + new + lines[idx][m.end():]
+                changed += 1
+            else:
+                title = BOLD_RE.match(lines[idx]).group(1)
+                report("WARN", f"listing line {idx + 1}", f"'{title}' count says {m.group(1)}, text is {n} {unit}: "
+                       "run with --write")
+    return changed
+
+
+def check_kv(kv):
+    for where, field, value in kv:
+        f, v = field.lower(), value.strip()
+        if "todo" in v.lower():
+            report("WARN", f"{where}/{field}", f"unfilled: {v[:60]}")
+        elif ("url" in f or f == "website") and v and not v.startswith("https://"):
+            report("ERROR", f"{where}/{field}", "URL must be a full https:// link")
+
+
 def main(argv):
-    if len(argv) == 2 and argv[1] == "--template":
+    args = argv[1:]
+    write = "--write" in args
+    args = [a for a in args if a != "--write"]
+    if args == ["--template"]:
         print(json.dumps(TEMPLATE, indent=2, ensure_ascii=False))
         return 0
-    if len(argv) != 2:
+    if len(args) != 1:
         print(__doc__.strip(), file=sys.stderr)
         return 2
-    with open(argv[1], encoding="utf-8") as fh:
-        data = json.load(fh)
+    path = args[0]
+    with open(path, encoding="utf-8") as fh:
+        raw = fh.read()
+    is_md = path.lower().endswith((".md", ".markdown"))
+    if is_md:
+        data, blocks, kv = parse_listing_md(raw)
+        lines = raw.split("\n")
+        changed = refresh_counts(lines, blocks, write)
+        if write and changed:
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write("\n".join(lines))
+            print(f"Updated {changed} count(s) in {path}")
+        check_kv(kv)
+        if not data["ios"] and not data["android"]:
+            report("ERROR", path, "no '## App Store' or '## Google Play' locale sections found")
+    else:
+        if write:
+            print("--write only applies to a listing .md file", file=sys.stderr)
+            return 2
+        data = json.loads(raw)
     competitors = data.get("competitors", [])
     strict_fields = {"ios": {"name", "subtitle", "keywords"},
                      "android": {"title", "short_description", "developer_name"}}
@@ -411,7 +573,9 @@ def main(argv):
             else:
                 check_play_desc(loc, meta)
     if isinstance(data.get("submission"), dict):
-        check_submission(data["submission"])
+        # Console answers (privacy, age rating, ...) live in submission.md when
+        # the source is Markdown, so only the JSON form checks required keys.
+        check_submission(data["submission"], required=not is_md)
     order = {"ERROR": 0, "WARN": 1, "INFO": 2}
     for level, where, msg in sorted(findings, key=lambda f: (order[f[0]], f[1])):
         print(f"{level:5} {where}: {msg}")

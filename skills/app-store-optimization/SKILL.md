@@ -15,7 +15,8 @@ Read as needed:
 - `references/policy-legal.md`: Apple and Google rules, consumer law (FTC, EU, UK), trademarks, the pre-submission checklist.
 - `references/submission-fields.md`: every field App Store Connect and Play Console ask for (new app and update), with limits, where each lives, and how to answer it from the code.
 - `references/sources.md`: sources with dates and confidence, and the myths not to repeat.
-- `scripts/aso-lint.py`: lints a metadata JSON file (limits, keyword hygiene, banned terms, other platforms, competitors, and the optional `submission` block: required fields, IAP/subscription text limits, URLs, secrets). `--template` prints the format.
+- `scripts/aso-lint.py`: lints `aso/listing.md` directly (limits, keyword hygiene, banned terms, other platforms, competitors, IAP/subscription text, URLs, TODOs); `--write` refreshes the character counts after edits. Also reads a metadata JSON (plus its `submission` block's required fields and secrets). `--template` prints an example JSON.
+- `scripts/aso-render.py`: one-time converter from a JSON draft (or the template) to `aso/listing.md`.
 - Screenshots and feature graphic design and pixel specs: the `store-screenshots` skill (`../store-screenshots/references/specs.md`).
 
 ## 0. Ground rules
@@ -52,13 +53,16 @@ Follow `references/keywords.md`. Output a keyword table per store and market: te
 ## 4. Write the metadata
 
 - Write per store and per locale. Localize from local keyword research; native-speaker review for titles.
-- Save it as JSON in the format of `scripts/aso-lint.py --template` (include `competitors`) and run `python3 scripts/aso-lint.py <file>`. Fix every ERROR; justify any WARN you keep.
+- **The deliverable is `aso/listing.md`, a Markdown file people read, paste from and edit.** Each field is a bold title (the console field name, count/limit) over a ```` ```text ```` block, grouped under `## App Store` / `## Google Play` and `### <locale> · <language>`. The competitor and trademark list sits in `## Lint settings` at the end. Nobody should have to open JSON to find or change store copy.
+- Start it with `aso-render.py` from a JSON draft (convenient when a script builds the locales) or from `aso-lint.py --template`. From then on, edit the Markdown only, and don't keep the JSON in the repo, where it would drift.
+- Lint it: `python3 scripts/aso-lint.py --write aso/listing.md`. This refreshes the counts and checks limits and policy. Fix every ERROR; justify any WARN you keep.
+- When the team has edited `listing.md`, edit it in place; never regenerate it and wipe their changes.
 - Give 2–3 options for name/title and subtitle/short description, with the trade-off (brand vs generic, which terms each covers).
 - iOS promotional text: time-sensitive news (no build needed). What's New: the real change. A first version has no What's New; don't write "now you can…" copy for an app nobody has seen.
 
 ## 4a. Submission metadata (new app or a review-blocking gap)
 
-Follow `references/submission-fields.md`. Fill the `submission` block of the metadata JSON (`--template` shows it) and write `aso/submission.md` with every console answer, grouped the way each console groups them. Answer from the code, not from memory:
+Follow `references/submission-fields.md`. Put the text fields with limits (IAP and subscription names, descriptions and benefits, App Review notes, URLs) in `listing.md`, so they're linted and pasteable. Write every other console answer in `aso/submission.md` as readable tables, grouped the way each console groups them. Answer from the code, not from memory:
 - **Permissions and usage strings**: `AndroidManifest.xml` `uses-permission` and `foregroundServiceType`; `Info.plist` `NS*UsageDescription`. Each sensitive Android permission maps to a Play declaration (photo/video, foreground service, …) or should be removed.
 - **SDKs and data**: dependency manifest (`pubspec.yaml`, `package.json`, Podfile, Gradle) for analytics, ads, crash, auth and payment SDKs. Then the API calls that send user data (sign-up fields, uploads, recordings, purchases). This gives App Privacy and Data safety. Processors acting for you still count as collection.
 - **Export compliance**: HTTPS / OS crypto only → exempt; set `ITSAppUsesNonExemptEncryption` = `NO` in `Info.plist` so builds stop asking.
@@ -88,13 +92,13 @@ Plan the system prompt moments (after a success, never at first launch or after 
 ## 8. Deliverables
 
 Save into the app's repo (ask where; default `aso/`), not into this skill:
-- `aso/metadata.json`: per store and locale, linted clean.
+- `aso/listing.md`: **required.** Every text field the stores ask for, per store and locale, ready to paste, with counts. Linted clean. The single source of store copy.
 - `aso/keywords.md` (or `.csv`): the keyword table and cluster map.
 - `aso/plan.md`: audit findings, the prioritised changes, screenshot frame plan, CPP / custom listing plan, test plan, localization order, review plan, KPIs and baseline numbers.
 - `aso/log.md`: dated entries: what changed, why, and the measured result. Learnings carry over between cycles.
 - `aso/submission.md` (first submission or a gap): every console answer from §4a, with the code evidence for each, and the blockers to fix before submitting.
 
-Generating the JSON from a small script (shared paragraphs, UK spelling swaps) keeps locales in sync; keep that script out of the repo unless the team wants it.
+Building a first draft as JSON from a small script (shared paragraphs, UK spelling swaps) keeps locales in sync; convert it with `aso-render.py`, then delete the JSON and the script.
 
 ## Pitfalls seen in past runs
 
