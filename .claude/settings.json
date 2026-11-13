@@ -1,5 +1,8 @@
 {
+  "enableArtifact": true,
   "worktree": {
     "bgIsolation": "none"
-  }
+  },
+  "cleanupPeriodDays": 36500,
+  "idleCompaction": false
 }

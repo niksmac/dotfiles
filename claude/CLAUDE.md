@@ -8,6 +8,7 @@
   - it's an experiment that may well be thrown away.
 - When you use one, say so in one line up front (path and branch), commit your work there, and don't merge it into the main branch yourself; tell the user the branch so they can review and merge.
 - Create a new branch outside a worktree only when the user explicitly asks for one.
+- A project's own AGENTS.md/CLAUDE.md rule on worktrees or branches overrides this section.
 
 ## No headless browsers
 - Never install or run Chromium, Playwright, Puppeteer, Selenium or any similar browser-automation tooling, not even in a temp folder.
