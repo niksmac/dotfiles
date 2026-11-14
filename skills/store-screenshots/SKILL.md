@@ -1,6 +1,6 @@
 ---
 name: store-screenshots
-description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Mac, Play phone, Play feature graphic), App Store creative assets (product page header, search result, iOS 27+) and app preview videos as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, a product page header or search result asset, an app preview, to fix store upload rejections (wrong size, alpha, images missing from exports), or to revise the existing Merrin or StoryBee store canvas.
+description: Plan and design App Store and Google Play screenshots (iPhone, iPad, Mac, Play phone, Play feature graphic), App Store creative assets (product page header, search result, iOS 27+) and app preview videos as an editable, exportable claude.ai Design canvas, benefit-first and policy-safe. Use when asked for store screenshots, ASO/listing graphics, a feature graphic, an iPad screenshot set, a product page header or search result asset, an app preview, to fix store upload rejections (wrong size, alpha, images missing from exports), or to revise the existing Merrin, StoryBee or StoryBee Reader store canvas.
 ---
 
 # Store screenshots
@@ -14,6 +14,7 @@ Read before starting:
 - `scripts/normalize-video.sh`: turns an app preview or creative-asset video into Apple's exact size, codec, frame rate and audio.
 - `references/merrin.md`: for Merrin (`lightrains/phoneLLM`), the brand, claims, positioning, demo cast and the live canvas.
 - `references/storybee.md`: the same for StoryBee (`storybee-flutter`).
+- `references/storybee-reader.md`: the same for StoryBee Reader (`storybee_reader`).
 - Another app: write the same profile for it first (section 1), as `references/<app>.md`.
 
 ## 0. Preconditions
