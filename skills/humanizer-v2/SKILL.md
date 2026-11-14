@@ -1,9 +1,12 @@
 ---
 name: humanizer-v2
-version: 2.7.0
+version: 2.8.0
 description:
-  'Remove signs of AI-generated writing from text. Use when editing or reviewing
-  text to make it sound more natural and human-written.'
+  'Remove signs of AI-generated writing from text and restore a natural voice.
+  Use when editing or reviewing text to make it sound human-written, including
+  blog posts, articles, newsletters and MDX/Markdown post files. Picks a light
+  persona from the content type (tutorial, announcement, opinion, story,
+  reference) without inventing facts or opinions.'
 license: MIT
 compatibility: claude-code opencode
 allowed-tools:
@@ -26,9 +29,10 @@ When given text to humanize:
 1. **Identify AI patterns** - Scan for the patterns listed below
 2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives
 3. **Preserve meaning** - Keep the core message intact
-4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)
-5. **Restore the author's voice where the text calls for it** - See PERSONALITY AND SOUL; reference and technical text stays neutral
-6. **Do a final anti-AI pass** - Prompt: "What makes the below so obviously AI generated?" Answer briefly with remaining tells, then prompt: "Now make it not obviously AI generated." and revise
+4. **Pick the persona** - Read the content type and choose a persona (see REGISTER AND PERSONA); reference and technical text stays neutral
+5. **Restore the author's voice where the text calls for it** - See PERSONALITY AND SOUL
+6. **Preserve the markup** - For blog posts and files, follow BLOG POSTS AND FILES
+7. **Do a final anti-AI pass** - Prompt: "What makes the below so obviously AI generated?" Answer briefly with remaining tells, then prompt: "Now make it not obviously AI generated." and revise
 
 ## Never Invent Facts
 
@@ -55,23 +59,61 @@ If the user provides a writing sample (their own previous writing), analyze it b
 
 2. **Match their voice in the rewrite.** Don't just remove AI patterns - replace them with patterns from the sample. If they write short sentences, don't produce long ones. If they use "stuff" and "things," don't upgrade to "elements" and "components."
 
-3. **When no sample is provided,** match the register of the original and follow the PERSONALITY AND SOUL section below. Don't invent a voice the author never had.
+3. **When no sample is provided,** match the register of the original and follow REGISTER AND PERSONA below. Don't invent a voice the author never had.
 
 ### How to provide a sample
 
 - Inline: "Humanize this text. Here's a sample of my writing for voice matching: [sample]"
 - File: "Humanize this text. Use my writing style from [file path] as a reference."
 
+## REGISTER AND PERSONA
+
+"Human" sounds different in a tutorial than in an opinion piece. Before rewriting, decide what kind of text this is and pick a persona to match. A persona is a small set of style settings, not a character.
+
+**The hard rule:** a persona changes how the existing content is expressed: pronouns the draft already uses, contractions, sentence rhythm, how directly a stated opinion is put, which hedges stay. It never adds a claim, opinion, feeling, anecdote, joke, example or first-person experience that isn't in the source. If a persona seems to need something the draft lacks, leave it out or mark the gap (see Never Invent Facts).
+
+### Read the content type from the text
+
+Use the signals in the text itself, strongest first:
+
+1. Frontmatter fields (`announcementType`, `category`, `tags`, `type`)
+2. The title and heading verbs: "How to", "Getting started", "Step 3" → tutorial; "Introducing", "Announcing", "Update", "Release" → announcement; "Why", "should", "the case for/against", "stop" → opinion; "How we", "What happened", "Lessons from", "Postmortem" → story
+3. The body: numbered steps, commands and code blocks (tutorial); dates, versions, availability, pricing (announcement); first-person claims and arguments (opinion); past tense and a timeline of events (story)
+
+### The personas
+
+| Persona | Use for | Person | Contractions | Rhythm | Opinions | Allowed |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Reference** | Docs, READMEs, API references, commit messages, encyclopedic text, reports, legal or policy text | Third person; "you" only for instructions | Few | Even, plain | None | Nothing extra; plain, specific and direct, not chatty |
+| **Explainer** | Tutorials, how-tos, guides, explainers | "You" for the reader; the author's "we"/"I" only if the draft has it | Yes | Short; one action per sentence in steps | Only practical judgments already in the draft ("this is slower") | Imperative steps, numbered lists for real sequences, a brief warning where the draft has one |
+| **Reporter** | Launches, announcements, release notes, company updates, news | The organization's "we" if the draft uses it | Light | Medium; lead with the news | Stated as the company's position, never hyped | What it is, who it's for, what changed, when; plain verbs; no exclamation marks |
+| **Practitioner** | Opinion pieces, essays, thought leadership, arguments | "I" or "we" as in the draft | Yes | Varied; short sentences for points the author stands behind | The author's own, stated plainly; hedges kept only where the author is unsure | One genuine question, an aside the draft already contains, keeping both sides of a mixed view |
+| **Storyteller** | Case studies, postmortems, personal narratives, customer stories | As in the draft | Yes | Follows the events; past tense | The narrator's own reactions, only those the source gives | Chronology, concrete details from the source, ending on the outcome rather than a moral |
+
+### Switching mildly
+
+Most posts mix types. A launch post has a "how to start" section and a "why we built it" section. Handle it like this:
+
+- **Pick one base persona** from the dominant purpose of the piece (frontmatter and title outweigh body sections).
+- **Let a section shift one step** when its content clearly differs: steps inside a launch post go imperative (Explainer), and a "Why we built this" section may use the Practitioner's or Storyteller's plainer, more personal rhythm.
+- **Shift only at headings**, never mid-paragraph.
+- **Keep one author throughout.** The pronoun for the author, the contraction habit, spelling (US/UK), punctuation conventions and the level of formality stay the same in every section. A reader should not be able to tell where the switch happened, only that each section reads naturally for what it does.
+- **When unsure, stay with the base persona.** A slightly flat section is better than one that sounds like a different writer.
+
+### Precedence
+
+When signals conflict, the earlier source wins:
+
+1. A writing sample from the user (Voice Calibration)
+2. The voice already in the draft: its pronouns, its opinions, its quirks
+3. House style: neighbouring posts in the same folder, a style guide, or a voice skill loaded alongside this one (for example, a brand blog-writing skill)
+4. The persona defaults above
+
 ## PERSONALITY AND SOUL
 
-Removing AI patterns can leave personal writing sterile. Whether to fix that depends on what kind of text it is.
+Removing AI patterns can leave personal writing sterile. This section applies to the Practitioner and Storyteller personas, and lightly to sections of other posts that speak for the author. Reference and Explainer text stays plain.
 
-### First, decide the register
-
-- **Reference and technical writing** (docs, READMEs, API references, commit messages, encyclopedic text, reports, legal or policy text): keep it neutral. Don't add opinions, first person, humor or asides. Here "human" means plain, specific and direct, not chatty.
-- **Personal or editorial writing** (blog posts, essays, newsletters, social posts, speeches): voice belongs here, but it has to be the author's. Use the voice sample if there is one. Without one, keep the opinions and feelings already in the text and make them plainer; don't add new ones.
-
-Never put opinions, feelings or experiences in the author's mouth that the original doesn't contain. That changes the meaning.
+Voice has to be the author's. Use the voice sample if there is one. Without one, keep the opinions and feelings already in the text and make them plainer; don't add new ones. Never put opinions, feelings or experiences in the author's mouth that the original doesn't contain. That changes the meaning.
 
 ### Signs of soulless personal writing (even if technically "clean"):
 
@@ -151,9 +193,9 @@ Name one source and say what it reported. If the text doesn't say what any outle
 
 ### 4. Promotional and Advertisement-like Language
 
-**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning
+**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning, game-changer, revolutionize, cutting-edge, next-level, supercharge, world-class, best-in-class
 
-**Problem:** LLMs have serious problems keeping a neutral tone, especially for "cultural heritage" topics.
+**Problem:** LLMs have serious problems keeping a neutral tone, especially for "cultural heritage" topics and product posts. In blog posts, exclamation marks in body text are part of the same pattern.
 
 **Before:**
 
@@ -183,7 +225,7 @@ The "crucial role" claim goes unless the source names who made it and on what ev
 
 **Phrases to watch:** Studies show, Research proves, Experts agree, [Name] once said, As [famous person] puts it, according to industry insiders
 
-**Problem:** LLMs invent plausible quotes, statistics, and citations. Style tells are cosmetic; a fabricated source is a credibility failure — and it's objectively checkable. Verify every quote, number, and study before shipping. If a claim can't be traced to a real source, cut it or flag it honestly.
+**Problem:** LLMs invent plausible quotes, statistics, and citations. Style tells are cosmetic; a fabricated source is a credibility failure, and it's objectively checkable. Verify every quote, number, and study before shipping. If a claim can't be traced to a real source, cut it or flag it honestly.
 
 **Before:**
 
@@ -227,7 +269,7 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 
 **Phrases to watch:** This isn't just about X. It's about Y., At the end of the day, it's really about, What this is truly about is, It's bigger than [topic]
 
-**Problem:** AI zooms from a specific topic to a grand abstraction — tech talk becomes TED talk. The pivot manufactures profundity by invoking humanity, trust, legacy, or "what really matters" when the actual subject was something ordinary.
+**Problem:** AI zooms from a specific topic to a grand abstraction: tech talk becomes TED talk. The pivot manufactures profundity by invoking humanity, trust, legacy, or "what really matters" when the actual subject was something ordinary.
 
 **Before:**
 
@@ -305,7 +347,7 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 
 **Phrases to watch:** What changed? Why does this matter?, The result?, So what happened?, Sound familiar?, Why? Because...
 
-**Problem:** AI asks a question and immediately answers it — bad high-school essay rhetoric. A sibling tic uses questions purely to bridge paragraphs instead of transitioning with substance. Lead with the answer; drop the setup.
+**Problem:** AI asks a question and immediately answers it, which is bad high-school essay rhetoric. A sibling tic uses questions purely to bridge paragraphs instead of transitioning with substance. Lead with the answer; drop the setup.
 
 **Before:**
 
@@ -355,7 +397,7 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 
 **Words to watch:** seamless and intuitive, robust and scalable, simple yet powerful, clear and concise, actionable and comprehensive, fast and reliable
 
-**Problem:** AI pairs adjectives compulsively — two or three where one would do, usually near-synonyms joined by "and" or "yet". The pairing adds rhythm but no meaning.
+**Problem:** AI pairs adjectives compulsively, two or three where one would do, usually near-synonyms joined by "and" or "yet". The pairing adds rhythm but no meaning.
 
 **Before:**
 
@@ -382,6 +424,8 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 ### 20. Em Dash Overuse
 
 **Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing. In practice, most of these can be rewritten more cleanly with commas, periods, or parentheses.
+
+This is about density. One or two em dashes in a long post are normal, especially in a passage that otherwise reads as human. Fix clusters, dashes used for a dramatic reveal ("It's not a log — it's a foundation"), and dashes in every paragraph.
 
 **Before:**
 
@@ -417,9 +461,13 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 
 > The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.
 
+Keep real lists. Sequential steps, commands and parallel reference items (options, requirements, specs) read better as lists, without the bold label if the item text says what it is. Turn into prose the lists that wrap an argument or a set of claims.
+
 ### 23. Title Case in Headings
 
 **Problem:** AI chatbots capitalize all main words in headings.
+
+This applies to body headings. If the site's existing posts use title case, follow the house style. Leave the frontmatter `title` alone unless asked; it is often set for SEO or a style guide.
 
 **Before:**
 
@@ -472,6 +520,8 @@ Delete both sentences. Open with the first concrete fact in the piece; if the dr
 **After:**
 
 > He said "the project is on track" but others disagreed.
+
+Match the document's existing convention. Many publishing tools convert straight quotes to curly ones, and edited prose often uses curly quotes on purpose. The tell is mixed usage, or curly quotes in a plain-text or Markdown source where everything else is straight.
 
 ## COMMUNICATION PATTERNS
 
@@ -600,7 +650,7 @@ Delete both sentences. The paragraph that follows them, which explains the cachi
 
 **Phrases to watch:** But here's the thing:, Here's the deal:, Then I realized:, Hot take:, And honestly?, The result?, That's the real unlock/challenge/trick
 
-**Problem:** AI manufactures edge with sassy interjections — fake confessions and ta-da phrases that inject synthetic drama, especially in LinkedIn-style posts. Most can be replaced with a plain "but" or nothing at all.
+**Problem:** AI manufactures edge with sassy interjections: fake confessions and ta-da phrases that inject synthetic drama, especially in LinkedIn-style posts. Most can be replaced with a plain "but" or nothing at all.
 
 **Before:**
 
@@ -630,33 +680,211 @@ Delete both sentences. The paragraph that follows them, which explains the cachi
 >
 > When users hit a slow page, they leave.
 
+## BLOG STRUCTURE PATTERNS
+
+These show up in whole posts rather than single sentences.
+
+### 38. Table-of-Contents Intros
+
+**Phrases to watch:** In this post/article, we'll explore/cover/walk through, By the end of this post you'll, Here's what we'll cover
+
+**Problem:** The intro lists the sections instead of starting. The headings already do that job.
+
+**Before:**
+
+> In this post, we'll explore what caching is, how to configure it, and why it matters.
+
+**After:** Delete the preview and open with the first real point. If the intro carried a fact or the author's position ("why we believe X"), keep that as a plain sentence. Most posts still need a lead paragraph before the first heading (see BLOG POSTS AND FILES).
+
+### 39. Hook Formulas and Fake Relatability
+
+**Phrases to watch:** Imagine this:, Picture this:, We've all been there., Let's be honest:, Raise your hand if, Ever wondered why
+
+**Problem:** A generic scene or shared experience invented to hook the reader. It is usually not in the source, so it is also a small fabrication.
+
+**Before:**
+
+> Picture this: it's 2 a.m., your pager goes off, and production is down.
+
+**After:** Cut it. If the author's own incident is in the source, open with that instead.
+
+### 40. Audience-Range Openers
+
+**Phrases to watch:** Whether you're a beginner or a seasoned pro, Whether you're a startup or an enterprise, From [small X] to [large Y]
+
+**Problem:** Claims the post is for everyone, which says it is for no one in particular.
+
+**Before:**
+
+> Whether you're a small 3PL or a global carrier, the dashboard has you covered.
+
+**After:**
+
+> The dashboard is built for [who, from the source?]. Or cut the sentence.
+
+### 41. Recap Conclusions and Bolted-On CTAs
+
+**Signs to watch:** a "Conclusion" or "Final thoughts" heading, a closing paragraph that repeats the intro, "Ready to get started? [Link] today!"
+
+**Problem:** The ending restates the post and then shouts a call to action.
+
+**Before:**
+
+> ## Conclusion
+> In conclusion, the new API represents a pivotal step forward. Ready to transform your workflow? Sign up today!
+
+**After:**
+
+> To try the new API, [sign up](/signup).
+
+End on the last substantive point. Keep any CTA and link the draft has, written as a plain sentence. Drop a generic "Conclusion" heading when the section shrinks to a line or two.
+
+### 42. Boilerplate Summary Blocks
+
+**Signs to watch:** "Key takeaways", "TL;DR", or "FAQ" blocks that repeat the body in bullet form
+
+**Problem:** Summary blocks bolted on for skimmers or SEO, restating what the reader just read.
+
+**Fix:** If the block only repeats the body, cut it. If it's part of the site's post template (neighbouring posts have it too), keep it and make each item specific. A real FAQ answers questions the body doesn't.
+
+### 43. One-Line Paragraph Stacks
+
+**Problem:** Every sentence gets its own paragraph, LinkedIn-style, so the post scrolls like a slideshow.
+
+**Before:**
+
+> We shipped it.
+>
+> Nobody noticed.
+>
+> That was the point.
+
+**After:**
+
+> We shipped it and nobody noticed, which was the point.
+
+A single-sentence paragraph is fine now and then. Several in a row is the pattern.
+
+### 44. Colon and Question Reveals
+
+**Phrases to watch:** Here's how:, Here's why:, The best part?, The answer:, The catch?, The result:
+
+**Problem:** A mini drumroll before an ordinary sentence. Related to #14 and #36.
+
+**Before:**
+
+> Setup takes one command. Here's how: run `npx init`.
+
+**After:**
+
+> Setup takes one command: `npx init`.
+
+### 45. Identical Section Skeletons
+
+**Signs to watch:** every H2 section is the same length and the same shape: a topic sentence, three bullets, then a one-line summary
+
+**Problem:** The template shows through. Real posts spend more words where the subject is harder.
+
+**Fix:** Let section length follow the content. Merge thin sections into their neighbours and drop the summary line that ends each section.
+
+---
+
+## BLOG POSTS AND FILES
+
+### Calibrate before cutting
+
+- **Density, not presence.** One em dash, one list, one rhetorical question or one "crucial" in a long post is normal. Fix clusters and repeated habits. Leave isolated instances alone in passages that already read as human.
+- **Leave human passages alone.** Paragraphs with particular details, slightly odd but specific word choices and uneven rhythm were probably written or edited by a person. Change them only to fix a clear tell, and keep their wording otherwise.
+- **Match house style.** Check one or two neighbouring posts for quote style, heading case, US/UK spelling, date format and how the company refers to itself. Follow them.
+- **Cut padding, not substance.** The rewrite will usually be shorter. Shorter because filler went is good; shorter because facts, steps or caveats went is a loss.
+- **Salvage before deleting.** A sentence cut for its pattern (a clichéd intro, a pivot, a recap) sometimes carries a fact, an audience or the author's stated position. Move that into a plain sentence elsewhere instead of losing it. An opinion the author states, even in hype wording, stays as the author's opinion, toned down.
+- **Keep a lead.** Blog posts usually open with a short paragraph before the first heading. If cutting the intro leaves none, write one or two plain sentences from material already in the post: for an announcement, what it is and who it's for; for a tutorial, what the reader will have done by the end; for an opinion piece, the author's claim. Restate what the post says; don't infer a new benefit or claim from it, and don't repeat the first section's opening sentence.
+
+### Preserve the markup
+
+When editing a post file (Markdown, MDX, HTML):
+
+- **Frontmatter:** never change `slug`, `date`, IDs, tags or other machine fields. Suggest changes to `title` or `excerpt` in your notes rather than editing them, unless asked.
+- **Components and code:** keep MDX/JSX components, their props, code blocks and inline code exactly as they are. Text inside a component's children can be edited like prose.
+- **Links:** keep every link target. Link text can change.
+- **Headings:** a heading's text sets its anchor. Before renaming one, search the site for links to that anchor (`#getting-started`); leave it if anything links there. Generic headings ("Conclusion", "Introduction") are safe to drop or rename.
+- **SEO terms:** where the post's main keyword phrase appears in the title, first paragraph or headings, keep it there.
+
 ---
 
 ## Process
 
 1. Read the input text carefully
-2. Identify all instances of the patterns above
-3. Rewrite each problematic section
-4. Ensure the revised text:
+2. Decide the content type and pick the base persona; note any sections that shift (REGISTER AND PERSONA). For a post file, glance at a neighbouring post for house style
+3. Identify all instances of the patterns above, weighing density (BLOG POSTS AND FILES)
+4. Rewrite each problematic section
+5. Ensure the revised text:
    - Sounds natural when read aloud
    - Varies sentence structure naturally
    - Uses specific details over vague claims, but only details the source or user supplied (see Never Invent Facts)
-   - Maintains appropriate tone for context
+   - Fits its persona, with one consistent author across sections
+   - Adds no opinion, anecdote, feeling or example the source lacks; the persona only changed how things are said
+   - Keeps frontmatter, components, code, link targets and linked headings intact
    - Uses simple constructions (is/are/has) where appropriate
-5. Present a draft humanized version
-6. Prompt: "What makes the below so obviously AI generated?"
-7. Answer briefly with the remaining tells (if any). Also check every name, number, date, quote and source against the original; anything not in it gets cut or marked
-8. Prompt: "Now make it not obviously AI generated."
-9. Present the final version (revised after the audit)
+6. Present a draft humanized version
+7. Prompt: "What makes the below so obviously AI generated?"
+8. Answer briefly with the remaining tells (if any). Also check every name, number, date, quote and source against the original; anything not in it gets cut or marked
+9. Prompt: "Now make it not obviously AI generated."
+10. Present the final version (revised after the audit)
 
 ## Output Format
 
-Provide:
+**For pasted text up to a few paragraphs**, provide:
 
-1. Draft rewrite
-2. "What makes the below so obviously AI generated?" (brief bullets)
-3. Final rewrite
-4. A brief summary of changes made (optional, if helpful)
+1. The persona used, in one line (and any section shifts)
+2. Draft rewrite
+3. "What makes the below so obviously AI generated?" (brief bullets)
+4. Final rewrite
+5. A brief summary of changes made (optional, if helpful)
+
+**For a file or a full post**, don't print three copies of it. Do the draft and audit passes internally, then:
+
+1. Edit the file in place (or give the final version once, if there is no file)
+2. Report the persona and section shifts in one line
+3. List the main tells found and fixed, grouped by pattern number
+4. List every bracketed gap you left for the author, and any suggested `title`/`excerpt` changes
+5. Note anything you deliberately left alone (a human passage, a house-style convention, a linked heading)
+
+## Blog Example: Persona Per Section
+
+**Before (a launch post with a setup section and a backstory section):**
+
+> ## Introducing Tidepool
+>
+> We're thrilled to announce Tidepool, a groundbreaking tool that empowers teams to seamlessly manage feature flags. It's not just a toggle — it's a whole new way to ship.
+>
+> ## Setting up
+>
+> Getting started is a breeze! First, you'll want to install the SDK. Next, it's important to note that you'll need an API key from the dashboard. Finally, simply wrap your feature in `flag()`.
+>
+> ## Why we built it
+>
+> Our team had been burned by half-finished features leaking into production. We tried three vendors and none of them let us roll back a flag per region. So we built one that does.
+
+**Base persona:** Reporter (an "Introducing" title). **Shifts:** "Setting up" goes Explainer; "Why we built it" goes Storyteller and is already human, so it barely changes. Author stays "we" with contractions throughout.
+
+**After:**
+
+> ## Introducing Tidepool
+>
+> Tidepool is a feature-flag tool for teams. You can roll back a flag in one region without touching the others.
+>
+> ## Setting up
+>
+> 1. Install the SDK.
+> 2. Get an API key from the dashboard.
+> 3. Wrap the feature in `flag()`.
+>
+> ## Why we built it
+>
+> We'd been burned by half-finished features leaking into production. We tried three vendors and none of them let us roll back a flag per region, so we built one that does.
+
+The per-region rollback in the intro comes from the backstory section, not from outside the post. Nothing was added: no customer quote, no adoption number, no "we've all been there".
 
 ## Full Example
 
