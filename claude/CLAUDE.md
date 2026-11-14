@@ -15,3 +15,9 @@
 
 - Never install or run Chromium, Playwright, Puppeteer, Selenium or any similar browser-automation tooling, not even in a temp folder.
 - To verify UI changes, rely on lint, build and code reading; ask the user to check the page in their own browser when a visual check matters.
+
+## Web fetching: curl for raw data, WebFetch for pages
+- Use `curl -sL` through Bash for JSON APIs, RSS/Atom feeds, raw files (e.g. raw.githubusercontent.com) and small static pages. It skips WebFetch's extra model pass and, from the main session, the web-fetch subagent hop.
+- Never dump raw HTML into the conversation. Convert it to text first: `curl -sL URL | textutil -stdin -format html -convert txt -stdout`.
+- Use WebFetch for large HTML pages where only a summary or one specific fact is needed; its short answer keeps the context small.
+- Neither handles JavaScript-rendered pages. Say so instead of falling back to a headless browser (see above).
