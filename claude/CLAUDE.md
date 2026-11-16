@@ -21,3 +21,12 @@
 - Never dump raw HTML into the conversation. Convert it to text first: `curl -sL URL | textutil -stdin -format html -convert txt -stdout`.
 - Use WebFetch for large HTML pages where only a summary or one specific fact is needed; its short answer keeps the context small.
 - Neither handles JavaScript-rendered pages. Say so instead of falling back to a headless browser (see above).
+
+## Shell: the Bash tool runs zsh, not bash
+
+Commands run in zsh 5.9 with `nomatch` and `equals` on and `shwordsplit` off, so bash habits break:
+- Quote every glob meant for another program, or zsh aborts the whole command with "no matches found": `grep -r --include='*.ts'`, `find . -name '*.mp4'`, `git ls-files '*.py'`, `rsync --exclude='*.tmp'`.
+- Loops over a glob that may match nothing (`for f in dir/*`, `dir/.[!.]*`) also abort. Use `(setopt null_glob; for f in dir/*; do …; done)`, or run the block in bash. The zsh `(N)` qualifier does not work here (bareglobqual is off).
+- A word starting with `=` expands to a command path: `echo =====` fails with "==== not found". Quote it (`echo '====='`) or use `-----` as a separator.
+- Unquoted `$var` is not word-split: `for x in $list` loops once. Use `${=list}`, an array, or bash.
+- For multi-line scripts with bash idioms (`shopt`, `declare -A`, `read -a`, `${!arr[@]}`, `set -euo pipefail` logic), run them as `bash -c '…'` or write a `.sh` file and run it with `bash`.
