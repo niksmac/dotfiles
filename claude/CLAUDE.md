@@ -18,7 +18,7 @@
 
 ## Web fetching: curl for raw data, WebFetch for pages
 - Use `curl -sL` through Bash for JSON APIs, RSS/Atom feeds, raw files (e.g. raw.githubusercontent.com) and small static pages. It skips WebFetch's extra model pass and, from the main session, the web-fetch subagent hop.
-- Never dump raw HTML into the conversation. Convert it to text first: `curl -sL URL | textutil -stdin -format html -convert txt -stdout`.
+- Never dump raw HTML into the conversation. Convert it to text first: on macOS `curl -sL URL | textutil -stdin -format html -convert txt -stdout`, on Linux `curl -sL URL | pandoc -f html -t plain`.
 - Use WebFetch for large HTML pages where only a summary or one specific fact is needed; its short answer keeps the context small.
 - Neither handles JavaScript-rendered pages. Say so instead of falling back to a headless browser (see above).
 
