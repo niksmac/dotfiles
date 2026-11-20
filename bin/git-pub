@@ -7,38 +7,118 @@
 # Examples
 #
 #   git-pub major|minor|patch
+#   git-pub -h
 
-git checkout develop
-git pull
-git checkout master
-git merge develop -m "Merge branch develop"
+usage() {
+  cat <<'EOF'
+Usage: git-pub [major|minor|patch]     (default: patch)
+       git-pub -h | --help
 
-npm version "${1:-patch}" --force -m "Version %s" 2>/dev/null || {
-  [ -f pubspec.yaml ] || { echo "No package.json or pubspec.yaml found" >&2; exit 1; }
+Merges the dev branch into the release branch, bumps the version, commits
+"Version x.y.z", tags vx.y.z, pushes, then returns to the dev branch.
 
-  bump="${1:-patch}"
-  version=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)/\1/p' pubspec.yaml | head -n 1)
-  [ -n "$version" ] || { echo "No version found in pubspec.yaml" >&2; exit 1; }
-  build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' pubspec.yaml | head -n 1)
+Version source:
+  package.json   npm version <bump> (commit + tag by npm); any npm version
+                 argument works here
+  pubspec.yaml   bumps x.y.z by <bump>; a +N build number goes up by 1
 
-  new_version=$(echo "$version" | awk -v bump="$bump" -F. '{
+Pub workspace members:
+  Each path in the root pubspec's `workspace:` list whose pubspec has a
+  version with a build number (an app, e.g. desktop/ at 1.0.0+12) is bumped
+  in the same commit, per pub.members. Members without a build number
+  (library packages) are left alone. The tag names the root version only;
+  the commit names every version, e.g.
+    Version 1.6.5+168 (desktop 1.0.0+14)
+
+Per-repo config (git config pub.<key>; add --global to change your default):
+  pub.members        build  member build number +1, x.y.z kept (default)
+                     same   member x.y.z gets the same bump, build +1
+                     none   members untouched
+  pub.devBranch      branch merged from               (default: develop)
+  pub.releaseBranch  branch released and tagged       (default: master,
+                                                       else main)
+  pub.backMerge      true   fast-forward the dev branch to the release
+                            branch and push it, so it carries the bump
+                            (default)
+                     false  leave the dev branch as it was
+
+Examples:
+  git-pub minor
+  git config pub.members same
+  git config --global pub.backMerge false
+EOF
+}
+
+case "$1" in
+  -h|--help) usage; exit 0 ;;
+esac
+
+bump="${1:-patch}"
+dev=$(git config pub.devBranch || echo develop)
+rel=$(git config pub.releaseBranch || { git show-ref -q --verify refs/heads/master && echo master || echo main; })
+mode=$(git config pub.members || echo build)
+back=$(git config --type=bool pub.backMerge || echo true)
+
+case "$mode" in
+  build|same|none) ;;
+  *) echo "pub.members must be build, same or none (got: $mode)" >&2; exit 1 ;;
+esac
+
+if [ ! -f package.json ]; then
+  case "$bump" in
+    major|minor|patch) ;;
+    *) echo "Bump must be major, minor or patch (got: $bump)" >&2; exit 1 ;;
+  esac
+fi
+
+# Bumps x.y.z ($1) by major|minor|patch ($2).
+bump_xyz() {
+  echo "$1" | awk -v bump="$2" -F. '{
     if (bump == "major") { $1++; $2 = 0; $3 = 0 }
     else if (bump == "minor") { $2++; $3 = 0 }
     else { $3++ }
     print
-  }' OFS=.)
+  }' OFS=.
+}
 
-  if [ -n "$build" ]; then
-    new_build=$((build + 1))
-    sed "s/^version: .*/version: $new_version+$new_build/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
-    new_version="$new_version+$new_build"
-  else
-    sed "s/^version: .*/version: $new_version/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+git checkout "$dev"
+git pull
+git checkout "$rel"
+git merge "$dev" -m "Merge branch $dev"
+
+npm version "$bump" --force -m "Version %s" 2>/dev/null || {
+  [ -f pubspec.yaml ] || { echo "No package.json or pubspec.yaml found" >&2; exit 1; }
+
+  version=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)/\1/p' pubspec.yaml | head -n 1)
+  [ -n "$version" ] || { echo "No version found in pubspec.yaml" >&2; exit 1; }
+  build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' pubspec.yaml | head -n 1)
+
+  new_version=$(bump_xyz "$version" "$bump")
+  [ -n "$build" ] && new_version="$new_version+$((build + 1))"
+  sed "s/^version: .*/version: $new_version/" pubspec.yaml > pubspec.yaml.tmp && mv pubspec.yaml.tmp pubspec.yaml
+  git add pubspec.yaml
+
+  summary=""
+  if [ "$mode" != none ]; then
+    for m in $(sed -n '/^workspace:/,/^[^ ]/s/^ *- *//p' pubspec.yaml | tr -d "\"'"); do
+      f="$m/pubspec.yaml"
+      [ -f "$f" ] || continue
+      m_build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' "$f" | head -n 1)
+      [ -n "$m_build" ] || continue
+      m_xyz=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)+.*/\1/p' "$f" | head -n 1)
+      [ "$mode" = same ] && m_xyz=$(bump_xyz "$m_xyz" "$bump")
+      m_version="$m_xyz+$((m_build + 1))"
+      sed "s/^version: .*/version: $m_version/" "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+      git add "$f"
+      summary="$summary, $(basename "$m") $m_version"
+    done
   fi
 
-  git add pubspec.yaml
-  git commit -m "Version $new_version"
+  git commit -m "Version $new_version${summary:+ (${summary#, })}"
   git tag "v${new_version%%+*}"
 }
 git push && git push --tags
-git checkout develop
+git checkout "$dev"
+if [ "$back" = true ]; then
+  git merge --ff-only "$rel" && git push
+fi
