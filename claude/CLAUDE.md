@@ -11,6 +11,10 @@
 - Create a new branch outside a worktree only when the user explicitly asks for one.
 - A project's own AGENTS.md/CLAUDE.md rule on worktrees or branches overrides this section.
 
+## Choices: number them
+
+- When asking the user to pick between options, number them (1, 2, 3) with the time or cost of each, so they can answer with a number.
+
 ## No headless browsers
 
 - Never install or run Chromium, Playwright, Puppeteer, Selenium or any similar browser-automation tooling, not even in a temp folder.
