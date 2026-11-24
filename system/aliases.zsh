@@ -51,6 +51,8 @@ else
   alias code='zed'
 fi
 alias ta='tmux a'
+# Lean tmux: own socket, so no resurrect restore and no autosave
+alias tal='tmux -L lean attach'
 alias oc='opencode'
 alias occ='opencode --continue'
 alias hs='hermes --tui'
