@@ -1,0 +1,2 @@
+# gcol <branch>: check out a branch and pull it (gco <branch> && gl).
+git checkout "$@" && git pull

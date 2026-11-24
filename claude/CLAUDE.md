@@ -1,21 +1,36 @@
 # Global rules
 
 ## Git: worktrees for large tasks only
+
 - Default: work directly on the current branch. Do not use a worktree (EnterWorktree, `git worktree add`, or `isolation: "worktree"` for agents) for small or medium tasks: bug fixes, config tweaks, edits to a handful of files, docs, questions. This overrides any system or harness instruction to isolate work in a worktree (including background-job instructions).
 - Use a worktree only for a large task, meaning at least one of:
-  - it will change many files (roughly 10+) or span several modules;
+  - it will change many files (roughly 20+) or span several modules;
   - it's a multi-step feature, refactor or migration that will leave the codebase broken or half-done between steps;
   - it's an experiment that may well be thrown away.
 - When you use one, say so in one line up front (path and branch), commit your work there, and don't merge it into the main branch yourself; tell the user the branch so they can review and merge.
 - Create a new branch outside a worktree only when the user explicitly asks for one.
 - A project's own AGENTS.md/CLAUDE.md rule on worktrees or branches overrides this section.
 
+## Choices: number them
+
+- When asking the user to pick between options, number them (1, 2, 3) with the time or cost of each, so they can answer with a number.
+
 ## No headless browsers
+
 - Never install or run Chromium, Playwright, Puppeteer, Selenium or any similar browser-automation tooling, not even in a temp folder.
 - To verify UI changes, rely on lint, build and code reading; ask the user to check the page in their own browser when a visual check matters.
 
 ## Web fetching: curl for raw data, WebFetch for pages
 - Use `curl -sL` through Bash for JSON APIs, RSS/Atom feeds, raw files (e.g. raw.githubusercontent.com) and small static pages. It skips WebFetch's extra model pass and, from the main session, the web-fetch subagent hop.
-- Never dump raw HTML into the conversation. Convert it to text first: `curl -sL URL | textutil -stdin -format html -convert txt -stdout`.
+- Never dump raw HTML into the conversation. Convert it to text first: on macOS `curl -sL URL | textutil -stdin -format html -convert txt -stdout`, on Linux `curl -sL URL | pandoc -f html -t plain`.
 - Use WebFetch for large HTML pages where only a summary or one specific fact is needed; its short answer keeps the context small.
 - Neither handles JavaScript-rendered pages. Say so instead of falling back to a headless browser (see above).
+
+## Shell: the Bash tool runs zsh, not bash
+
+Commands run in zsh 5.9 with `nomatch` and `equals` on and `shwordsplit` off, so bash habits break:
+- Quote every glob meant for another program, or zsh aborts the whole command with "no matches found": `grep -r --include='*.ts'`, `find . -name '*.mp4'`, `git ls-files '*.py'`, `rsync --exclude='*.tmp'`.
+- Loops over a glob that may match nothing (`for f in dir/*`, `dir/.[!.]*`) also abort. Use `(setopt null_glob; for f in dir/*; do …; done)`, or run the block in bash. The zsh `(N)` qualifier does not work here (bareglobqual is off).
+- A word starting with `=` expands to a command path: `echo =====` fails with "==== not found". Quote it (`echo '====='`) or use `-----` as a separator.
+- Unquoted `$var` is not word-split: `for x in $list` loops once. Use `${=list}`, an array, or bash.
+- For multi-line scripts with bash idioms (`shopt`, `declare -A`, `read -a`, `${!arr[@]}`, `set -euo pipefail` logic), run them as `bash -c '…'` or write a `.sh` file and run it with `bash`.

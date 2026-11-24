@@ -1,0 +1,3 @@
+#compdef gcol=git-checkout
+# Complete gcol like `git checkout`.
+_git "$@"
