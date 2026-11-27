@@ -47,28 +47,16 @@ codename = "MX Anywhere 3S"
 kind = "mouse"
 
 [[flow.peers]]
-name = "niksmac-2"
-public_key = "ed25519:ef0c8fb5b5f73bf1541751e078849e57f1be4331c1a5ea786d49f08a1824db8b"
+name = "niksmac-ubuntu"
+public_key = "ed25519:11bae02b5d8069104ecb34c9524fc1b17e755beb2c94529af39729080789caa8"
 
 [[flow.layout]]
-edge = "left"
-peer = "niksmac-2"
-
-[[flow.devices]]
-key = "serial:2502scq2ycj8"
-
-[flow.devices.peer_channels]
-self = 1
-
-[[flow.devices]]
-key = "serial:2438za43ynh8"
+edge = "right"
+peer = "niksmac-ubuntu"
 
 [flow]
 enabled = false
 require_modifier = false
-
-[flow.devices.peer_channels]
-self = 1
 
 [devices."serial:2438za43ynh8".identity.model_info]
 entity_count = 3
