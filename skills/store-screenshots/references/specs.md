@@ -36,14 +36,14 @@ New placements on top of previews and screenshots: the **product page header** a
 
 | Placement | Image | Video |
 |---|---|---|
-| Product page header | **21:9, 3840 x 1646**, .jpeg/.jpg/.png; or **16:9, 5244 x 2950, .png only** | 21:9, 3840 x 1646, 30 or 60 fps, 5 to 30 s, .mov/.m4v/.mp4 |
-| Search results | **3:2, min 1920 x 1280, max 3840 x 2560**, .jpeg/.jpg/.png; or **16:9, 5244 x 2950, .png only** | 3:2, min 1920 x 1280, max 3840 x 2560, 30 or 60 fps, 5 to 30 s, .mov/.m4v/.mp4 |
+| Product page header | **21:9, 3840 x 1646, .png only** (art safe area 1646 x 661 at x 1097, y 493); or universal **16:9, 5244 x 2950, .png only** (safe area 1402 x 962 at x 1921, y 660) | 21:9, 3840 x 1646, 30 or 60 fps, 5 to 30 s, .mov/.m4v/.mp4 |
+| Search results | **3:2, min 1920 x 1280, max 3840 x 2560**, .jpeg/.jpg/.png (art safe area 2168 x 1030 at x 836, y 765 on the 3840 x 2560 canvas); or the universal 16:9 PNG | 3:2, min 1920 x 1280, max 3840 x 2560, 30 or 60 fps, 5 to 30 s, .mov/.m4v/.mp4 |
 | In-App Event card / details | 16:9 1920 x 1080 to 3840 x 2160 / 9:16 1080 x 1920 to 2160 x 3840, max 500 MB | same sizes, 30 or 60 fps, 15 to 30 s |
 
 - No alpha ("Images can't include alpha channels or transparencies"). Codec, colour space and video file size are not stated: use H.264 or HEVC, sRGB / Rec. 709.
 - **Universal asset:** the 16:9 5244 x 2950 PNG listed under both placements; "If you upload a universal creative asset, you can use it for both your product page header and search results placement" ("Use header asset in search results", universal assets only). Video has no universal size.
 - Playback: "Videos are muted by default in search results and can't currently be unmuted. On your product page, videos are also muted by default, but people can unmute them. Videos loop continuously in both placements." Design silent-first and loop-clean. A poster frame is set per video and applies everywhere it is used.
-- Safe area: Apple's templates (Figma, Photoshop, Pixelmator, Sketch on the best-practices page) define it; the pages only say to keep the focal point and text in the centre "to prevent any unwanted clipping". For the universal asset, the part both crops keep is the centre **4425 x 2247** (inferred: 21:9 keeps full width, 3:2 keeps full height). The App Store Connect Preview tool shows iPhone and iPad, orientations, languages and Dark Mode: check there before submitting.
+- Safe area (Apple creative assets specifications, read 2026-11-25; supersedes the earlier inferred 4425 x 2247): the table gives an **Art Safe Area** per placement (above). "Keep all critical elements within this central boundary"; the rest is the **Auxiliary Art Area** for atmospheric art and background imagery. Header 1646 x 661 at (1097, 493); search 2168 x 1030 at (836, 765); universal 1402 x 962 at (1921, 660). Header and universal are PNG only. Apple's templates (best-practices page) draw the same zones. The App Store Connect Preview tool shows iPhone and iPad, orientations, languages and Dark Mode: check there before submitting.
 - Content rules (best practices): must relate to the app's functionality; short phrase that enhances the visual, localized for every app language; **no pricing, discounts, website URLs or copyright symbols; no logos or references to other platforms or marketplaces; no Apple-designated recognitions (Editors' Choice, App of the Day, Apple Design Award); no unverifiable claims**; 4+ age rating content. Device frames and people: no rule stated.
 - PPO can test alternative header visuals.
 
@@ -65,7 +65,7 @@ New placements on top of previews and screenshots: the **product page header** a
 
 | Item | Requirement |
 |---|---|
-| Phone screenshots | 2 to 8. JPEG or 24-bit PNG, no alpha. Sides 320 to 3840 px, **long side at most 2x the short side**, so the iPhone 1320 x 2868 render (2.17:1) is rejected. Use **1080 x 1920**. |
+| Phone screenshots | 2 to 8. JPEG or 24-bit PNG, no alpha. Sides 320 to 3840 px, up to 8 MB each, **long side at most 2.3x the short side** (help 9866151, read 2026-11-25; was 2x). Use **1080 x 1920** (9:16): 4+ at that size make the app eligible for Play's large recommendation formats. |
 | Featuring | At least 4 screenshots at min 1080 px. |
 | Tablets | Optional; if used, at least 4, 9:16 or 16:9, 1080 to 7680 px. |
 | Feature graphic | **Required**, **1024 x 500**, no alpha. Keep logo, name and tagline away from the edges (cropped on some surfaces). No pure white, black or dark-gray fill, no device frames, no store badges, **no "Free"**. |

@@ -7,7 +7,7 @@
 # belongs to from its aspect ratio and scale (a 2x or 3x export is detected),
 # resizes it to the exact pixel size, removes the alpha channel (both stores
 # reject alpha) and writes an sRGB JPEG to <out-dir>/<slot>/ (an opaque PNG
-# for the universal creative asset, which Apple takes as .png only).
+# for the header and universal creative assets, which Apple takes as .png only).
 #
 # Slots (verified 2026-11-11 against Apple's screenshot and creative assets
 # specifications and Play Console help 9866151). Every size Apple accepts is listed, so a file
@@ -46,7 +46,7 @@ slots=(
   "mac 2560 1600"
   "mac 1440 900"
   "mac 1280 800"
-  "asc-header 3840 1646"
+  "asc-header 3840 1646 png"
   "asc-search 3840 2560"
   "asc-search 1920 1280"
   "asc-universal 5244 2950 png"
