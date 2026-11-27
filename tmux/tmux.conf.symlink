@@ -1,5 +1,10 @@
 #!/usr/bin/zsh
 
+# Number windows and panes from 1. Set before the session below is created,
+# or its first window gets index 0.
+set -g base-index 1
+setw -g pane-base-index 1
+
 # Create session if none exists (guarded so `prefix r` reloads don't add one).
 # On the default socket, also flag a resurrect restore (run after tpm, at the
 # bottom) and hold off the first autosave so it can't save this placeholder
@@ -20,9 +25,6 @@ set -g default-terminal "screen-256color"
 unbind C-b
 set-option -g prefix `
 bind ` send-prefix
-
-setw -g pane-base-index 1
-set -g base-index 1
 
 set -s escape-time 10
 # Increase repeat time for repeated commands
