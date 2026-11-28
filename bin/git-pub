@@ -16,6 +16,8 @@ Usage: git-pub [major|minor|patch]     (default: patch)
 
 Merges the dev branch into the release branch, bumps the version, commits
 "Version x.y.z", tags vx.y.z, pushes, then returns to the dev branch.
+Ends by printing every version on the release branch, old -> new, and
+the tag.
 
 Version source:
   package.json   npm version <bump> (commit + tag by npm); any npm version
@@ -33,6 +35,7 @@ Pub workspace members:
 Per-repo config (git config pub.<key>; add --global to change your default):
   pub.members        build  member build number +1, x.y.z kept (default)
                      same   member x.y.z gets the same bump, build +1
+                     match  member x.y.z set to the root's, build +1
                      none   members untouched
   pub.devBranch      branch merged from               (default: develop)
   pub.releaseBranch  branch released and tagged       (default: master,
@@ -60,8 +63,8 @@ mode=$(git config pub.members || echo build)
 back=$(git config --type=bool pub.backMerge || echo true)
 
 case "$mode" in
-  build|same|none) ;;
-  *) echo "pub.members must be build, same or none (got: $mode)" >&2; exit 1 ;;
+  build|same|match|none) ;;
+  *) echo "pub.members must be build, same, match or none (got: $mode)" >&2; exit 1 ;;
 esac
 
 if [ ! -f package.json ]; then
@@ -81,13 +84,55 @@ bump_xyz() {
   }' OFS=.
 }
 
+# Lists the paths in the `workspace:` list of the pubspec on stdin.
+ws_members() {
+  sed -n '/^workspace:/,/^[^ ]/s/^ *- *//p' | tr -d "\"'"
+}
+
+# Prints the version in file $2 at commit $1, or nothing.
+version_at() {
+  case "$2" in
+    *.json) git show "$1:$2" 2>/dev/null | sed -n 's/^ *"version": *"\([^"]*\)".*/\1/p' ;;
+    *)      git show "$1:$2" 2>/dev/null | sed -n 's/^version: *\([^ #]*\).*/\1/p' | tr -d "\"'" ;;
+  esac | head -n 1
+}
+
+# Prints the version of each manifest on the release branch, as it was
+# before this release -> now, then the tag on the release branch.
+print_versions() {
+  files=$manifest
+  if [ "$manifest" = pubspec.yaml ]; then
+    for m in $(git show "$rel:pubspec.yaml" | ws_members); do
+      files="$files $m/pubspec.yaml"
+    done
+  fi
+  w=0
+  for f in $files; do [ ${#f} -gt $w ] && w=${#f}; done
+  echo
+  echo "Versions on $rel:"
+  for f in $files; do
+    new=$(version_at "$rel" "$f")
+    [ -n "$new" ] || continue
+    old=$(version_at "$before" "$f")
+    if [ "$old" = "$new" ]; then
+      printf "  %-${w}s  %s (unchanged)\n" "$f" "$new"
+    else
+      printf "  %-${w}s  %s -> %s\n" "$f" "${old:-none}" "$new"
+    fi
+  done
+  tag=$(git describe --tags --exact-match "$rel" 2>/dev/null) && echo "Tag: $tag"
+}
+
 git checkout "$dev"
 git pull
 git checkout "$rel"
 git merge "$dev" -m "Merge branch $dev"
+before=$(git rev-parse HEAD)
+manifest=package.json
 
 npm version "$bump" --force -m "Version %s" 2>/dev/null || {
   [ -f pubspec.yaml ] || { echo "No package.json or pubspec.yaml found" >&2; exit 1; }
+  manifest=pubspec.yaml
 
   version=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)/\1/p' pubspec.yaml | head -n 1)
   [ -n "$version" ] || { echo "No version found in pubspec.yaml" >&2; exit 1; }
@@ -100,13 +145,16 @@ npm version "$bump" --force -m "Version %s" 2>/dev/null || {
 
   summary=""
   if [ "$mode" != none ]; then
-    for m in $(sed -n '/^workspace:/,/^[^ ]/s/^ *- *//p' pubspec.yaml | tr -d "\"'"); do
+    for m in $(ws_members < pubspec.yaml); do
       f="$m/pubspec.yaml"
       [ -f "$f" ] || continue
       m_build=$(sed -n 's/^version: *[0-9]*\.[0-9]*\.[0-9]*+\([0-9]*\).*/\1/p' "$f" | head -n 1)
       [ -n "$m_build" ] || continue
       m_xyz=$(sed -n 's/^version: *\([0-9]*\.[0-9]*\.[0-9]*\)+.*/\1/p' "$f" | head -n 1)
-      [ "$mode" = same ] && m_xyz=$(bump_xyz "$m_xyz" "$bump")
+      case "$mode" in
+        same)  m_xyz=$(bump_xyz "$m_xyz" "$bump") ;;
+        match) m_xyz=${new_version%%+*} ;;
+      esac
       m_version="$m_xyz+$((m_build + 1))"
       sed "s/^version: .*/version: $m_version/" "$f" > "$f.tmp" && mv "$f.tmp" "$f"
       git add "$f"
@@ -122,3 +170,4 @@ git checkout "$dev"
 if [ "$back" = true ]; then
   git merge --ff-only "$rel" && git push
 fi
+print_versions
